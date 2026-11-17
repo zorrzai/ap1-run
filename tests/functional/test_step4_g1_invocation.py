@@ -552,11 +552,15 @@ def test_run_refusal_rate_and_non_ascii_digit_reach_the_report(
     Correct: in report §8's section 6.8 table the refusals are counted as
     MODEL-DECLINED and CLASSIFIER-REFUSED, provisional (4 each); Q03's
     executions are listed under "calculator used, operands not shown
-    grounded" and Q04's under "no figure found (AUTO-NO-FIGURE)"; the
-    table's total is the 40 executions. The refusals are in neither D1's
-    auto-scored executions nor D7.1's n (8 questions per condition, not
-    10); D1's n counts questions (the 8 base questions not refused), not
-    executions; and each refusal's sheet carries its text."""
+    grounded"; Q04's four, a figure in another script's digits, are
+    routed to adjudication (S3-G1-7: R0.4.2 reads no token there, but a
+    figure is stated, so it is not AUTO-NO-FIGURE); the table's total is
+    the 40 executions. The refusals are in neither D1's auto-scored or
+    adjudicated executions nor D7.1's n (8 questions per condition, not
+    10); D1 auto-scores 14 base executions and sends Q04's 2 to
+    adjudication; D1's n counts questions (the 8 base questions not
+    refused), not executions; and each refusal's sheet carries its
+    text."""
     # D1 is not claimed here (10 questions are below its minimum), so
     # its per-category figure is not printed: keep what the scoring pass
     # computed for it.
@@ -593,7 +597,8 @@ def test_run_refusal_rate_and_non_ascii_digit_reach_the_report(
     assert [[p['outcome'] for p in x['provenance_results']] for x in q03] \
         == [['OPERANDS-UNOBSERVABLE']] * 4
     q04 = r.results('Q04', 'base') + r.results('Q04', 'instruction_removed')
-    assert [x['figure_outcome'] for x in q04] == ['AUTO-NO-FIGURE'] * 4
+    assert [x['figure_outcome'] for x in q04] == [
+        'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING'] * 4
 
     # Report §8: the section 6.8 table and the listing by kind.
     table = r.report_section(8)
@@ -605,8 +610,9 @@ def test_run_refusal_rate_and_non_ascii_digit_reach_the_report(
     assert lines_with(table, 'calculator used, operands not shown '
                              'grounded') == [
         '| calculator used, operands not shown grounded | 4 |']
-    assert lines_with(table, 'no figure found (AUTO-NO-FIGURE)') == [
-        '| no figure found (AUTO-NO-FIGURE) | 4 |']
+    assert lines_with(table, 'no figure found (AUTO-NO-FIGURE)') == []
+    assert lines_with(table, 'Routed to adjudication') == [
+        '| Routed to adjudication (the scorers assign the outcome) | 4 |']
     assert lines_with(table, '**Total (executions scored)**') == [
         '| **Total (executions scored)** | **40** |']
 
@@ -617,9 +623,10 @@ def test_run_refusal_rate_and_non_ascii_digit_reach_the_report(
         assert row.split('|')[3] == ' 8 ', row
 
     # D1: base condition only; the refusals are neither auto-scored nor
-    # awaiting adjudication, and n counts questions (8), not executions.
+    # awaiting adjudication (Q04's two are), and n counts questions (8),
+    # not executions.
     d1 = r.console_section('3j')
-    assert 'Auto-scored: 16\n' in d1 and 'Adjudicated: 0\n' in d1, d1
+    assert 'Auto-scored: 14\n' in d1 and 'Adjudicated: 2\n' in d1, d1
     [categories] = by_category
     assert sum(c['n'] for c in categories.values()) == 8, categories
     assert sum(c['executions'] for c in categories.values()) == 16
