@@ -777,6 +777,42 @@ def test_verify_run_worked_step_only_change_fails(vrs, tmp_path, base):
         'sealed=%s, recomputed=' % record['expected_values_hash'])
 
 
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R1.1', 'R0.4.1')
+def test_verify_run_expected_values_computed_in_the_runs_decimal_context(
+        vrs, tmp_path, base):
+    # The run computes the expected values in the shared Decimal context
+    # (precision 50, T3-60); the verifier recomputes them in the same one,
+    # whatever its caller's context. A module returning an unrounded
+    # 1/7, as its final and as a worked step, verifies (at Python's
+    # default precision of 28 it gave a different digest: a false FAIL).
+    from decimal import Context, Decimal, localcontext
+    (base / 'example' / 'fixture.json').write_text('{"accounts": []}\n')
+    (base / 'example' / 'questions.json').write_text(json.dumps(
+        {'items': [{'id': 'Q01', 'source_accounts': []}]}))
+    (base / GT).write_text(
+        'from decimal import Decimal as D\n'
+        'def compute(item_id, ctx):\n'
+        '    v = D(1) / D(7)\n'
+        '    return {"final": v, "intermediates": [\n'
+        '        {"label": "seventh", "value": v}]}\n')
+    with localcontext(Context(prec=50)):
+        seventh = Decimal(1) / Decimal(7)
+    values = {'Q01': {'final': seventh, 'intermediates': [
+        {'label': 'seventh', 'value': seventh}]}}
+    config = resolved_config()
+    record = seal(config=config,
+                  fixture_path=base / 'example' / 'fixture.json',
+                  questions_path=base / 'example' / 'questions.json',
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    with localcontext(Context(prec=28)):
+        checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [] and ('expected_values_hash', 'MATCH') in checks
+
+
 def test_verify_run_expected_values_module_may_import_its_neighbours(
         vrs, tmp_path, base):
     (base / 'example' / 'helper_g5.py').write_text('V = "7"\n')

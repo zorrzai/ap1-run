@@ -65,7 +65,9 @@ from ap1_run.execution.sealed_inputs import (  # noqa: E402
     INPUT_FILES, compute_expected_values, load_ground_truth, parse_json_input,
 )
 from ap1_run.execution.version import compute_runner_source_hash  # noqa: E402
-from ap1_run.foundation.numeric import canonical_hash, file_hash  # noqa: E402
+from ap1_run.foundation.numeric import (  # noqa: E402
+    canonical_hash, file_hash, in_decimal_context,
+)
 
 
 # -- Known errata for contextual reporting ---------------------------------
@@ -246,7 +248,9 @@ def _ap1_text_path(resolved_config, ap1_text):
 
 def _check_expected_values(seal_record, paths, checks, failures):
     """Recompute the expected values from the inputs (T3-48): load the
-    ground-truth module from its file and run it on every item."""
+    ground-truth module from its file and run it on every item, in the
+    shared Decimal context the run computes them in (T3-60), whatever
+    this process's own context."""
     sealed = seal_record.get('expected_values_hash', '')
     if not sealed:
         failures.append(('expected_values_hash',
@@ -261,6 +265,10 @@ def _check_expected_values(seal_record, paths, checks, failures):
                 data[name] = f.read()
         module = load_ground_truth(paths['ground_truth'],
                                    data['ground_truth'])
+        # As the run does; a module without compute fails as before, at
+        # its first item
+        if hasattr(module, 'compute'):
+            module.compute = in_decimal_context(module.compute)
         values = compute_expected_values(
             module, parse_json_input(data['fixture']),
             parse_json_input(data['questions']))
