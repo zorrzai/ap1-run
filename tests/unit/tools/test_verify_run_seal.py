@@ -788,7 +788,8 @@ def test_verify_run_worked_step_only_change_fails(vrs, tmp_path, base):
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
     assert failures == [] and ('expected_values_hash', 'MATCH') in checks
@@ -834,7 +835,8 @@ def test_verify_run_expected_values_computed_in_the_runs_decimal_context(
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     with localcontext(Context(prec=28)):
         checks, failures = vrs.verify_run(str(run_dir))
@@ -1220,7 +1222,7 @@ def test_main_without_arguments_prints_usage_and_returns_1(vrs, monkeypatch,
 def test_main_argv_argument(vrs, run, capsys):
     run_dir, _, _ = run
     assert vrs.main([str(run_dir)]) == 0
-    assert capsys.readouterr().out.endswith('RESULT: PASS (13 checks)\n')
+    assert capsys.readouterr().out.endswith('RESULT: PASS (14 checks)\n')
 
 
 def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
@@ -1231,7 +1233,7 @@ def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
     assert code == 0
     expected = ['=== Verifying: %s ===' % run_dir, '']
     expected += ['  PASS  %s: %s' % c for c in all_checks(record)]
-    expected += ['', '  13 passed, 0 failed', '', 'RESULT: PASS (13 checks)',
+    expected += ['', '  14 passed, 0 failed', '', 'RESULT: PASS (14 checks)',
                  '']
     assert out == '\n'.join(expected)
 
@@ -1291,7 +1293,7 @@ def test_main_totals_passes_over_passing_runs(vrs, run, monkeypatch,
     code, out = run_main(vrs, [str(run_dir), str(run_dir)], monkeypatch,
                          capsys)
     assert code == 0
-    assert out.endswith('RESULT: PASS (26 checks)\n')
+    assert out.endswith('RESULT: PASS (28 checks)\n')
 
 
 def test_main_totals_failures_over_failing_runs(vrs, tmp_path, base,
