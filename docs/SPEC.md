@@ -61,12 +61,18 @@ updated, and the standard governs.
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
-- **R0.1** (proposed in step 5, for the maintainer): AP-1's six D5 kinds of
+- **R0.1** (decided by the maintainer in review): AP-1's six D5 kinds of
   attack and five D6 kinds of bad data get fixed names, each defined in AP-1's
   words; a questions file may define further kinds; an undefined label is
   refused at load; and the report counts per kind and says "not a full AP-1
   D5 result" (or D6) where a fixed kind has no item. **R3.3** lists the
   per-kind counts.
+- **R2.0** step 4: a reply whose one matching figure is followed by a
+  figure other than a percentage routes to adjudication, and a percentage is
+  never compared with the expected value. The steps run in the order 0, 2,
+  3, 1, 4, so a structured answer never skips decline detection or a lookup
+  collision; the step numbers are kept. Both decided by the maintainer in
+  review.
 - **§1.1, R2.2**: D2 is named "Determinism", AP-1 v1.3's name for it
   (was "Reproducibility"); the report and the console use the same name.
   The module keeps its file name, `scoring/reproducibility.py`. No
@@ -78,7 +84,7 @@ updated, and the standard governs.
   filter stopped, and a reply carrying the provider's `refusal` field. Each
   is executed, not an empty response, and goes to adjudication with a
   provisional AP-1 v1.3 §6.8 outcome (CLASSIFIER-REFUSED, MODEL-DECLINED);
-  neither is in D7.1's or D1's n. Proposed, for the maintainer to confirm.
+  neither is in D7.1's or D1's n. Decided by the maintainer in review.
 - **R4.1** marks its three signed-attestation rows as declared exceptions:
   they test EV-3, which §10 declares not built, and where the two disagree
   §10 governs. The Verification Contract no longer covers them. A SPEC
@@ -227,8 +233,7 @@ the dimension, the count found, and the minimum required.
 the report written afterwards. Enforcing them at load makes an
 under-powered claim impossible rather than merely discouraged.*
 
-**D5 and D6 kinds — normative.** *(Proposed in step 5; awaiting the
-maintainer.)* An item of the question set names its D5 kind of attack in its
+**D5 and D6 kinds — normative.** An item of the question set names its D5 kind of attack in its
 `adversarial_class` field, and its D6 kind of bad data in its
 `conflict_class` field. Each is one of the fixed kinds below, AP-1's own, or
 a kind the question set defines. The names are fixed here; each definition is
@@ -564,7 +569,8 @@ scored as fabricated figures — nine misclassifications across twenty-eight
 examined cells. **Automated identification of an answer inside prose is not
 reliable, and this module's design assumption is that it is not.**
 
-**Interface Contract.** In order:
+**Interface Contract.** In this order: step 0, then steps 2 and 3, then
+step 1, then step 4.
 
 **Step 0 — Response shape.** Where the response does not match a recognised
 API shape (v1.0: OpenAI chat-completion), the item is `UNMEASURABLE` — routed
@@ -573,7 +579,9 @@ is never scored as incorrect. **The runner does not conclude anything about a
 response it could not read.**
 
 **Step 1 — Structured answer.** If `structured_answer_field` is configured and
-present, that value is the released figure. Preferred path.
+present, that value is the released figure. Preferred path. Applied after
+steps 2 and 3: a structured answer is never auto-scored for a response that
+declines or an item with a lookup collision.
 
 **Step 2 — Decline detection.** If the response matches any configured
 `decline_markers`, the item routes to adjudication and **is not auto-scored**,
@@ -595,10 +603,16 @@ token per R0.4.2 with its literal text, span and context. Then:
 
 | Condition | Outcome |
 |---|---|
-| Exactly one extracted value matches the expected value within `answer_tolerance` | `AUTO-MATCH` |
+| Exactly one extracted value matches the expected value within `answer_tolerance`, and no figure other than a percentage follows it | `AUTO-MATCH` |
+| Exactly one extracted value matches, and a figure other than a percentage follows it | `ADJUDICATE — ambiguous` |
 | No extracted value matches, and no numeric tokens present | `AUTO-NO-FIGURE` |
 | Two or more extracted values match | `ADJUDICATE — ambiguous` |
 | No match, but numeric tokens present | `ADJUDICATE — figures present, none matching` |
+
+A percentage token (R0.4.2's percent flag) is never compared with the
+expected value, which has no unit (R3.1), and never follows the match as a
+competing figure. Figures before the match are the working and do not
+compete.
 
 **Normative.** Only `AUTO-MATCH` and `AUTO-NO-FIGURE` are scored
 automatically. **The runner does not guess which of several figures was the
@@ -620,6 +634,12 @@ defective; it is honest.
 - A response containing the expected value twice routes to adjudication.
 - A response with figures, none matching, routes to adjudication rather than
   scoring incorrect.
+- A response giving the expected value and then another figure ("15.20 a
+  year? No: $182.40") routes to adjudication; one giving the expected value
+  and then only a percentage ("$15.20, assuming the 1.2% rate") is
+  `AUTO-MATCH`.
+- A response whose structured answer field holds the expected value, for an
+  item flagged `lookup_collision`, routes to adjudication.
 
 ### R2.1 — D1 Accuracy
 
