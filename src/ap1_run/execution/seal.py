@@ -71,17 +71,20 @@ def expected_values_hash(expected_values):
     """The canonical hash of the expected values: for each item, what
     scoring reads of what the ground-truth module returned for it (R1.1,
     T3-48): its final value, whether it is derivable (an underivable item
-    is VOID; true when not given) and its required operation (the D7
-    evidence), as {item_id: {final, derivable, required_operation}}.
-    Raises SealError if a value cannot be hashed (a float, or a value
-    JSON cannot hold)."""
+    is VOID; true when not given), its required operation (the D7
+    evidence) and its worked steps, the intermediates as the module
+    returned them (D7.2 operand provenance; [] when not given), as
+    {item_id: {final, derivable, required_operation, intermediates}}.
+    Raises SealError if a value cannot be hashed (a float anywhere in it,
+    the intermediates included, or a value JSON cannot hold)."""
     def entry(result):
         if not isinstance(result, dict):
             return {'final': result, 'derivable': True,
-                    'required_operation': None}
+                    'required_operation': None, 'intermediates': []}
         return {'final': result.get('final'),
                 'derivable': result.get('derivable', True),
-                'required_operation': result.get('required_operation')}
+                'required_operation': result.get('required_operation'),
+                'intermediates': result.get('intermediates', [])}
     try:
         return canonical_hash({item_id: entry(result) for item_id, result
                                in expected_values.items()})

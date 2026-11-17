@@ -27,10 +27,11 @@ writing):
                    seal function (captured by driver.py before the call)
   expected_values_hash
                    canonical hash of {item: {final, derivable,
-                   required_operation}} of the expected values passed to
-                   the seal ('' if none; derivable true and the others
-                   None when not given); the values themselves are pinned
-                   by the goldens, which print this hash (T3-48)
+                   required_operation, intermediates}} of the expected
+                   values passed to the seal ('' if none; derivable true,
+                   required_operation and final None, intermediates []
+                   when not given); the values themselves are pinned by
+                   the goldens, which print this hash (T3-48)
   environment      python_version, platform and package_versions of this
                    interpreter (the driver runs on the same one), outside
                    runner_source_hash (T3-30, T3-70)
@@ -149,13 +150,15 @@ TEXT_INPUTS = {'fixture': 'fixture_path', 'questions': 'questions_path',
 
 def _scored_part(result):
     """What scoring reads of one ground-truth result: its final, whether
-    it is derivable (true when not given), its required operation."""
+    it is derivable (true when not given), its required operation, and
+    its worked steps, the intermediates as returned ([] when not given)."""
     if not isinstance(result, dict):
         return {'final': result, 'derivable': True,
-                'required_operation': None}
+                'required_operation': None, 'intermediates': []}
     return {'final': result.get('final'),
             'derivable': result.get('derivable', True),
-            'required_operation': result.get('required_operation')}
+            'required_operation': result.get('required_operation'),
+            'intermediates': result.get('intermediates', [])}
 
 
 class HashCheckError(Exception):

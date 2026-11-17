@@ -88,10 +88,13 @@ def files(tmp_path):
                 'calculator_path': paths['calculator']})
 
 
-def digest_entry(final, derivable=True, required_operation=None):
-    """One item of the expected-values digest (T3-48)."""
+def digest_entry(final, derivable=True, required_operation=None,
+                 intermediates=()):
+    """One item of the expected-values digest (T3-48), its worked steps
+    ([] when not given) included."""
     return {'final': final, 'derivable': derivable,
-            'required_operation': required_operation}
+            'required_operation': required_operation,
+            'intermediates': list(intermediates)}
 
 
 def make_seal(files, config=CONFIG, **kwargs):
@@ -200,30 +203,44 @@ def test_seal_hash_binds_the_environment(files, frozen, monkeypatch, field):
 def test_seal_expected_values_hashed_canonically(files, frozen):
     # T3-48: for each item what scoring reads of its result: the final
     # value (a Decimal as its exact string), whether it is derivable (VOID
-    # otherwise; true by default) and its required operation.
+    # otherwise; true by default), its required operation and its worked
+    # steps, the intermediates as returned ([] by default).
+    step = {'label': 'sum', 'value': Decimal('1.500'), 'operation': 'add',
+            'inputs': [{'source': 'acct.balance'}, {'constant': '12'}]}
     values = {'Q02': {'final': Decimal('1.50'), 'derivable': True,
-                      'required_operation': 'calculator', 'x': 1},
+                      'required_operation': 'calculator', 'x': 1,
+                      'intermediates': [step]},
               'Q01': {'final': None, 'derivable': False}}
     record = make_seal(files, expected_values=values)
     assert record['expected_values_hash'] == canon({
         'Q01': {'final': None, 'derivable': False,
-                'required_operation': None},
+                'required_operation': None, 'intermediates': []},
         'Q02': {'final': '1.50', 'derivable': True,
-                'required_operation': 'calculator'}})
+                'required_operation': 'calculator',
+                'intermediates': [dict(step, value='1.500')]}})
 
 
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
 @pytest.mark.parametrize('change', [
     {'derivable': False}, {'required_operation': 'none'},
-    {'final': Decimal('1.51')}])
+    {'final': Decimal('1.51')},
+    {'intermediates': [{'label': 'step', 'value': Decimal('3.01'),
+                        'inputs': [{'source': 'acct.balance'}]}]},
+    {'intermediates': [{'label': 'step', 'value': Decimal('3.00'),
+                        'inputs': [{'source': 'acct.rate'}]}]},
+    {'intermediates': []}])
 def test_seal_expected_values_digest_binds_what_scoring_reads(files, frozen,
                                                               change):
-    # Two ground truths that differ only in derivable (VOID or scored) or
-    # in the required operation (the D7 evidence) are different expected
-    # values, as they are for the final.
+    # Two ground truths that differ only in derivable (VOID or scored), in
+    # the required operation (the D7 evidence) or in a worked step (what
+    # D7.2 operand provenance matches operands against: a step's value or
+    # its inputs, or no steps at all) are different expected values, as
+    # they are for the final.
     base = {'final': Decimal('1.50'), 'derivable': True,
-            'required_operation': 'calculator'}
+            'required_operation': 'calculator',
+            'intermediates': [{'label': 'step', 'value': Decimal('3.00'),
+                               'inputs': [{'source': 'acct.balance'}]}]}
     one = make_seal(files, expected_values={'Q01': base})
     other = make_seal(files, expected_values={'Q01': dict(base, **change)})
     assert one['expected_values_hash'] != other['expected_values_hash']
@@ -238,6 +255,17 @@ def test_seal_empty_expected_values_are_sealed_as_such(files, frozen):
 def test_seal_unhashable_expected_values_refused(files, frozen, bad):
     with pytest.raises(SealError) as exc:
         make_seal(files, expected_values={'Q01': {'final': bad}})
+    assert str(exc.value).startswith('expected values cannot be sealed: ')
+
+
+@pytest.mark.parametrize('bad', [1.5, object()])
+def test_seal_unhashable_worked_step_refused(files, frozen, bad):
+    # A float in a worked step is refused as a float final is: the seal
+    # hashes Decimals, never floats (R0.4.1, R0.4.3).
+    with pytest.raises(SealError) as exc:
+        make_seal(files, expected_values={'Q01': {
+            'final': Decimal('1'),
+            'intermediates': [{'label': 'step', 'value': bad}]}})
     assert str(exc.value).startswith('expected values cannot be sealed: ')
 
 
@@ -907,6 +935,35 @@ def test_perturbation_check_passes_example_module(example):
     assert perturbation_check(*example) == []
 
 
+def _decimals_as_text(obj):
+    """obj with every Decimal as its exact string, as canonical JSON
+    writes it (R0.4.3), so canon() can hash it."""
+    if isinstance(obj, Decimal):
+        return str(obj)
+    if isinstance(obj, dict):
+        return {k: _decimals_as_text(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_decimals_as_text(v) for v in obj]
+    return obj
+
+
+@pytest.mark.req('R1.1')
+def test_expected_values_hash_of_example_module_covers_its_worked_steps(
+        example):
+    # The shipped module's results (Decimals, worked steps with typed
+    # inputs) hash, and the digest is that of {final, derivable,
+    # required_operation, intermediates} for each item, written out here.
+    from ap1_run.execution.sealed_inputs import compute_expected_values
+    values = compute_expected_values(*example)
+    assert any(r.get('intermediates') for r in values.values())
+    want = canon({item_id: _decimals_as_text({
+        'final': r.get('final'), 'derivable': r.get('derivable', True),
+        'required_operation': r.get('required_operation'),
+        'intermediates': r.get('intermediates', [])})
+        for item_id, r in values.items()})
+    assert seal_mod.expected_values_hash(values) == want
+
+
 def test_source_fields_check_passes_example_module(example):
     assert source_fields_check(*example) == []
 
@@ -1162,6 +1219,23 @@ def test_seal_other_inputs_give_another_inputs_hash(files, frozen):
         != base['inputs_hash']
     assert full_seal(files, expected_values={})['inputs_hash'] \
         != base['inputs_hash']
+
+
+@pytest.mark.req('R1.1')
+def test_verify_seal_worked_step_only_change_refused(files, frozen):
+    # The expected values compared include the worked steps: a ground
+    # truth that now returns another intermediate, final unchanged, is a
+    # named mismatch.
+    step = {'label': 'step', 'value': Decimal('3.00')}
+    values = {'Q01': {'final': Decimal('1.50'), 'intermediates': [step]}}
+    record = full_seal(files, expected_values=values)
+    assert full_verify(record, files, expected_values=values) is True
+    other = {'Q01': {'final': Decimal('1.50'), 'intermediates': [
+        dict(step, value=Decimal('3.01'))]}}
+    error = _refused(lambda: full_verify(record, files,
+                                         expected_values=other))
+    assert error is not None
+    assert 'expected_values' in str(error)
 
 
 @pytest.mark.finding('T3-68')

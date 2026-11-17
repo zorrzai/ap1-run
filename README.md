@@ -640,7 +640,7 @@ its inputs and refuses, naming the input, if any has changed.
 | `questions_hash` | `example/questions.json` | Question set unchanged |
 | `ground_truth_hash` | `example/ground_truth_example.py` | Ground-truth module unchanged (see E3) |
 | `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
-| `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
+| `expected_values_hash` | the ground-truth module's results | Expected values as scored: final, derivable, required operation and worked steps (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
 | `inputs_hash` | All of the above, and every other sealed field but the timestamp | The configuration sealed, whenever it was sealed (records with `seal_format` only) |
 | `seal_hash` | All of the above, and the timestamp | Composite integrity |

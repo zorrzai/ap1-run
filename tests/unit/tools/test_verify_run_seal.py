@@ -734,8 +734,47 @@ def test_verify_run_expected_values_recomputed_from_the_module(
                          % (record['expected_values_hash'],
                             canonical_hash({'Q01': {
                                 'final': '2', 'derivable': True,
-                                'required_operation': None}})))]
+                                'required_operation': None,
+                                'intermediates': []}})))]
 
+
+@pytest.mark.req('R1.1')
+def test_verify_run_worked_step_only_change_fails(vrs, tmp_path, base):
+    # The expected values the verifier recomputes include each item's
+    # worked steps: a module that now returns another intermediate, the
+    # final unchanged, fails expected_values_hash and nothing else.
+    (base / 'example' / 'fixture.json').write_text('{"accounts": []}\n')
+    (base / 'example' / 'questions.json').write_text(json.dumps(
+        {'items': [{'id': 'Q01', 'source_accounts': []}]}))
+
+    def module(step):
+        return ('def compute(item_id, ctx):\n'
+                '    return {"final": "1.5", "intermediates": [\n'
+                '        {"label": "step", "value": "%s"}]}\n' % step)
+    (base / GT).write_text(module('3.00'))
+    config = resolved_config()
+    values = {'Q01': {'final': '1.5', 'intermediates': [
+        {'label': 'step', 'value': '3.00'}]}}
+    record = seal(config=config,
+                  fixture_path=base / 'example' / 'fixture.json',
+                  questions_path=base / 'example' / 'questions.json',
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [] and ('expected_values_hash', 'MATCH') in checks
+    # The module now gives another worked step, final unchanged; the
+    # record names the new module's hash and is resealed, so only the
+    # expected values tell the two apart.
+    (base / GT).write_text(module('3.01'))
+    record = dict(record,
+                  ground_truth_hash=seal_mod.text_file_hash(str(base / GT)))
+    run_dir = write_run(tmp_path / 'run2', reseal(record), config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert names(failures) == ['expected_values_hash']
+    assert failures[0][1].startswith(
+        'sealed=%s, recomputed=' % record['expected_values_hash'])
 
 
 def test_verify_run_expected_values_module_may_import_its_neighbours(

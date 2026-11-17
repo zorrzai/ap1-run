@@ -103,6 +103,9 @@ updated, and the standard governs.
   covers it. Was: "Sealing the same inputs at the same timestamp yields the
   same `seal_hash`; the hash of each sealed input does not depend on the time
   of sealing."
+- **R1.1** the expected-values digest covers each item's worked steps
+  (`intermediates`) as well as its final value, whether it is derivable and
+  its required operation: scoring reads them too (D7.2 operand provenance).
 
 ---
 
@@ -376,6 +379,14 @@ distinguishable from the artifact alone.
 
 **Why keys are sealed before the run.** An attestation verified against a key
 supplied after the fact proves nothing (R1.3).
+
+**What the expected values are.** The record seals a digest of what the
+ground-truth module returns for each item and scoring reads: its final value,
+whether it is derivable, its required operation and its worked steps
+(`intermediates`, which D7.2 operand provenance matches calculator operands
+against). A float anywhere in them, a worked step's value included, is
+refused at seal time: the seal hashes Decimals, never floats (R0.4.1,
+R0.4.3).
 
 **Verification Contract.**
 - Modifying any sealed input causes the scorer to refuse, naming the mismatch.
