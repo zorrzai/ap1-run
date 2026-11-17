@@ -30,6 +30,14 @@ CONFIG = {'permitted_transformations': ['percent_to_fraction'],
           'answer_tolerance': '0'}
 
 
+# DEC-5: tests of today's behaviour in a module SPEC does not define are
+# provisional (the code is the definition for now); the step-4 xfails
+# in this file are not, they state the correct behaviour of known defects.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: D7.2(b) operation correctness has no SPEC section; the code '
+    'is the provisional definition')
+
+
 def classify(expression, gt=None, config=None):
     return classify_operation(expression, Q07_GT if gt is None else gt,
                               CONFIG if config is None else config)
@@ -47,6 +55,7 @@ def oc(value):
 
 # -- constants -----------------------------------------------------------------
 
+@PROVISIONAL
 def test_operation_outcome_constants():
     assert (OC, WO, UNOBS) == ('OPERATION-CORRECT', 'WRONG-OPERATION',
                                'OPERATION-UNOBSERVABLE')
@@ -54,6 +63,7 @@ def test_operation_outcome_constants():
 
 # -- evaluate_expression: arithmetic ---------------------------------------------
 
+@PROVISIONAL
 @pytest.mark.parametrize('expression, value', [
     ('2 + 3', D('5')),
     ('7 - 10', D('-3')),
@@ -74,12 +84,14 @@ def test_evaluate_expression_arithmetic(expression, value):
     assert result == value
 
 
+@PROVISIONAL
 def test_evaluate_expression_is_exact_decimal_not_float():
     assert evaluate_expression('0.1 + 0.2') == D('0.3')
     assert evaluate_expression('15200 * 1.2 / 100 / 12') == \
         D('15200') * D('1.2') / D('100') / D('12')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-58')
 def test_evaluate_expression_reads_literals_through_float():
     # Literals go through float: '15.20' loses its trailing zero and 17+
@@ -89,10 +101,12 @@ def test_evaluate_expression_reads_literals_through_float():
     assert evaluate_expression('15200.0000000000000001') == D('15200.0')
 
 
+@PROVISIONAL
 def test_evaluate_expression_strips_surrounding_whitespace():
     assert evaluate_expression('  15200 * 1.2  ') == D('18240.0')
 
 
+@PROVISIONAL
 def test_evaluate_expression_caret_is_power_with_power_precedence():
     # '^' becomes '**', so it binds tighter than '-' (E6).
     assert evaluate_expression('2^3 - 1') == D('7')
@@ -100,6 +114,7 @@ def test_evaluate_expression_caret_is_power_with_power_precedence():
     assert abs(r - D('0.0196')) < D('0.001')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-77')
 def test_evaluate_expression_pi_and_e_come_from_float():
     # Correct (R0.4): constants at Decimal precision; today str(math.pi).
@@ -107,6 +122,7 @@ def test_evaluate_expression_pi_and_e_come_from_float():
     assert evaluate_expression('e') == D('2.718281828459045')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-77')
 def test_evaluate_expression_round_is_half_even():
     # Correct: the declared HALF_UP policy (3); Decimal.quantize defaults
@@ -114,6 +130,7 @@ def test_evaluate_expression_round_is_half_even():
     assert evaluate_expression('round(2.5)') == D('2')
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G4-3')
 def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
     # Decimal // and % truncate toward zero; the reference calculator
@@ -123,6 +140,7 @@ def test_evaluate_expression_floor_division_and_mod_truncate_toward_zero():
     assert evaluate_expression('-7 % 3') == D('-1')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-60')
 def test_evaluate_expression_result_depends_on_context_precision():
     # The module uses whatever global precision is current, which
@@ -136,6 +154,7 @@ def test_evaluate_expression_result_depends_on_context_precision():
         assert len(str(evaluate_expression('1 / 3'))) == 52
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-58')
 def test_evaluate_expression_huge_float_literal_is_infinity():
     assert evaluate_expression('1e400') == D('Infinity')
@@ -143,11 +162,13 @@ def test_evaluate_expression_huge_float_literal_is_infinity():
 
 # -- evaluate_expression: refusals -----------------------------------------------
 
+@PROVISIONAL
 @pytest.mark.parametrize('expression', [None, 15.2, '', '   '])
 def test_evaluate_expression_non_string_or_blank_is_none(expression):
     assert evaluate_expression(expression) is None
 
 
+@PROVISIONAL
 @pytest.mark.parametrize('expression', [
     'this is not math',      # SyntaxError
     'x + 1',                 # unknown name
@@ -170,6 +191,7 @@ def test_evaluate_expression_unsupported_or_failing_is_none(expression):
     assert evaluate_expression(expression) is None
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-40')
 @pytest.mark.parametrize('expression', ['max(1, 2)', 'sqrt(4)', 'log(10)',
                                         'min(1, 2)', 'pow(2, 3)'])
@@ -180,6 +202,7 @@ def test_evaluate_expression_calculator_functions_are_refused(expression):
     assert evaluate_expression(expression) is None
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G4-4')
 def test_evaluate_expression_decimal_overflow_raises():
     # Correct (docstring): None for a non-numeric result. decimal.Overflow
@@ -189,6 +212,7 @@ def test_evaluate_expression_decimal_overflow_raises():
         evaluate_expression('10 ** 10 ** 10')
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G4-4')
 def test_evaluate_expression_deep_nesting_raises_recursion_error():
     with pytest.raises(RecursionError):
@@ -197,6 +221,7 @@ def test_evaluate_expression_deep_nesting_raises_recursion_error():
 
 # -- classify_operation --------------------------------------------------------
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_unparseable_is_unobservable():
     assert classify('not math') == {
@@ -204,12 +229,14 @@ def test_classify_operation_unparseable_is_unobservable():
         'detail': "expression unparseable or non-numeric: 'not math'"}
 
 
+@PROVISIONAL
 def test_classify_operation_non_string_is_unobservable():
     r = classify(None)
     assert r['outcome'] == UNOBS
     assert r['detail'] == 'expression unparseable or non-numeric: None'
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_result_equal_to_expected_is_correct():
     assert classify('42175 * 0.078 / 4 - 15 * 3') == {
@@ -219,11 +246,13 @@ def test_classify_operation_result_equal_to_expected_is_correct():
                   '(tolerance 0)'}
 
 
+@PROVISIONAL
 def test_classify_operation_equivalent_route_is_correct():
     # annual / 4 instead of monthly * 3: same value, not penalised.
     assert classify('42175.00 * (0.078 / 4) - (15.00 * 3)')['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_expected_given_as_string_or_number():
     gt = {'final': '15.20'}
     assert classify('15.2', gt)['matched_against'] == 'expected_value'
@@ -231,6 +260,7 @@ def test_classify_operation_expected_given_as_string_or_number():
         'expected_value'
 
 
+@PROVISIONAL
 def test_classify_operation_invalid_expected_is_ignored():
     r = classify('15.2', {'final': 'abc'}, {})
     assert r == {'outcome': WO, 'evaluated_result': '15.2',
@@ -239,10 +269,12 @@ def test_classify_operation_invalid_expected_is_ignored():
                            'nor any intermediate'}
 
 
+@PROVISIONAL
 def test_classify_operation_without_expected_or_intermediates_is_wrong():
     assert classify('15.2', {}, {})['outcome'] == WO
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_wrong_operation_detail():
     assert classify('42175 + 999') == {
@@ -253,6 +285,7 @@ def test_classify_operation_wrong_operation_detail():
 
 # tolerance
 
+@PROVISIONAL
 def test_classify_operation_within_tolerance_is_inclusive():
     config = dict(CONFIG, answer_tolerance='0.01')
     r = classify('777.4225', config=config)
@@ -261,30 +294,36 @@ def test_classify_operation_within_tolerance_is_inclusive():
     assert classify('777.4226', config=config)['outcome'] == WO
 
 
+@PROVISIONAL
 def test_classify_operation_tolerance_applies_below_expected():
     config = {'answer_tolerance': D('0.01')}
     assert classify('777.4025', config=config)['outcome'] == OC
     assert classify('777.4024', config=config)['outcome'] == WO
 
 
+@PROVISIONAL
 def test_get_tolerance_missing_is_zero():
     assert _get_tolerance({}) == D('0')
 
 
+@PROVISIONAL
 def test_get_tolerance_decimal_is_returned_as_is():
     tol = D('0.005')
     assert _get_tolerance({'answer_tolerance': tol}) is tol
 
 
+@PROVISIONAL
 def test_get_tolerance_string_and_number_are_converted():
     assert _get_tolerance({'answer_tolerance': '0.01'}) == D('0.01')
     assert _get_tolerance({'answer_tolerance': 0.5}) == D('0.5')
 
 
+@PROVISIONAL
 def test_get_tolerance_invalid_is_zero():
     assert _get_tolerance({'answer_tolerance': 'bad'}) == D('0')
 
 
+@PROVISIONAL
 def test_within_tolerance_is_absolute_and_inclusive():
     assert _within_tolerance(D('1.0'), D('1.1'), D('0.1'))
     assert _within_tolerance(D('1.1'), D('1.0'), D('0.1'))
@@ -293,6 +332,7 @@ def test_within_tolerance_is_absolute_and_inclusive():
 
 # intermediates
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_raw_intermediate_is_correct():
     assert classify('42175 * 7.8 / 100 / 4') == {
@@ -302,23 +342,27 @@ def test_classify_operation_raw_intermediate_is_correct():
                   'quarterly_return=822.4125'}
 
 
+@PROVISIONAL
 def test_classify_operation_first_matching_intermediate_wins():
     gt = {'final': D('1'), 'intermediates': [
         {'label': 'a', 'value': D('45')}, {'label': 'b', 'value': D('45')}]}
     assert classify('15 * 3', gt)['matched_against'] == 'intermediate:a'
 
 
+@PROVISIONAL
 def test_classify_operation_intermediate_without_label_is_question_mark():
     gt = {'final': D('1'), 'intermediates': [{'value': D('45')}]}
     assert classify('15 * 3', gt)['matched_against'] == 'intermediate:?'
 
 
+@PROVISIONAL
 def test_classify_operation_intermediate_value_as_string_is_converted():
     gt = {'final': D('1'), 'intermediates': [{'label': 'f',
                                               'value': '45.0'}]}
     assert classify('15 * 3', gt)['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_skips_none_and_invalid_intermediates():
     gt = {'final': D('1'), 'intermediates': [
         {'label': 'none', 'value': None}, {'label': 'bad', 'value': 'abc'},
@@ -326,12 +370,14 @@ def test_classify_operation_skips_none_and_invalid_intermediates():
     assert classify('15 * 3', gt)['matched_against'] == 'intermediate:good'
 
 
+@PROVISIONAL
 def test_classify_operation_expected_checked_before_intermediates():
     gt = {'final': D('45'), 'intermediates': [{'label': 'f',
                                                'value': D('45')}]}
     assert classify('15 * 3', gt)['matched_against'] == 'expected_value'
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_transformed_intermediate_is_correct():
     gt = {'final': D('1'), 'intermediates': [{'label': 'rate',
@@ -342,6 +388,7 @@ def test_classify_operation_transformed_intermediate_is_correct():
         'detail': 'result 0.078 matches percent_to_fraction(rate)=0.078'}
 
 
+@PROVISIONAL
 def test_classify_operation_only_permitted_transformations_apply():
     gt = {'final': D('1'), 'intermediates': [{'label': 'rate',
                                               'value': D('7.8')}]}
@@ -349,6 +396,7 @@ def test_classify_operation_only_permitted_transformations_apply():
     assert classify('7.8 / 100', gt, config)['outcome'] == WO
 
 
+@PROVISIONAL
 def test_classify_operation_unknown_transformation_name_is_skipped():
     gt = {'final': D('1'), 'intermediates': [{'label': 'rate',
                                               'value': D('7.8')}]}
@@ -358,12 +406,14 @@ def test_classify_operation_unknown_transformation_name_is_skipped():
         'intermediate:rate(percent_to_fraction)'
 
 
+@PROVISIONAL
 def test_classify_operation_no_transformations_key_means_none():
     gt = {'final': D('1'), 'intermediates': [{'label': 'rate',
                                               'value': D('7.8')}]}
     assert classify('0.078', gt, {})['outcome'] == WO
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_quantised_intermediate_is_correct():
     gt = {'final': D('1'), 'intermediates': [{'label': 'q',
@@ -374,6 +424,7 @@ def test_classify_operation_quantised_intermediate_is_correct():
         'detail': 'result 777.41 matches quantised q=777.41'}
 
 
+@PROVISIONAL
 def test_classify_operation_quantised_intermediate_uses_declared_rounding():
     gt = {'final': D('9'), 'intermediates': [{'label': 'q',
                                               'value': D('1.005')}]}
@@ -384,6 +435,7 @@ def test_classify_operation_quantised_intermediate_uses_declared_rounding():
     assert classify('1.00', gt, even)['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_quantisation_defaults_two_places_half_up():
     gt = {'final': D('9'), 'intermediates': [{'label': 'q',
                                               'value': D('1.005')}]}
@@ -394,6 +446,7 @@ def test_classify_operation_quantisation_defaults_two_places_half_up():
                     )['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_quantisation_places_may_be_a_string():
     gt = {'final': D('9'), 'intermediates': [{'label': 'q',
                                               'value': D('1.04')}]}
@@ -401,6 +454,7 @@ def test_classify_operation_quantisation_places_may_be_a_string():
     assert classify('1.0', gt, config)['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_empty_quantisation_does_not_quantise():
     gt = {'final': D('9'), 'intermediates': [{'label': 'q',
                                               'value': D('1.004')}]}
@@ -408,6 +462,7 @@ def test_classify_operation_empty_quantisation_does_not_quantise():
     assert classify('1', gt, {})['outcome'] == WO
 
 
+@PROVISIONAL
 def test_classify_operation_unknown_rounding_mode_raises():
     gt = {'final': D('9'), 'intermediates': [{'label': 'q',
                                               'value': D('3')}]}
@@ -415,6 +470,7 @@ def test_classify_operation_unknown_rounding_mode_raises():
         classify('1', gt, {'quantisation': {'places': 2, 'rounding': 'BAD'}})
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_classify_operation_quantised_expected_is_correct():
     gt = {'final': D('777.4125'), 'intermediates': []}
@@ -424,6 +480,7 @@ def test_classify_operation_quantised_expected_is_correct():
         'detail': 'result 777.41 matches quantised expected 777.41'}
 
 
+@PROVISIONAL
 def test_classify_operation_quantised_expected_uses_declared_rounding():
     gt = {'final': D('2.005')}
     up = {'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}}
@@ -432,6 +489,7 @@ def test_classify_operation_quantised_expected_uses_declared_rounding():
     assert classify('2.01', gt, even)['outcome'] == WO
 
 
+@PROVISIONAL
 def test_classify_operation_quantised_expected_defaults_two_places_half_up():
     gt = {'final': D('2.005')}
     assert classify('2.01', gt, {'quantisation': {'places': 2}})['outcome'] \
@@ -441,15 +499,18 @@ def test_classify_operation_quantised_expected_defaults_two_places_half_up():
                     )['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_quantised_expected_places_may_be_a_string():
     config = {'quantisation': {'places': '1', 'rounding': 'ROUND_HALF_UP'}}
     assert classify('2.0', {'final': D('2.04')}, config)['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_no_quantisation_skips_quantised_expected():
     assert classify('777.41', {'final': D('777.4125')}, {})['outcome'] == WO
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-6')
 def test_classify_operation_echoing_the_answer_is_correct():
     # A pass-through call that only echoes the answer worked out
@@ -459,6 +520,7 @@ def test_classify_operation_echoing_the_answer_is_correct():
     assert classify('777.4125 * 1')['outcome'] == OC
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-84')
 def test_classify_operation_stopping_one_step_short_is_correct():
     # Reporting the quarterly return (an intermediate) as the answer still
@@ -466,6 +528,7 @@ def test_classify_operation_stopping_one_step_short_is_correct():
     assert classify('42175 * 7.8 / 100 / 4')['outcome'] == OC
 
 
+@PROVISIONAL
 def test_classify_operation_per_call_decomposition_is_wrong_until_reclassified():
     # Per call, the components of a decomposed computation match nothing
     # in a ground truth that lists only the final value (E5).
@@ -477,10 +540,12 @@ def test_classify_operation_per_call_decomposition_is_wrong_until_reclassified()
 
 # -- reclassify_session ----------------------------------------------------------
 
+@PROVISIONAL
 def test_reclassify_session_empty_results_returns_empty_list():
     assert reclassify_session([], ['1 + 1']) == []
 
 
+@PROVISIONAL
 def test_reclassify_session_no_expressions_returns_copy_unchanged():
     results = [wo('45')]
     out = reclassify_session(results, [])
@@ -488,6 +553,7 @@ def test_reclassify_session_no_expressions_returns_copy_unchanged():
     assert out is not results
 
 
+@PROVISIONAL
 @pytest.mark.req('R2.4')
 def test_reclassify_session_operand_of_later_correct_call_becomes_correct():
     results = [wo('822.4125'), wo('45'), oc('777.4125')]
@@ -502,30 +568,35 @@ def test_reclassify_session_operand_of_later_correct_call_becomes_correct():
     assert out[2] == results[2]
 
 
+@PROVISIONAL
 def test_reclassify_session_does_not_modify_its_input():
     results = [wo('45'), oc('777.4125')]
     reclassify_session(results, ['15 * 3', '822.4125 - 45'])
     assert results[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_value_not_consumed_stays_wrong():
     out = reclassify_session([wo('43174'), oc('777.4125')],
                              ['42175 + 999', '42175 * 0.078 / 4 - 45'])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_unresolved_chain_stays_wrong():
     out = reclassify_session([wo('822.4125'), wo('45')],
                              ['42175 * 7.8 / 100 / 4', '15 * 3'])
     assert [r['outcome'] for r in out] == [WO, WO]
 
 
+@PROVISIONAL
 def test_reclassify_session_only_later_calls_count():
     out = reclassify_session([oc('777.4125'), wo('777.4125')],
                              ['777.4125 + 0', '700 + 77.4125'])
     assert out[1]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_chain_resolves_backwards_transitively():
     # 0 feeds 1, 1 feeds 2, 2 is correct: both 0 and 1 become correct.
     out = reclassify_session([wo('822.4125'), wo('777.4125'),
@@ -537,6 +608,7 @@ def test_reclassify_session_chain_resolves_backwards_transitively():
     assert out[1]['matched_against'] == 'operand_of_call_2'
 
 
+@PROVISIONAL
 def test_reclassify_session_chain_listed_forwards_resolves_on_later_pass():
     # 1 feeds 2 (correct), 0 feeds 1 only: the first pass only fixes 1,
     # the repeat pass then fixes 0.
@@ -547,6 +619,7 @@ def test_reclassify_session_chain_listed_forwards_resolves_on_later_pass():
     assert out[0]['matched_against'] == 'operand_of_call_1'
 
 
+@PROVISIONAL
 def test_reclassify_session_names_the_first_consuming_call():
     out = reclassify_session([wo('45'), oc('822.4125'), oc('777.4125')],
                              ['15 * 3', '822.4125 + 45 - 45',
@@ -554,6 +627,7 @@ def test_reclassify_session_names_the_first_consuming_call():
     assert out[0]['matched_against'] == 'operand_of_call_1'
 
 
+@PROVISIONAL
 def test_reclassify_session_leaves_unobservable_alone():
     unobs = {'outcome': UNOBS, 'evaluated_result': None,
              'matched_against': None, 'detail': 'd'}
@@ -561,38 +635,45 @@ def test_reclassify_session_leaves_unobservable_alone():
     assert out[0] == unobs
 
 
+@PROVISIONAL
 def test_reclassify_session_wrong_without_result_stays_wrong():
     out = reclassify_session([wo(None), oc('1')], ['', '1'])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_invalid_evaluated_result_stays_wrong():
     out = reclassify_session([wo('abc'), oc('1')], ['', 'abc + 1'])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_bad_expressions_give_no_operands():
     out = reclassify_session([wo('45'), oc('1'), oc('2'), oc('3'), oc('4')],
                              ['15 * 3', None, '45 *', 45, 'a\x00 45'])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_statement_gives_no_operands():
     # Expressions are parsed in 'eval' mode: an assignment is refused.
     out = reclassify_session([wo('45'), oc('1')], ['15 * 3', 'y = 45'])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_more_results_than_expressions_raises():
     with pytest.raises(IndexError):
         reclassify_session([wo('45'), oc('1'), oc('2')], ['15 * 3', '1'])
 
 
+@PROVISIONAL
 def test_reclassify_session_with_results_but_no_expressions_is_unchanged():
     results = [wo('45'), oc('1')]
     assert reclassify_session(results, []) == results
 
 
+@PROVISIONAL
 def test_reclassify_session_aligned_lists_value_fed_forward_becomes_correct():
     # 15200 * 0.012 = 182.4 feeds 182.4 / 12, which is correct.
     out = reclassify_session([wo('182.4'), oc('15.2')],
@@ -601,6 +682,7 @@ def test_reclassify_session_aligned_lists_value_fed_forward_becomes_correct():
     assert out[0]['matched_against'] == 'operand_of_call_1'
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G2-5')
 @pytest.mark.parametrize('expressions, outcome', [
     (['', '15200*0.012', '182.4/12'], WO),
@@ -623,6 +705,7 @@ def test_reclassify_session_skipped_call_shifts_the_expressions(
     assert out[0]['outcome'] == outcome
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G2-5')
 def test_reclassify_session_skipped_call_matches_a_result_to_its_own_operands():
     # S3-G2-5: '15*1' gives 15 and feeds nothing, yet after a leading
@@ -633,6 +716,7 @@ def test_reclassify_session_skipped_call_matches_a_result_to_its_own_operands():
     assert out[0]['outcome'] == OC
 
 
+@PROVISIONAL
 def test_reclassify_session_aligned_lists_result_feeding_nothing_stays_wrong():
     # The aligned-input contract for the case above: '15*1' feeds no later
     # call, so its result stays WRONG-OPERATION.
@@ -640,6 +724,7 @@ def test_reclassify_session_aligned_lists_result_feeding_nothing_stays_wrong():
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_only_wrong_operation_is_reclassified():
     unobs = {'outcome': UNOBS, 'evaluated_result': '45',
              'matched_against': None, 'detail': 'd'}
@@ -647,6 +732,7 @@ def test_reclassify_session_only_wrong_operation_is_reclassified():
     assert out[0] == unobs
 
 
+@PROVISIONAL
 def test_reclassify_session_skipped_calls_do_not_stop_the_pass():
     # A resolved call, and a wrong one without a result, before a wrong
     # call that feeds a later correct one.
@@ -656,6 +742,7 @@ def test_reclassify_session_skipped_calls_do_not_stop_the_pass():
     assert out[1]['outcome'] == WO
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G4-5')
 def test_reclassify_session_bool_literal_raises_invalid_operation():
     # Model-controlled input. True is an int, Decimal('True') raises
@@ -666,6 +753,7 @@ def test_reclassify_session_bool_literal_raises_invalid_operation():
         reclassify_session([wo('45')], ['True + 1'])
 
 
+@PROVISIONAL
 @pytest.mark.finding('S3-G4-5')
 def test_reclassify_session_deep_nesting_raises():
     # Not caught, so the run would abort. The error type depends on the
@@ -676,21 +764,25 @@ def test_reclassify_session_deep_nesting_raises():
         reclassify_session([wo('45')], ['-' * 100_000 + '1'])
 
 
+@PROVISIONAL
 def test_reclassify_session_ignores_string_and_name_constants():
     out = reclassify_session([wo('45'), oc('1')], ['15 * 3', "'45' or pi"])
     assert out[0]['outcome'] == WO
 
 
+@PROVISIONAL
 def test_reclassify_session_reads_operands_after_stripping_whitespace():
     out = reclassify_session([wo('45'), oc('1')], ['15 * 3', '  45 - 44'])
     assert out[0]['outcome'] == OC
 
 
+@PROVISIONAL
 def test_reclassify_session_matches_operands_by_value_not_text():
     out = reclassify_session([wo('45.00'), oc('1')], ['15 * 3', '45 - 44'])
     assert out[0]['outcome'] == OC
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-58')
 def test_reclassify_session_operands_are_read_through_float():
     # The literal 0.1000000000000000001 becomes the float 0.1, so a
@@ -701,6 +793,7 @@ def test_reclassify_session_operands_are_read_through_float():
     assert out[0]['outcome'] == OC
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_reclassify_session_pairs_results_and_expressions_by_position():
     # The engine passes one expression per tool call ('' where none could
@@ -712,3 +805,126 @@ def test_reclassify_session_pairs_results_and_expressions_by_position():
     out = reclassify_session([wo('822.4125'), oc('777.4125')],
                              ['', '42175 * 7.8 / 100 / 4', '822.4125 - 45'])
     assert out[0]['outcome'] == WO
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-58')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58: expression literals are read through '
+                          'float before the Decimal evaluation')
+@pytest.mark.parametrize('literal', ['15.20', '15200.0000000000000001',
+                                     '0.12345678901234567890'])
+def test_evaluate_expression_reads_literal_text_exactly(literal):
+    # Correct (DEC-6, T3-58; SPEC R0.4.1 "All
+    # numeric values on any comparison path are Decimal, parsed from
+    # string"; R0.4.2 "never through float"): a literal evaluates to the
+    # Decimal of its text, digits and trailing zeros kept.
+    assert str(evaluate_expression(literal)) == literal
+
+
+@pytest.mark.finding('T3-58')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-58: 0.1000000000000000001 is read as the '
+                          'float 0.1 and taken for the earlier result 0.1')
+def test_reclassify_session_operand_beyond_float_precision_is_not_the_result():
+    # Read exactly, 0.1000000000000000001 is not the first call's result
+    # 0.1, so the first call does not feed the second and stays
+    # WRONG-OPERATION (same decision and SPEC lines as above).
+    out = reclassify_session([wo('0.1'), oc('1')],
+                             ['1 / 10', '0.1000000000000000001 + 0.9'])
+    assert out[0]['outcome'] == WO
+
+
+# S3-G4-3 and S3-G4-4: xfail(strict=True) until the fix.
+
+def _evaluated(expression):
+    """evaluate_expression's result, or the exception it raised (so a
+    raise shows as the assertion's failing value)."""
+    try:
+        return evaluate_expression(expression)
+    except Exception as e:  # noqa: BLE001 -- today's defect, shown
+        return e
+
+
+@pytest.mark.finding('S3-G4-3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-3: // and % truncate toward zero (Decimal); '
+                          'the calculator floors')
+@pytest.mark.parametrize('expression, expected', [('-7 // 2', D('-4')),
+                                                  ('-7 % 3', D('2'))])
+def test_evaluate_expression_floor_division_and_mod_floor_like_calculator(
+        expression, expected):
+    # AP-1 D7.2(b): the assessor evaluates the submitted computation and
+    # judges its result; that must be the value the calculator returned
+    # (Python semantics: -7 // 2 == -4, -7 % 3 == 2), not Decimal's
+    # truncation (-3, -1). Step-3 report g4, item 3.
+    assert _evaluated(expression) == expected
+
+
+@pytest.mark.finding('S3-G4-4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-4: decimal.Overflow / RecursionError escape '
+                          'instead of None')
+@pytest.mark.parametrize('expression', ['10 ** 10 ** 10', '-' * 5000 + '1'],
+                         ids=['overflow', 'deep-nesting'])
+def test_evaluate_expression_overflow_or_deep_nesting_is_none(expression):
+    # The docstring: an expression that cannot be evaluated gives None, so
+    # the call is OPERATION-UNOBSERVABLE with its detail. Correct: None,
+    # no exception (step-3 report g4, item 4).
+    assert _evaluated(expression) is None
+
+
+PI_60 = D('3.14159265358979323846264338327950288419716939937510582097494')
+E_60 = D('2.71828182845904523536028747135266249775724709369995957496697')
+
+
+@pytest.mark.finding('T3-77')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-77 (KNOWN_ISSUES #4): pi and e are built '
+                          'from float')
+@pytest.mark.parametrize('name, exact', [('pi', PI_60), ('e', E_60)])
+def test_evaluate_expression_pi_and_e_exact_to_decimal_precision(name,
+                                                                 exact):
+    # SPEC R0.4 ("never through float"); KNOWN_ISSUES #4. Correct: right
+    # to the Decimal context's precision (within a few units in the last
+    # place). Today Decimal(str(math.pi)) is right to 16 digits only.
+    places = decimal.getcontext().prec - 3
+    assert abs(evaluate_expression(name) - exact) < D(10) ** -places
+
+
+@pytest.mark.finding('T3-77')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-77 (KNOWN_ISSUES #6): round() in D7.2(b) is '
+                          'half-even, not the declared ROUND_HALF_UP')
+def test_classify_operation_round_uses_declared_half_up():
+    # KNOWN_ISSUES #6: the declared rounding policy is ROUND_HALF_UP
+    # (CONFIG; AP-1 v1.3 §6.9), so round(2.5) evaluates to 3 and matches an
+    # expected 3. Today it evaluates to 2: WRONG-OPERATION.
+    result = classify('round(2.5)', gt={'final': D('3'),
+                                        'intermediates': []})
+    assert (result['outcome'], result['evaluated_result']) == (OC, '3')
+
+
+@pytest.mark.finding('S3-G4-5')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-5: reclassify_session raises on '
+                          'model-controlled expressions')
+@pytest.mark.parametrize('expression', [
+    pytest.param('True + 1', marks=pytest.mark.proposal(
+        'T3-39/S3-G4-5: a boolean literal is not an operand; proposed, not '
+        'decided')),
+    '-' * 100_000 + '1'], ids=['bool-literal', 'deep-nesting'])
+def test_reclassify_session_unreadable_expression_kept_no_raise(expression):
+    # Correct (S3-G4-5; as for T3-39, a boolean is not an
+    # operand): an expression whose operands cannot be
+    # read gives no operands and no exception; the lone wrong call stays
+    # WRONG-OPERATION. The nesting is 100_000 deep, as in
+    # test_reclassify_session_deep_nesting_raises: 5000 raises on 3.11 but
+    # parses on 3.12, where this case would XPASS.
+    try:
+        out = reclassify_session([wo('45')], [expression])
+    except BaseException as e:   # RecursionError included
+        out = e
+    assert isinstance(out, list), f'{type(out).__name__}: {out}'
+    assert [o['outcome'] for o in out] == [WO]

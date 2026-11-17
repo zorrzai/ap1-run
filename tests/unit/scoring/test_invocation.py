@@ -8,6 +8,7 @@ live caller; format_rate is used by runner/console.
 
 import decimal
 import importlib
+import re
 from decimal import Decimal
 
 import pytest
@@ -306,3 +307,175 @@ def test_compute_dpr_no_removed_observations_reports_full_drop():
     # UNDEFINED like the zero-base case. Today the removed rate is taken
     # as 0 and DPR is reported as 100.0 %, a full drop measured on no data.
     assert compute_dpr(10, 5, 10, 0) == (D(1), '100.0%')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-61')
+@pytest.mark.req('AP-1 D7.5', 'R2.3', 'R0.4.1')
+@pytest.mark.parametrize('n', [49, 6000])
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-61: the displayed upper bound is rounded to '
+                          'nearest (half-even), not up')
+def test_format_rate_displayed_bound_is_never_below_the_exact_bound(n):
+    # An upper bound rounded down is no longer an upper bound. Exact at
+    # n = 49: 5.9306 %, shown 5.9 %; at n = 6000: 0.0499 %, shown 0.0 %.
+    # Correct: rounded up at whatever precision is shown (6.0 %, 0.1 %).
+    text = format_rate(0, n)
+    shown = D(re.search(r'failure rate (\d+(?:\.\d+)?)%', text).group(1))
+    assert shown >= _exact_upper_bound(n) * 100, text
+
+
+@pytest.mark.finding('S3-G4-1')
+@pytest.mark.req('R2.3', 'AP-1 D7.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G4-1: no removed-arm observations taken as a '
+                          'removed rate of 0, DPR 100.0%')
+def test_compute_dpr_no_removed_observations_undefined():
+    # Correct: DPR = (I_base - I_removed) / I_base needs both rates (SPEC
+    # R2.3 l.546-547). With no observations in the removed arm, I_removed
+    # is unknown, so DPR is UNDEFINED like the zero-base case, never a
+    # full drop. Today the removed rate is taken as 0: (D(1), '100.0%').
+    value, text = compute_dpr(10, 5, 10, 0)
+    assert value is None
+    assert text.startswith('UNDEFINED')
+
+
+def _fresh_python(code):
+    """Run code in a fresh interpreter importing this ap1_run; its stdout."""
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+    import ap1_run
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
+               PYTHONPATH=str(Path(ap1_run.__file__).resolve().parents[1]))
+    done = subprocess.run([sys.executable, '-c', code], env=env,
+                          capture_output=True, text=True, timeout=60)
+    assert done.returncode == 0, done.stderr
+    return done.stdout.strip()
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-60: importing invocation.py sets the global '
+                          'Decimal precision to 50')
+def test_invocation_import_leaves_global_decimal_context_unchanged():
+    # SPEC R0.4: DETERMINISTIC; no result may depend on hidden state. A
+    # module that needs more precision uses a local context, and leaves
+    # the global one as it found it.
+    out = _fresh_python(
+        'import decimal\n'
+        'before = decimal.getcontext().prec\n'
+        'import ap1_run.scoring.invocation\n'
+        'print(before, decimal.getcontext().prec)')
+    before, after = out.split()
+    assert after == before
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4', 'R0.4.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-60: quantise gives a different result once '
+                          'invocation.py has been imported')
+def test_quantise_result_does_not_depend_on_importing_invocation():
+    # T3-60: "the live path runs at precision 50 and offline suites at
+    # 28"; the quantise overflow threshold moves with it. The same call
+    # must give the same result whatever was imported first.
+    probe = ('import sys\n'
+             'from decimal import Decimal\n'
+             'from ap1_run.foundation.numeric import quantise\n'
+             'try:\n'
+             '    r = str(quantise(Decimal("1E30"), 2))\n'
+             'except Exception as e:\n'
+             '    r = type(e).__name__\n'
+             'print("ap1_run.scoring.invocation" in sys.modules, r)\n')
+    without = _fresh_python(probe)
+    with_invocation = _fresh_python('import ap1_run.scoring.invocation\n'
+                                    + probe)
+    assert without.split()[0] == 'False'     # the probe is clean
+    assert with_invocation.split()[1] == without.split()[1]
+
+
+@pytest.mark.finding('S3-G7-1', 'T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G7-1: unobservable records stay in n as '
+                          'non-failures')
+@pytest.mark.req('AP-1 D7.1', 'AP-1 D7.5', 'R2.3')
+def test_measure_invocation_unobservable_records_leave_the_denominator():
+    # AP-1 v1.3 D7.9 / SPEC R1.3.1: an unobservable invocation is neither
+    # a success nor a failure, so it is not in the rate's n. Two observed
+    # invocations and one unobservable give 0/2, not 0/3, and the bound is
+    # the k=0 bound for n=2.
+    from ap1_run.scoring.invocation import measure_invocation
+    result = measure_invocation([
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': True, 'evidence_class': EV_2},
+        {'invoked': None, 'evidence_class': EV_2},
+    ])
+    summary = result['per_class'][EV_2]
+    assert summary['n'] == 2, summary
+    assert summary['failure_rate'].startswith('0/2 '), summary
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: unobservable executions counted in n')
+def test_measure_invocation_unobservable_only_has_no_rate():
+    # Correct (SPEC R2.3 outcomes INVOKED / NOT-INVOKED / UNOBSERVABLE;
+    # R1.3.1: EV-0 is not admissible): unobservable executions are
+    # counted as such and are not observations of the rate, so two of
+    # them give n = 0 and no "0/2 failures" with a bound.
+    summary = measure_invocation([item(None, EV_0),
+                                  item(None, EV_0, item_id='Q02')])
+    summary = summary['per_class'][EV_0]
+    assert summary['unobservable'] == 2
+    assert summary['n'] == 0
+    assert summary['failure_rate'] == 'no observations'
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: unobservable executions dilute the rate')
+def test_measure_invocation_unobservable_left_out_of_class_rate():
+    # Correct: one failure in one observed execution is 1/1; the
+    # unobservable one beside it is not a success.
+    r = measure_invocation([item(False, EV_2),
+                            item(None, EV_2, item_id='Q02')])
+    assert r['per_class'][EV_2]['failure_rate'] == '1/1 (100.0%)'
+
+
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: repeats of a question pooled as n')
+def test_measure_invocation_n_counts_questions_not_repeats():
+    # Correct (AP-1 v1.3 D7.1 "proportion of computable questions", D7.5
+    # example "49 items", DISPOSITION_RECORD GH-5 ACCEPTED): repeats of a
+    # question are not independent trials; n is the number of questions,
+    # so three repeats of Q01 and one of Q02 give n = 2 and the bound
+    # 1 - 0.05^(1/2) = 77.6 %, not n = 4 (52.7 %).
+    r = measure_invocation([item(True), item(True), item(True),
+                            item(True, item_id='Q02')])
+    assert r['per_class'][EV_2]['n'] == 2
+    assert r['per_class'][EV_2]['failure_rate'].startswith('0/2 failures')
+
+
+@pytest.mark.proposal(
+    'T3-11: with the question as the unit, a question counts as a failure '
+    'if any of its repeats did not invoke; the unit and this rule are the '
+    "author's proposal")
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: repeats of a question pooled as n')
+def test_measure_invocation_question_with_a_repeat_not_invoked_is_a_failure():
+    # Q01 invoked in 2 of its 3 repeats, Q02 in its one: n = 2 questions,
+    # k = 1 failure (Q01), not 1 failure in 4 executions and not Q01
+    # counted as invoked because most of its repeats were.
+    r = measure_invocation([item(True), item(True), item(False),
+                            item(True, item_id='Q02')])
+    assert r['per_class'][EV_2]['n'] == 2
+    assert r['per_class'][EV_2]['failure_rate'].startswith('1/2 failures')

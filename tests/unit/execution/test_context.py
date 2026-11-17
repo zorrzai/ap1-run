@@ -227,3 +227,76 @@ def test_tracking_context_non_subscript_read_not_recorded(read):
     tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
     read(tc['savings'])
     assert tc.accessed_fields() == set()
+
+
+# What the model is shown for each fixture field: the label a reader of
+# the prompt sees. Written out, not rebuilt from the formatter's rule.
+SHOWN_LABELS = {'annual_rate': 'Annual Rate', 'balance': 'Balance',
+                'credit_limit': 'Credit Limit', 'direction': 'Direction',
+                'min_payment': 'Min Payment', 'monthly_fee': 'Monthly Fee',
+                'reward_rate': 'Reward Rate'}
+
+
+def _shown_blocks(shown, fixture):
+    """{account id: the lines shown under that account's name}."""
+    names = {f"{a['name']}:": a['id'] for a in fixture['accounts']}
+    blocks, current = {}, None
+    for line in shown.split('\n'):
+        if line.strip() in names:
+            current = names[line.strip()]
+            blocks[current] = []
+        elif current is not None:
+            blocks[current].append(line)
+    return blocks
+
+
+@pytest.mark.req('R0.2', 'R2.4')
+def test_shown_context_and_delivered_context_agree_on_the_example():
+    # T3-56: no test checked that what the model is shown and what the
+    # provenance resolves against are the same values. For every shipped
+    # item, each field of the delivered context is shown in its own
+    # account's block, on the line with that field's label, with the same
+    # value. Passes today; it guards a change to either function.
+    import json
+    from pathlib import Path
+    example = Path(__file__).resolve().parents[3] / 'example'
+    fixture = json.loads((example / 'fixture.json').read_text('utf-8'))
+    items = json.loads((example / 'questions.json').read_text('utf-8'))
+    bad = []
+    for item in items['items']:
+        blocks = _shown_blocks(format_fixture_context(fixture, item),
+                               fixture)
+        ctx = build_delivered_context(fixture, item['source_accounts'])
+        for account, fields in ctx.items():
+            for field, value in fields.items():
+                label = SHOWN_LABELS[field]
+                if not any(line.strip().startswith(f'{label}:')
+                           and line.strip().split(':', 1)[1].strip() == value
+                           for line in blocks.get(account, [])):
+                    bad.append((item['id'], account, field, value))
+    assert bad == []
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-8')
+@pytest.mark.req('R3.1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-8: TrackingAccount records __getitem__ only')
+@pytest.mark.parametrize('read', [
+    lambda acct: acct.get('annual_rate'),
+    lambda acct: list(acct.items()),
+    lambda acct: list(acct.values()),
+    lambda acct: acct.copy()['annual_rate'],
+    lambda acct: dict(acct)['annual_rate'],
+    lambda acct: {**acct}['annual_rate'],
+], ids=['get', 'items', 'values', 'copy', 'dict', 'unpack'])
+def test_tracking_context_non_subscript_read_recorded(read):
+    # Correct (T3-8; R3.1 via source_fields_check: an undeclared read is
+    # refused with the field named): every path that hands out a field's
+    # value records the field. Each read here exposes annual_rate, so it
+    # must be among the accessed fields (a path that exposes every value,
+    # like .items(), may record every field). Today nothing is recorded.
+    tc = TrackingContext({'savings': {'balance': '1', 'annual_rate': '2'}})
+    read(tc['savings'])
+    assert 'savings.annual_rate' in tc.accessed_fields()

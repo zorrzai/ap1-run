@@ -10,6 +10,14 @@ from ap1_run.runner.summary import (
 )
 
 
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
+
 def executed(item_id='Q01', condition='base', repeat=1, **fields):
     record = {'item_id': item_id, 'condition': condition, 'repeat': repeat,
               'status': 'EXECUTED'}
@@ -116,6 +124,7 @@ EMPTY = {
 }
 
 
+@PROVISIONAL
 def test_summary_of_nothing():
     assert build_summary([], []) == EMPTY
 
@@ -171,6 +180,7 @@ def test_summary_invocation_figures_without_condition():
         'd7_invocation_': {'failures': 0, 'n': 1, 'rate': '1/1'}}
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-63')
 def test_summary_operation_correctness_and_wrong_operation_split():
     def oc(*outcomes):
@@ -213,6 +223,7 @@ def prov(outcome, *resolutions, originated=()):
             'originated_operands': list(originated)}
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16', 'T3-5')
 def test_summary_operand_provenance_counts():
     results = [
@@ -281,6 +292,7 @@ def test_consistency_checks_rows_after_a_non_executed_row():
         ])
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-1', 'T3-11', 'T3-63')
 def test_summary_counts_accumulate_after_non_executed_rows():
     def oc(outcome):
@@ -421,3 +433,153 @@ def test_reproducibility_with_the_real_classifier_below_minimum():
 
 def test_reproducibility_of_nothing():
     assert classify_reproducibility({}, 3, None) == {}
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-34')
+@pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-34: quantisation findings from provenance are '
+                          'dropped from the summary')
+def test_summary_collects_quantisation_findings():
+    # AP-1 v1.3 D7.2(a)(iii): "The quantised case is grounded and records a
+    # quantisation finding"; SPEC R3.3: the report contains "quantisation
+    # findings". report.py §11 reads summary['quantisation_findings']
+    # (item_id, operand, finding); build_summary never sets it.
+    summary = build_summary([executed('Q07', provenance_results=[{
+        'outcome': 'OPERANDS-GROUNDED',
+        'operand_resolutions': [{'operand_value': '274.14', 'step': 3,
+                                 'resolution': 'quantised_intermediate',
+                                 'quantisation_finding': True}],
+        'originated_operands': [],
+        'quantisation_findings': [{
+            'operand': '274.14', 'matched_intermediate': 'monthly_return',
+            'expression': '274.14 - 15'}]}])], [])
+    found = summary.get('quantisation_findings', [])
+    assert [(f.get('item_id'), f.get('operand')) for f in found] == [
+        ('Q07', '274.14')]
+
+
+@pytest.mark.finding('T3-34')
+@pytest.mark.req('R2.4', 'R3.3')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-34: near-miss findings from provenance are '
+                          'dropped from the summary')
+def test_summary_collects_near_miss_findings():
+    # trace.py records a near_miss_finding on an operand equal to a prior
+    # return only after quantisation (ORIGINATED with a finding). report.py
+    # §11 lists summary['near_miss_findings']; build_summary never sets it.
+    summary = build_summary([executed('Q01', provenance_results=[{
+        'outcome': 'OPERAND-ORIGINATED',
+        'operand_resolutions': [{
+            'operand_value': '2.17', 'step': 5, 'resolution': 'originated',
+            'near_miss_finding': {'prior_return': '2.1714285714285713',
+                                  'quantised_to': '2.17', 'operand': '2.17',
+                                  'grounded': False}}],
+        'originated_operands': [{'value': '2.17', 'literal': '2.17',
+                                 'expression': '2.17 * 7',
+                                 'resolution': 'originated'}],
+        'quantisation_findings': []}])], [])
+    found = summary.get('near_miss_findings', [])
+    assert len(found) == 1 and '2.17' in str(found[0]) \
+        and 'Q01' in str(found[0])
+
+
+@pytest.mark.finding('T3-63')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-63: a WRONG-OPERATION call in an UNMEASURABLE '
+                          'execution is counted as "item answer incorrect"')
+def test_summary_wrong_operation_in_unmeasurable_execution_not_item_wrong():
+    # SPEC R2.0 step 0: an unreadable response is UNMEASURABLE, "never
+    # scored as incorrect. The runner does not conclude anything about a
+    # response it could not read." So its WRONG-OPERATION calls are not
+    # counted under "Item answer incorrect" (report.md §7, console 3i).
+    results = [executed(figure_outcome='UNMEASURABLE',
+                        operation_correctness=[{'outcome': 'WRONG-OPERATION'}])]
+    s = build_summary(results, [])
+    assert s['wrong_operation_split']['item_wrong'] == 0
+
+
+@pytest.mark.finding('T3-63')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-63: a WRONG-OPERATION call in an AUTO-NO-FIGURE '
+                          'execution is counted as "item answer incorrect"')
+def test_summary_wrong_operation_in_no_figure_execution_not_item_wrong():
+    # An AUTO-NO-FIGURE execution released no figure: D1 scores it
+    # NO-FIGURE, not INCORRECT (scoring/accuracy.py; SPEC R2.0 step 4 keeps
+    # AUTO-NO-FIGURE a separate automatic outcome), so it has no "item
+    # answer" to be incorrect. Only executions D1 scores INCORRECT belong in
+    # "Item answer incorrect".
+    results = [executed(figure_outcome='AUTO-NO-FIGURE',
+                        operation_correctness=[{'outcome': 'WRONG-OPERATION'}])]
+    s = build_summary(results, [])
+    assert s['wrong_operation_split']['item_wrong'] == 0
+
+
+@pytest.mark.finding('T3-38')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-38: NOT-INVOKED with a call to an unoffered '
+                          'tool is treated as FATAL')
+def test_consistency_not_invoked_with_call_to_other_tool_accepted():
+    # Correct (SPEC R0.3: calls not matching the declared required
+    # operation are recorded and reported but do not affect D7.1; R2.3:
+    # NOT-INVOKED is legitimate): the row score_execution builds for an
+    # execution whose one call was to "python" passes the check. The
+    # invariant to keep is about calls to the required operation; if the
+    # fix adds a field for that to the row, add it here too.
+    try:
+        verify_invocation_consistency([executed(
+            invocation_outcome='NOT-INVOKED', tool_calls_count=1,
+            evidence_class='EV-2 PLATFORM-STRUCTURAL')])
+    except RuntimeError as e:
+        raise AssertionError(f'raised: {e}') from e
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: EV-0 executions counted as INVOKED in D7.1')
+def test_summary_d71_ev0_execution_not_counted():
+    # Correct (SPEC R2.3, R1.3.1; AP-1 v1.3 D7.7): an EV-0 execution
+    # (outcome None, UNOBSERVABLE) is neither a success nor a failure, so
+    # the base D7.1 figure rests on the one observed execution: n = 1.
+    s = build_summary([
+        executed('Q01', evidence_class='EV-2 PLATFORM-STRUCTURAL',
+                 invocation_outcome='INVOKED'),
+        executed('Q02', evidence_class='EV-0 UNOBSERVABLE',
+                 invocation_outcome=None),
+    ], [])
+    base = s['invocation_figures']['d7_invocation_base']
+    assert (base['failures'], base['n']) == (0, 1)
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: an all-EV-0 condition prints n/n')
+def test_summary_d71_all_ev0_has_no_observations():
+    # Correct: a condition with only EV-0 executions has no D7.1
+    # observations, so no figure with n > 0 (which §5 would print as
+    # "n/n" with a bound).
+    s = build_summary([
+        executed(q, evidence_class='EV-0 UNOBSERVABLE',
+                 invocation_outcome=None) for q in ('Q01', 'Q02')], [])
+    figures = s['invocation_figures']
+    assert all(f['n'] == 0 for f in figures.values()), figures
+
+
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: D7.1 n pools repeats')
+def test_summary_d71_n_counts_questions_not_repeats():
+    # Correct (AP-1 v1.3 D7.1 "proportion of computable questions",
+    # DISPOSITION_RECORD GH-5 ACCEPTED, T3 review T3-11): three repeats
+    # of two questions, all invoked, are n = 2 questions, not 6.
+    s = build_summary([
+        executed(q, repeat=rep, evidence_class='EV-2 PLATFORM-STRUCTURAL',
+                 invocation_outcome='INVOKED')
+        for q in ('Q01', 'Q02') for rep in (1, 2, 3)], [])
+    base = s['invocation_figures']['d7_invocation_base']
+    assert (base['failures'], base['n']) == (0, 2)

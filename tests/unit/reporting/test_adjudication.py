@@ -2,6 +2,7 @@
 records get sheets, and what each sheet says."""
 
 import re
+from pathlib import Path
 
 import pytest
 
@@ -9,6 +10,14 @@ from ap1_run.reporting import adjudication
 from ap1_run.reporting.adjudication import (
     ADJUDICATION_REASONS, RUBRIC_TABLE, generate_sheets,
 )
+
+
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
 
 
 CONFIG = {'ap1_version': '1.3', 'ap1_version_doi': '10.5281/zenodo.1'}
@@ -368,6 +377,7 @@ def test_sheet_without_tool_calls_says_so_and_defaults_unknown():
         '\n\n**Invocation outcome:** `unknown`\n')
 
 
+@PROVISIONAL
 def test_sheet_operation_correctness_listed():
     text = one_sheet(operation_correctness=[
         {'outcome': 'WRONG-OPERATION', 'reason': 'divides by 10'}, {}])
@@ -494,6 +504,7 @@ def coverage(repeat, outcome='PARTIALLY-GOVERNED', item_id='Q01',
     return rc
 
 
+@PROVISIONAL
 def test_sheet_coverage_partially_governed_listed_with_figures():
     text = one_sheet(coverage_records=[
         coverage(1, finding='430.75 not returned',
@@ -507,11 +518,13 @@ def test_sheet_coverage_partially_governed_listed_with_figures():
         '\n')
 
 
+@PROVISIONAL
 def test_sheet_coverage_missing_fields_read_question_mark_and_blank():
     text = one_sheet(coverage_records=[{'outcome': 'PARTIALLY-GOVERNED'}])
     assert '\n- Repeat ?: \n' in text
 
 
+@PROVISIONAL
 def test_sheet_coverage_only_governed_has_no_finding():
     text = one_sheet(coverage_records=[
         coverage(1, 'GOVERNED-RELEASE'), coverage(2, 'COVERAGE-UNOBSERVABLE')])
@@ -593,3 +606,227 @@ def test_sheet_sections_in_order():
     assert order == sorted(order)
     assert text.startswith(
         '\n## Item 1: Q01 (Condition: base) \u2014 Scorer 1\n\n### Question')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+def sheets_list(text):
+    """The sheets of a generate_sheets document, one string each."""
+    return re.split(r'\n(?=## Item )', text)[1:]
+
+
+@pytest.mark.finding('T3-9')
+@pytest.mark.req('R3.2', 'AP-1 §6.8')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-9: a transport-failed record given an '
+                          'ADJUDICATE outcome gets a sheet')
+def test_sheets_transport_failure_record_never_gets_a_sheet():
+    # A record with no response is UNMEASURED (AP-1 v1.3 §6.8 "Response
+    # statuses, distinct from outcomes"), whatever figure outcome a join
+    # gave it: no sheet. Today the ADJUDICATE check comes first and the
+    # sheet shows "[no response received]".
+    text = sheets_for([record(error_state='TRANSPORT_FAILURE: HTTP 500',
+                              response_received=None)])
+    assert 'Total items requiring adjudication: 0' in text
+    assert '[no response received]' not in text
+
+
+@pytest.mark.finding('T3-37')
+@pytest.mark.req('R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason="T3-37: a sheet's coverage finding lists every "
+                          'repeat of the item and condition')
+def test_sheets_coverage_finding_is_the_sheets_own_repeat():
+    # Correct (SPEC R3.2; T3-9): coverage joins on the
+    # repeat too. Repeat 1 was GOVERNED-RELEASE, so its two sheets carry
+    # no Release Coverage Finding; repeat 2's two sheets carry its own.
+    text = sheets_for(
+        [record(repeat=1), record(repeat=2)],
+        release_coverage_results=[
+            coverage(1, 'GOVERNED-RELEASE'),
+            coverage(2, finding='rep 2 ungoverned')])
+    assert [('PARTIALLY-GOVERNED' in s, 'rep 2 ungoverned' in s)
+            for s in sheets_list(text)] == [
+        (False, False), (False, False), (True, True), (True, True)]
+
+
+@pytest.mark.finding('T3-37')
+@pytest.mark.req('R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-37: a sheet does not say which repeat it is')
+def test_sheets_each_sheet_names_its_repeat():
+    # Correct: a sheet is for one execution and says which repeat it is,
+    # so a scorer's mark can be joined back to it. Today the header names
+    # the item and condition only.
+    text = sheets_for([record(repeat=3), record(repeat=7)])
+    headers = [s.splitlines()[0] for s in sheets_list(text)]
+    assert [bool(re.search(r'\b[Rr]epeat\W{0,3}%d\b' % n, h))
+            for h, n in zip(headers, (3, 3, 7, 7))] == [True] * 4, headers
+
+
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-36: every sheet header prints the arm '
+                          '(condition)')
+def test_sheets_do_not_name_the_arm():
+    # AP-1 v1.3 §13.8: "Two scorers, blind to arm identity where the
+    # response text permits". The arm (instructed or instruction-removed)
+    # is the D7.1b contrast being measured; the sheet must not print it.
+    # Today: "## Item 1: Q01 (Condition: instruction_removed) — Scorer 1".
+    text = sheets_for([record(condition='instruction_removed', arm_id=
+                              'instruction_removed'),
+                       record(condition='base', arm_id='base')])
+    assert len(sheets_list(text)) == 4
+    found = [w for w in ('instruction_removed', 'Condition')
+             if w in text] + re.findall(r'\bbase\b', text)
+    assert found == []
+
+
+T3_36_DESIGN = (
+    "T3-36: generate_sheets(..., order_seed=<text>) orders the sheets by a "
+    "seeded shuffle (the seal hash in a run), and "
+    "adjudication.sheet_key(<same arguments>) returns the private "
+    "{sheet number: (item_id, condition, repeat)} key for joining back; "
+    "the API and the design are the author's proposal")
+NEW_API = (TypeError, AttributeError, AssertionError)
+
+
+def _six_items_base_first():
+    """Six items, each run base first (as every run is); each response
+    carries a marker the sheet shows verbatim, so a test can read the arm
+    of a sheet without the sheet naming it."""
+    items = [{'id': f'Q0{i}', 'category': 'interest',
+              'text': f'Question {i}?', 'source_accounts': ['savings']}
+             for i in range(1, 7)]
+    records = [record(item_id=q['id'], condition=arm, arm_id=arm,
+                      response_received=f'ARM-{arm.upper()}-{q["id"]}')
+               for q in items for arm in ('base', 'instruction_removed')]
+    return items, records
+
+
+def _scorer1_arms(text):
+    return [re.search(r'ARM-(BASE|INSTRUCTION_REMOVED)-Q0\d', sheet)
+            .group(1) for sheet in sheets_list(text)
+            if re.search(r'Scorer 1\b', sheet.split('\n', 1)[0])]
+
+
+@pytest.mark.proposal(T3_36_DESIGN)
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=NEW_API,
+                   reason='T3-36: sheets follow the transcript order; there '
+                          'is no order_seed (new API)')
+def test_sheets_order_is_seeded_and_does_not_follow_the_arm():
+    # AP-1 v1.3 §13.8, blind to arm identity: removing the arm's name is
+    # not enough if the order shows it. The order is a function of a seed
+    # (the same seed gives the same sheets, so they can be reproduced),
+    # and across seeds the arm at each scorer-1 position is not
+    # predictable: over 60 seeds, every position holds the base arm
+    # between 20 % and 80 % of the time. A fixed pattern (the transcript
+    # order, BBII..., grouping by arm) fails; a seeded shuffle passes.
+    # Seeds are fixed, so the test is deterministic.
+    items, records = _six_items_base_first()
+    qs = questions(*items)
+    first = sheets_list(sheets_for(records, qs=qs, order_seed='seed-0'))
+    assert first == sheets_list(sheets_for(records, qs=qs,
+                                           order_seed='seed-0'))
+    sequences = [_scorer1_arms(sheets_for(records, qs=qs,
+                                          order_seed=f'seed-{n}'))
+                 for n in range(60)]
+    assert all(len(seq) == 12 for seq in sequences)
+    base_share = [sum(seq[pos] == 'BASE' for seq in sequences) / 60
+                  for pos in range(12)]
+    assert all(0.2 <= share <= 0.8 for share in base_share), base_share
+
+
+@pytest.mark.proposal(T3_36_DESIGN)
+@pytest.mark.finding('T3-36')
+@pytest.mark.req('AP-1 §13.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=NEW_API,
+                   reason='T3-36: no sheet-to-arm key (new API: '
+                          'adjudication.sheet_key)')
+def test_sheet_key_joins_every_sheet_back_to_its_arm():
+    # The scorers get the sheets; the key stays with the operator. For
+    # every sheet, the key's (item, condition, repeat) is the record the
+    # sheet shows (read from the response marker), for every seed tried.
+    items, records = _six_items_base_first()
+    qs = questions(*items)
+    for seed in ('seed-0', 'seed-1', 'seed-2'):
+        text = sheets_for(records, qs=qs, order_seed=seed)
+        key = adjudication.sheet_key(records, qs, fixture(), CONFIG,
+                                     order_seed=seed)
+        sheets = sheets_list(text)
+        assert sorted(key) == list(range(1, len(sheets) + 1)), key
+        for number, sheet in enumerate(sheets, start=1):
+            item_id, condition, _ = key[number]
+            assert f'ARM-{condition.upper()}-{item_id}' in sheet, \
+                (seed, number, key[number])
+
+
+@pytest.mark.finding('T3-13')
+@pytest.mark.req('AP-1 §6.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-13: the sheet omits the D7.2(a) result the '
+                          '§6.8 composition rule needs')
+def test_sheet_shows_d72a_operand_result():
+    # AP-1 v1.3 §6.8 Composition: "Where a computed answer rests on an
+    # originated operand (D7.2(a) = OPERAND-ORIGINATED), the answer-level
+    # outcome is ORIGINATED". A scorer applying it needs the D7.2(a)
+    # result and the originated operands (SPEC R3.2: everything a scorer
+    # needs). The record carries them (engine provenance_results); the
+    # sheet shows operation correctness only.
+    text = one_sheet(provenance_results=[{
+        'outcome': 'OPERAND-ORIGINATED',
+        'operand_resolutions': [
+            {'operand_value': '10.5', 'step': 5, 'resolution': 'originated'},
+            {'operand_value': '7.3', 'step': 5, 'resolution': 'originated'}],
+        'originated_operands': [
+            {'value': '10.5', 'literal': '10.5', 'expression': '10.5 - 7.3',
+             'resolution': 'originated'},
+            {'value': '7.3', 'literal': '7.3', 'expression': '10.5 - 7.3',
+             'resolution': 'originated'}],
+        'quantisation_findings': []}])
+    assert ('D7.2(a)' in text, 'OPERAND-ORIGINATED' in text,
+            '10.5' in text and '7.3' in text) == (True, True, True)
+
+
+# T3-82: the sheet abridges two of AP-1 v1.3 §6.8's definitions and omits
+# its composition rule. The rubric's own gap (no outcome for a grounded
+# answer from the wrong formula) is the standard's, and is not tested.
+
+AP1_TEXT = (Path(__file__).resolve().parents[3] / 'reference'
+            / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
+
+
+def _plain(text):
+    return re.sub(r'\s+', ' ', text.replace('**', '')).strip()
+
+
+def _ap1_section_6_8():
+    text = AP1_TEXT.read_text(encoding='utf-8')
+    start = text.index('6.8 Outcome vocabulary')
+    return text[start:text.index('6.9 Quantisation', start)]
+
+
+@pytest.mark.finding('T3-82')
+@pytest.mark.req('AP-1 §6.8', 'R3.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-82: the sheet abridges the MODEL-DECLINED and '
+                          'WRONG-SCOPE definitions and omits the composition '
+                          'rule')
+def test_sheet_rubric_is_ap1_section_6_8_in_full():
+    # AP-1 v1.3 §6.8, read from reference/ (not from the code): every
+    # outcome's definition, as published, and the Composition rule are on
+    # the sheet a scorer marks.
+    section_6_8 = _ap1_section_6_8()
+    definitions = re.findall(r'^\| \*\*([A-Z-]+)\*\* \| (.+) \|$',
+                             section_6_8, re.M)
+    assert len(definitions) == 6, definitions
+    composition = re.search(r'\*\*Composition\.\*\* (.+)', section_6_8)
+    sheet = _plain(one_sheet())
+    missing = [name for name, text in definitions
+               if _plain(text) not in sheet]
+    if _plain(composition.group(1)) not in sheet:
+        missing.append('Composition')
+    assert missing == []

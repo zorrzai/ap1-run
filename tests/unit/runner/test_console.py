@@ -4,6 +4,14 @@ import pytest
 
 from ap1_run.runner.console import print_run_report, print_scoring_report
 
+
+# DEC-5: D7.2(b) operation correctness, release coverage and sign inversion
+# have no SPEC section, so the tests below that show their results are
+# provisional (the code is the definition for now). Strict xfails are not.
+PROVISIONAL = pytest.mark.provisional(
+    'DEC-5: shows D7.2(b) operation-correctness, release-coverage or '
+    'sign-inversion results; the code is the provisional definition')
+
 RULE = '=' * 60
 
 
@@ -27,6 +35,7 @@ def run_report(capsys, all_results, conditions=('base',), **lists):
 HEADER = f'\n{RULE}\nSMOKE TEST REPORT\n{RULE}\n\nDISCLAIMER TEXT\n\n'
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-80')
 def test_run_report_with_no_results(capsys):
     assert run_report(capsys, [], conditions=['base', 'instruction_removed']) \
@@ -44,7 +53,7 @@ def test_run_report_with_no_results(capsys):
             '    failure rate: no observations\n'
             '  instruction_removed: invoked=0 not_invoked=0 n=0\n'
             '    failure rate: no observations\n'
-            # F3: a literal backslash-n, pinned as it is today
+            # T3-80: a literal backslash-n, pinned as it is today
             '\\n3h2. D7.3 TRANSCRIPTION:\n'
             '  TRANSCRIBED-EXACT: 0\n'
             '  TRANSCRIBED-ALTERED: 0\n'
@@ -90,6 +99,7 @@ RESULTS = [
 ]
 
 
+@PROVISIONAL
 def test_run_report_with_results(capsys):
     out = run_report(
         capsys, RESULTS, conditions=['base', 'instruction_removed'],
@@ -201,6 +211,7 @@ PROVENANCE = (
     '  OPERAND-ORIGINATED: 4\n')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_full(capsys):
     d1 = {'auto_scored_n': 50, 'adjudicated_n': 10, 'correct': 40,
@@ -224,6 +235,7 @@ def test_scoring_report_full(capsys):
         '  UNMEASURED: 1\n' + PROVENANCE)
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_defaults_when_values_are_missing(capsys):
     print_scoring_report({'n': 0}, {}, None, {})
@@ -248,6 +260,7 @@ def test_scoring_report_defaults_when_values_are_missing(capsys):
         '  OPERAND-ORIGINATED: 0\n')
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-16')
 def test_scoring_report_without_d1_summary(capsys):
     print_scoring_report({}, {}, None, SUMMARY)
@@ -256,6 +269,7 @@ def test_scoring_report_without_d1_summary(capsys):
         '\n3k. D2 REPRODUCIBILITY:\n' + PROVENANCE)
 
 
+@PROVISIONAL
 @pytest.mark.finding('T3-63')
 def test_run_report_single_execution(capsys):
     # Thresholds at one: one scored figure, one execution in a condition,
@@ -274,3 +288,94 @@ def test_run_report_single_execution(capsys):
         '      route divergence (item answer correct):      0\n'
         '      item answer incorrect:                       0\n'
         '      item answer undetermined (adjudicated):      1\n')
+
+
+# --- Step 4: correct behaviour (failing until fixed) ---
+
+@pytest.mark.finding('T3-63')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-63: the console counts WRONG-OPERATION calls in '
+                          'UNMEASURABLE and AUTO-NO-FIGURE executions as '
+                          '"item answer incorrect"')
+def test_run_report_wrong_operation_in_unreadable_or_no_figure_not_item_wrong(
+        capsys):
+    # SPEC R2.0 step 0 (an UNMEASURABLE response is never scored incorrect)
+    # and D1's own vocabulary (AUTO-NO-FIGURE scores NO-FIGURE, not
+    # INCORRECT): neither execution has an incorrect item answer.
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'UNMEASURABLE',
+                 operation_correctness=[{'outcome': 'WRONG-OPERATION'}]),
+        executed('Q02', 'base', 1, 'AUTO-NO-FIGURE',
+                 operation_correctness=[{'outcome': 'WRONG-OPERATION'}])])
+    [line] = [x for x in out.splitlines() if 'item answer incorrect' in x]
+    assert line.split()[-1] == '0'
+
+
+@pytest.mark.proposal(
+    'T3-80: the 3h2 heading laid out like the others; a presentation '
+    'choice')
+@pytest.mark.finding('T3-80')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-80: section 3h2 prints a literal backslash-n')
+def test_run_report_section_3h2_heading_starts_after_a_blank_line(capsys):
+    # Correct (T3-80): the literal "\n" is fixed; 3h2 is laid out like
+    # every other section heading.
+    out = run_report(capsys, [], conditions=['base'])
+    assert '\\n' not in out
+    assert '    failure rate: no observations\n\n3h2. D7.3 TRANSCRIPTION:\n' \
+        in out
+
+
+def section(out, label):
+    start = out.index(f'\n{label}. ')
+    end = out.find('\n\n3', start + 1)
+    return out[start:end if end > 0 else None]
+
+
+@pytest.mark.finding('T3-1')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-1: EV-0 executions counted in console 3h n')
+def test_run_report_3h_ev0_execution_not_in_rate(capsys):
+    # Correct (SPEC R2.3, R1.3.1): the EV-0 execution (outcome None) is
+    # not an observation of the rate; base is 0 failures in 1, not in 2.
+    out = run_report(capsys, [
+        executed('Q01', 'base', 1, 'AUTO-MATCH', invocation_outcome='INVOKED',
+                 evidence_class='EV-2 PLATFORM-STRUCTURAL'),
+        executed('Q02', 'base', 1, 'AUTO-MATCH', invocation_outcome=None,
+                 evidence_class='EV-0 UNOBSERVABLE')])
+    text = section(out, '3h')
+    assert 'n=2' not in text and '0/2' not in text, text
+    assert '0/1 failures' in text, text
+
+
+@pytest.mark.proposal(
+    'T3-11: n counts questions, not executions; no decision covers what n '
+    'counts')
+@pytest.mark.finding('T3-11')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-11: console 3h pools repeats as n')
+def test_run_report_3h_rate_counts_questions_not_repeats(capsys):
+    # Correct (AP-1 v1.3 D7.1, GH-5): three repeats of one question are
+    # one question: "0/1 failures", not "0/3".
+    out = run_report(capsys, [
+        executed('Q01', 'base', rep, 'AUTO-MATCH',
+                 invocation_outcome='INVOKED') for rep in (1, 2, 3)])
+    text = section(out, '3h')
+    assert '0/1 failures' in text, text
+
+
+@pytest.mark.finding('T3-65')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='T3-65: console 3g prints only a count')
+def test_run_report_3g_lists_each_unmeasured_cell_with_cause(capsys):
+    # Correct (T3-65; SPEC R0.2): section 3g
+    # names each unmeasured cell with its cause.
+    cells = [{'item_id': 'Q03', 'condition': 'base', 'repeat': 1,
+              'cause': 'rate limited (HTTP 429)'},
+             {'item_id': 'Q05', 'condition': 'base', 'repeat': 2,
+              'cause': 'transport failure after 3 attempts'}]
+    out = run_report(capsys, [], unmeasured_cells=cells)
+    text = section(out, '3g')
+    assert 'UNMEASURED CELLS: 2' in text
+    for cell in cells:
+        assert cell['item_id'] in text and cell['cause'] in text, text
