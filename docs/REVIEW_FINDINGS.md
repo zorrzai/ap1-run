@@ -1467,8 +1467,11 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `numeric.py:179` (sign-led pattern)
 - After the reorg: `src/ap1_run/foundation/numeric.py:179` (`_build_extraction_re`)
 - Breaks: SPEC R2.0 (the expected value twice routes to adjudication), on the operator reading
-- Addressed by: fixed; commits 836c1b0f, b50d61cf; test
-  `tests/unit/foundation/test_numeric.py::test_extract_sign_after_number_is_an_operator_positions`
+- Addressed by: fixed; commits 836c1b0f, b50d61cf, dc7b365f; test
+  `tests/unit/foundation/test_numeric.py::test_extract_sign_after_number_is_an_operator_positions`;
+  note: the sign is an operator only in an expression's shape (`5-3`, `1437.00 - 1006.25`); with a
+  space before it and none after (`month 12 -575.50`) it stays the figure's sign (dc7b365f, after
+  the review of #13)
 
 **S3-G1-6 · low · Digits inside identifiers produce numeric tokens**
 - What's wrong: `Q04` → 4, `v2.0.1` → 2.0 and 1, `1e5` → 1 and 5; there is no word boundary.
@@ -1482,10 +1485,11 @@ also hold there; the G7 Inspect and G8 tool files do not.
 - Where: `numeric.py`
 - After the reorg: `src/ap1_run/foundation/numeric.py`
 - Breaks: SPEC R0.4.2 (undeclared)
-- Addressed by: fixed; commits 856a8fb7, 547f3007, 67a15172; test
+- Addressed by: fixed; commits 856a8fb7, 547f3007, 67a15172, 45f32639; test
   `tests/unit/foundation/test_numeric.py::test_arabic_indic_and_full_width_three_neither_parse_nor_extract`;
   note: SPEC R0.4.2 decides it: its digits are ASCII 0-9 only, so neither Arabic-Indic nor
-  full-width digits parse or extract
+  full-width digits parse or extract; a reply with such digits and no numeric token routes to
+  adjudication, not AUTO-NO-FIGURE (45f32639, after the review of #13)
 
 **S3-G1-8 · low · `(12.5%)` extracts as +12.5 %**
 - What's wrong: the parenthesised-negative pattern has no `%`.
@@ -2080,3 +2084,17 @@ The verifier's options for a run's inputs outside `example/` and `reference/` co
 verifier work in #3. Until then README.md says that the verifier reads only those two
 directories. The fix lands before anyone outside the project runs the instrument with
 `--fixture-dir`.
+
+### DEC-8: SPEC sets no module size limit and records no line counts
+The retirement PR (#11) removed SPEC §12.9's 300-line limit on instrument modules and §12.10's
+line counts, and #3 had listed that change as one for the maintainer to decide. The maintainer
+approved it on 16 November 2026, in the review of #11:
+> "S1, dropping §12.9's 300-line limit and §12.10's line counts: **yes**. Please record it as a
+> maintainer decision in `docs/REVIEW_FINDINGS.md`, with the SPEC version line updated in the same
+> commit. My reasoning, for the record: a line count is not behaviour, git already records file
+> sizes, and at #16's head `numeric.py`, `engine.py` and `operation_correctness.py` are 460, 524
+> and 344 lines, so keeping the limit would block every fix in #12–#16. Module size is left to
+> review."
+
+SPEC's "Revision, November 2026" entry for §12.9 and §12.10 and its version line cite this
+decision. `tests/conformance/test_spec_file_list.py` checks §12.10's file list without counts.

@@ -1,6 +1,6 @@
 # AP-1 Runner — System Build Specification
 
-**Version 0.3 (draft) · 28 July 2026 · for internal and external technical review**
+**Version 0.3 (draft) · 28 July 2026, revised November 2026 · for internal and external technical review**
 
 Document class: Engineering build specification — for the development team and
 for external technical review.
@@ -57,7 +57,8 @@ updated, and the standard governs.
   The measurement note for the counts goes too. §12.9 keeps the definition
   of an instrument module, and now names what is not one by location:
   demonstration tooling, the tools in `tools/` and the example modules (the
-  test suites are no longer named there).
+  test suites are no longer named there). The maintainer decided this on
+  16 November 2026 (DEC-8 in `docs/REVIEW_FINDINGS.md`).
   (`trace.py`'s exception recorded why `STRUCTURAL_CONSTANTS` exists: in the
   first 1000-execution live run, 288 of 818 originated operands were the
   literal value 1; R2.4 states the rule.)
@@ -324,7 +325,8 @@ A numeric token is recognised as, in order:
 3. one or more digits, optionally grouped by the configured
    `grouping_separator`. A digit is one of the ASCII digits `0`–`9`; the
    digits of other scripts (Arabic-Indic `٣`, full-width `３`) are not digits
-   here, so text written in them holds no numeric token;
+   here, so text written in them holds no numeric token (a response with
+   such digits and no numeric token routes to adjudication, R2.0 step 4);
 4. an optional `decimal_separator` followed by fractional digits;
 5. an optional trailing `%`.
 
@@ -578,7 +580,8 @@ token per R0.4.2 with its literal text, span and context. Then:
 | Condition | Outcome |
 |---|---|
 | Exactly one extracted value matches the expected value within `answer_tolerance` | `AUTO-MATCH` |
-| No extracted value matches, and no numeric tokens present | `AUTO-NO-FIGURE` |
+| No extracted value matches, no numeric tokens present, and no digits of another script | `AUTO-NO-FIGURE` |
+| No numeric tokens present, but digits of another script (R0.4.2) | `ADJUDICATE — figures present, none matching` |
 | Two or more extracted values match | `ADJUDICATE — ambiguous` |
 | No match, but numeric tokens present | `ADJUDICATE — figures present, none matching` |
 
