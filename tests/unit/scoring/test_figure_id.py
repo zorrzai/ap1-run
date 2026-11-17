@@ -240,6 +240,24 @@ def test_identify_figure_no_numeric_tokens_is_auto_no_figure():
         'extracted_tokens': [], 'matched_indices': []}
 
 
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('month 12 -575.50', '575.50', ADJUDICATE_NO_MATCH),
+    ('month 12 -575.50', '-575.50', AUTO_MATCH),
+    ('In 2024 -12.5% was the change', '12.5', ADJUDICATE_NO_MATCH),
+    ('In 2024 -12.5% was the change', '-12.5', AUTO_MATCH),
+], ids=['wrong-sign-not-matched', 'negative-matched',
+        'year-wrong-sign-not-matched', 'year-negative-matched'])
+def test_identify_figure_sign_after_label_number_is_kept(
+        content, expected, outcome):
+    # The review of #13: at 3803f542 the first and third
+    # AUTO-MATCH (a wrong-sign answer scored correct) and the second and
+    # fourth go to adjudication.
+    r = identify(response(content), expected=expected)
+    assert r['outcome'] == outcome, r
+
+
 @pytest.mark.req('R2.0')
 def test_identify_figure_exactly_one_match_is_auto_match():
     r = identify(response('Balance 15200, interest 15.20 a month.'))

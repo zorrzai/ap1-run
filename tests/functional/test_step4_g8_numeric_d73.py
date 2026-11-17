@@ -266,3 +266,22 @@ def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
                             'principal portion is $430.75.'}]})
     assert {c: r['figure_outcome'] for c, r in rows(out, 'Q04').items()} \
         == dict.fromkeys(BOTH, 'ADJUDICATE-AMBIGUOUS')
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_wrong_sign_after_a_label_number_is_not_auto_matched(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: a sign after a number with a space before it
+    # and none after ('month 12 -430.75') is the figure's sign, not a
+    # subtraction. Q04 expects +430.75, so this reply's -430.75 matches
+    # nothing and goes to adjudication; at 3803f542 it read 430.75 and
+    # AUTO-MATCHed, a wrong-sign answer scored correct.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'For payment 1 -430.75 is the principal '
+                            'portion.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
