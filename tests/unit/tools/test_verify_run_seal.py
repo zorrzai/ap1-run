@@ -115,10 +115,16 @@ def make_record(base, config):
                 lookup_collisions=[])
 
 
-def reseal(record):
-    """Recompute seal_hash over the record as seal() does: every field
-    but the hash itself (T3-47: the timestamp included)."""
+def reseal(record, inputs=True):
+    """Recompute the record's hashes as seal() does: inputs_hash (if the
+    record has one, and unless inputs is false) over every field but the
+    timestamp and the two hashes, then seal_hash over every field but
+    itself (T3-47: the timestamp and inputs_hash included)."""
     record = dict(record)
+    if inputs and 'inputs_hash' in record:
+        record['inputs_hash'] = canonical_hash(
+            {k: v for k, v in record.items()
+             if k not in ('timestamp', 'inputs_hash', 'seal_hash')})
     hashable = {k: v for k, v in record.items() if k != 'seal_hash'}
     record['seal_hash'] = canonical_hash(hashable)
     return record
@@ -166,7 +172,7 @@ def run(tmp_path, base):
 def all_checks(record, lines=2):
     """Every check of a run that matches, in order."""
     return [
-        ('seal record fields', 'all 19 sealed fields present'),
+        ('seal record fields', 'all 20 sealed fields present'),
         ('config_hash', 'MATCH'),
         ('fixture_hash', 'MATCH'),
         ('questions_hash', 'MATCH'),
@@ -176,6 +182,7 @@ def all_checks(record, lines=2):
         ('expected_values_hash', 'MATCH'),
         ('lookup_collisions', 'MATCH'),
         ('runner_source_hash', 'MATCH'),
+        ('inputs_hash', 'MATCH'),
         ('seal_hash', 'MATCH'),
         ('transcript seal_hash', 'all %d lines match report' % lines),
         ('seal timestamp', 'no later than the first transcript record '
@@ -494,7 +501,7 @@ def test_verify_run_config_hash_is_canonical_json_sha256(vrs, tmp_path,
 def test_verify_run_changed_input_fails_its_hash(vrs, run, base, field,
                                                   relpath):
     run_dir, record, _ = run
-    (base / relpath).write_text('changed\n')
+    (base / relpath).write_bytes(b'changed\n')
     checks, failures = vrs.verify_run(str(run_dir))
     assert (field, 'sealed=%s, recomputed=%s' % (
         record[field], file_hash(str(base / relpath)))) in failures
@@ -508,7 +515,7 @@ def legacy(record):
     record = {k: v for k, v in record.items() if k not in (
         'seal_format', 'calculator_hash', 'expected_values_hash',
         'python_version', 'platform', 'package_versions',
-        'lookup_collisions')}
+        'lookup_collisions', 'inputs_hash')}
     record['seal_hash'] = canonical_hash(
         {k: v for k, v in record.items()
          if k not in ('timestamp', 'seal_hash')})
@@ -530,8 +537,8 @@ LEGACY_SOURCE_WARNING = ('runner_source_hash', 'not recomputed: a record '
 def test_verify_run_legacy_record_checked_under_its_rules(vrs, tmp_path,
                                                          base):
     # A record without seal_format: no field-set, calculator,
-    # expected-values or source-hash check; seal_hash without the
-    # timestamp; a warning.
+    # expected-values, source-hash or inputs_hash check; seal_hash without
+    # the timestamp; a warning.
     config = resolved_config()
     record = legacy(make_record(base, config))
     run_dir = write_run(tmp_path / 'run', record, config)
@@ -540,7 +547,8 @@ def test_verify_run_legacy_record_checked_under_its_rules(vrs, tmp_path,
     assert failures == []
     assert checks == without(all_checks(record), 'seal record fields',
                              'calculator_hash', 'expected_values_hash',
-                             'lookup_collisions', 'runner_source_hash')
+                             'lookup_collisions', 'runner_source_hash',
+                             'inputs_hash')
     assert warnings == [LEGACY_WARNING, LEGACY_COLLISIONS_WARNING,
                         LEGACY_SOURCE_WARNING]
 
@@ -666,7 +674,7 @@ def test_verify_run_unknown_version_without_ap1_text_fails(vrs, tmp_path,
     assert failures == [('ap1_text_hash', "no AP-1 text is known for "
                          "ap1_version 'v9'; give it with --ap1-text")]
     other = tmp_path / 'other.md'
-    other.write_text('# AP-1 text\n')
+    other.write_bytes(b'# AP-1 text\n')
     assert vrs.verify_run(str(run_dir), ap1_text=str(other))[1] == []
 
 
@@ -754,7 +762,83 @@ def test_verify_run_expected_values_recomputed_from_the_module(
                          % (record['expected_values_hash'],
                             canonical_hash({'Q01': {
                                 'final': '2', 'derivable': True,
-                                'required_operation': None}})))]
+                                'required_operation': None,
+                                'intermediates': []}})))]
+
+
+@pytest.mark.req('R1.1')
+def test_verify_run_worked_step_only_change_fails(vrs, tmp_path, base):
+    # The expected values the verifier recomputes include each item's
+    # worked steps: a module that now returns another intermediate, the
+    # final unchanged, fails expected_values_hash and nothing else.
+    (base / 'example' / 'fixture.json').write_text('{"accounts": []}\n')
+    (base / 'example' / 'questions.json').write_text(json.dumps(
+        {'items': [{'id': 'Q01', 'source_accounts': []}]}))
+
+    def module(step):
+        return ('def compute(item_id, ctx):\n'
+                '    return {"final": "1.5", "intermediates": [\n'
+                '        {"label": "step", "value": "%s"}]}\n' % step)
+    (base / GT).write_text(module('3.00'))
+    config = resolved_config()
+    values = {'Q01': {'final': '1.5', 'intermediates': [
+        {'label': 'step', 'value': '3.00'}]}}
+    record = seal(config=config,
+                  fixture_path=base / 'example' / 'fixture.json',
+                  questions_path=base / 'example' / 'questions.json',
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [] and ('expected_values_hash', 'MATCH') in checks
+    # The module now gives another worked step, final unchanged; the
+    # record names the new module's hash and is resealed, so only the
+    # expected values tell the two apart.
+    (base / GT).write_text(module('3.01'))
+    record = dict(record,
+                  ground_truth_hash=seal_mod.text_file_hash(str(base / GT)))
+    run_dir = write_run(tmp_path / 'run2', reseal(record), config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert names(failures) == ['expected_values_hash']
+    assert failures[0][1].startswith(
+        'sealed=%s, recomputed=' % record['expected_values_hash'])
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R1.1', 'R0.4.1')
+def test_verify_run_expected_values_computed_in_the_runs_decimal_context(
+        vrs, tmp_path, base):
+    # The run computes the expected values in the shared Decimal context
+    # (precision 50, T3-60); the verifier recomputes them in the same one,
+    # whatever its caller's context. A module returning an unrounded
+    # 1/7, as its final and as a worked step, verifies (at Python's
+    # default precision of 28 it gave a different digest: a false FAIL).
+    from decimal import Context, Decimal, localcontext
+    (base / 'example' / 'fixture.json').write_text('{"accounts": []}\n')
+    (base / 'example' / 'questions.json').write_text(json.dumps(
+        {'items': [{'id': 'Q01', 'source_accounts': []}]}))
+    (base / GT).write_text(
+        'from decimal import Decimal as D\n'
+        'def compute(item_id, ctx):\n'
+        '    v = D(1) / D(7)\n'
+        '    return {"final": v, "intermediates": [\n'
+        '        {"label": "seventh", "value": v}]}\n')
+    with localcontext(Context(prec=50)):
+        seventh = Decimal(1) / Decimal(7)
+    values = {'Q01': {'final': seventh, 'intermediates': [
+        {'label': 'seventh', 'value': seventh}]}}
+    config = resolved_config()
+    record = seal(config=config,
+                  fixture_path=base / 'example' / 'fixture.json',
+                  questions_path=base / 'example' / 'questions.json',
+                  ground_truth_path=base / GT,
+                  calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    with localcontext(Context(prec=28)):
+        checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [] and ('expected_values_hash', 'MATCH') in checks
 
 
 def test_verify_run_expected_values_module_may_import_its_neighbours(
@@ -873,6 +957,49 @@ def test_verify_run_missing_seal_hash_field_fails(vrs, tmp_path, base):
                          record['seal_hash'])]
     # The transcript's empty seal_hash "matches" the report's missing one.
     assert ('transcript seal_hash', 'all 1 lines match report') in checks
+
+
+# -- verify_run: inputs_hash --------------------------------------------------
+
+@pytest.mark.req('R1.1')
+def test_verify_run_tampered_inputs_hash_fails(vrs, tmp_path, base):
+    # An inputs_hash rewritten in report.md, seal_hash recomputed to match
+    # (so the transcript still agrees): the recomputed inputs_hash differs,
+    # and that is the only failure.
+    config = resolved_config()
+    record = make_record(base, config)
+    shown = reseal(dict(record, inputs_hash='0' * 64), inputs=False)
+    run_dir = write_run(tmp_path / 'run', shown, config)
+    checks, failures = vrs.verify_run(str(run_dir))
+    assert failures == [('inputs_hash', 'sealed=%s, recomputed=%s' % (
+        '0' * 64, record['inputs_hash']))]
+    assert ('seal_hash', 'MATCH') in checks
+
+
+@pytest.mark.req('R1.1')
+def test_verify_run_field_rewritten_under_the_old_inputs_hash_fails(
+        vrs, tmp_path, base):
+    # A sealed field rewritten and seal_hash recomputed, inputs_hash left
+    # as it was: inputs_hash no longer matches the record.
+    config = resolved_config()
+    record = make_record(base, config)
+    shown = reseal(dict(record, runner_version_tag='v9'), inputs=False)
+    run_dir = write_run(tmp_path / 'run', shown, config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert names(failures) == ['inputs_hash']
+    assert failures[0][1].startswith('sealed=%s, recomputed='
+                                     % record['inputs_hash'])
+
+
+def test_verify_run_record_without_inputs_hash_fails(vrs, tmp_path, base):
+    config = resolved_config()
+    record = make_record(base, config)
+    shown = reseal({k: v for k, v in record.items() if k != 'inputs_hash'})
+    run_dir = write_run(tmp_path / 'run', shown, config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert failures == [
+        ('seal record fields', 'missing inputs_hash'),
+        ('inputs_hash', 'sealed=, recomputed=%s' % record['inputs_hash'])]
 
 
 def test_verify_run_seal_with_true_ev3_flag_verifies(vrs, tmp_path, base):
@@ -1141,8 +1268,8 @@ def test_main_failures_print_after_checks_and_warnings(vrs, tmp_path, base,
               and line.split()[0] in ('PASS', 'WARN', 'FAIL')]
     # Every PASS first, then every WARN, then every FAIL (the fixture,
     # the expected values computed from it, the transcript).
-    assert status == ['PASS'] * 9 + ['WARN'] + ['FAIL'] * 3
-    assert lines[-3:] == ['  9 passed, 3 failed, 1 warnings', '',
+    assert status == ['PASS'] * 10 + ['WARN'] + ['FAIL'] * 3
+    assert lines[-3:] == ['  10 passed, 3 failed, 1 warnings', '',
                           'RESULT: FAIL (3 failures, 1 warnings)']
 
 

@@ -253,11 +253,16 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
     Raises AmbiguousLocaleError if any token is ambiguous.
 
     Two readings of the free text, beyond the token grammar:
-    - A sign directly after a number (only spaces or tabs between, on
-      the same line) is a binary operator, not the sign of the next
-      token: '1437.00 - 1006.25' and '5-3' give 1006.25 and 3 (S3-G1-5).
-      A number dropped as inside a word does not count ('Q4 -5%' gives
-      -5%), nor does one on the line before ('1,006.25\n-575.50').
+    - A sign after a number, in the shape of an expression, is a binary
+      operator, not the sign of the next token: with nothing between
+      the number and the sign ('5-3', '5- 3'), or with spaces or tabs
+      on both sides of the sign ('1437.00 - 1006.25'), the tokens are
+      5 and 3, 1437.00 and 1006.25 (S3-G1-5). A space before the sign
+      and none after keeps the sign ('month 12 -575.50' gives 12 and
+      -575.50; 'In 2024 -12.5%' gives -12.5%). '+' and U+2212 are read
+      the same way. A number dropped as inside a word does not count
+      ('Q4 - 5%' gives -5%), nor does one on the line before
+      ('1,006.25\n- 575.50').
     - Digits inside a word are not a token: 'Q04', 'v2.0.1', 'item A1'
       give nothing (S3-G1-6). A word character is an ASCII letter or
       digit ('__430.75__' and CJK text around a figure still give it). A
@@ -289,13 +294,15 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
     prev_core_end = None
     for i, (start, end, match_text) in enumerate(deduped):
         core_end = start + len(match_text.rstrip())
-        follows_number = (prev_core_end is not None
-                          and not text[prev_core_end:start].strip(' \t'))
+        gap = (text[prev_core_end:start] if prev_core_end is not None
+               else None)
+        follows_number = gap is not None and not gap.strip(' \t')
         if in_word[i]:
             continue
         prev_core_end = core_end
         stripped = match_text.strip()
-        if follows_number and stripped[0] in _SIGNS:
+        if (follows_number and stripped[0] in _SIGNS
+                and (not gap or stripped[1:2] in (' ', '\t'))):
             # An operator: the token is what follows it.
             rest = stripped[1:].lstrip()
             start = core_end - len(rest)

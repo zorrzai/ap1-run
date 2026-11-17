@@ -23,7 +23,7 @@ from ap1_run.foundation.numeric import canonical_hash, file_hash
 SEAL_FORMAT = '2'
 
 # The fields every record of this format carries. seal_hash covers all
-# of them (T3-15, T3-47: the timestamp too).
+# of them (T3-15, T3-47: the timestamp and inputs_hash too).
 SEALED_FIELDS = (
     'seal_format', 'timestamp',
     'fixture_hash', 'questions_hash', 'ground_truth_hash', 'calculator_hash',
@@ -31,7 +31,7 @@ SEALED_FIELDS = (
     'ap1_version', 'ap1_version_doi', 'ap1_text_hash',
     'runner_version_tag', 'runner_version_commit', 'runner_source_hash',
     'python_version', 'platform', 'package_versions',
-    'verification_keys', 'ev3_implemented',
+    'verification_keys', 'ev3_implemented', 'inputs_hash',
 )
 
 # The fields a record of this format carries when the run gives them;
@@ -39,6 +39,10 @@ SEALED_FIELDS = (
 # collisions it found at seal (T3-75), and every check that compares them
 # (check_collisions) refuses a record of this format without them.
 OPTIONAL_SEALED_FIELDS = ('lookup_collisions',)
+
+# The fields inputs_hash leaves out: the time of sealing, and the two
+# hashes over the record. Every other sealed field is inside it.
+NOT_IN_INPUTS_HASH = ('timestamp', 'inputs_hash', 'seal_hash')
 
 # The sealed text inputs, by name: the record field is '<name>_hash'.
 TEXT_INPUTS = ('fixture', 'questions', 'ground_truth', 'calculator')
@@ -73,17 +77,20 @@ def expected_values_hash(expected_values):
     """The canonical hash of the expected values: for each item, what
     scoring reads of what the ground-truth module returned for it (R1.1,
     T3-48): its final value, whether it is derivable (an underivable item
-    is VOID; true when not given) and its required operation (the D7
-    evidence), as {item_id: {final, derivable, required_operation}}.
-    Raises SealError if a value cannot be hashed (a float, or a value
-    JSON cannot hold)."""
+    is VOID; true when not given), its required operation (the D7
+    evidence) and its worked steps, the intermediates as the module
+    returned them (D7.2 operand provenance; [] when not given), as
+    {item_id: {final, derivable, required_operation, intermediates}}.
+    Raises SealError if a value cannot be hashed (a float anywhere in it,
+    the intermediates included, or a value JSON cannot hold)."""
     def entry(result):
         if not isinstance(result, dict):
             return {'final': result, 'derivable': True,
-                    'required_operation': None}
+                    'required_operation': None, 'intermediates': []}
         return {'final': result.get('final'),
                 'derivable': result.get('derivable', True),
-                'required_operation': result.get('required_operation')}
+                'required_operation': result.get('required_operation'),
+                'intermediates': result.get('intermediates', [])}
     try:
         return canonical_hash({item_id: entry(result) for item_id, result
                                in expected_values.items()})
@@ -91,9 +98,20 @@ def expected_values_hash(expected_values):
         raise SealError(f'expected values cannot be sealed: {e}') from e
 
 
+def inputs_hash(record):
+    """inputs_hash: the canonical hash of every field but the timestamp,
+    inputs_hash and seal_hash. It does not depend on the time of sealing,
+    so it identifies the configuration sealed: sealing the same inputs
+    gives the same inputs_hash at any time (R1.1)."""
+    return canonical_hash({k: v for k, v in record.items()
+                           if k not in NOT_IN_INPUTS_HASH})
+
+
 def record_hash(record):
     """seal_hash: the canonical hash of every field but seal_hash itself,
-    the timestamp included (T3-47)."""
+    the timestamp and inputs_hash included (T3-47). It identifies one
+    sealing event: the same inputs give the same seal_hash only at the
+    same timestamp (R1.1)."""
     return canonical_hash({k: v for k, v in record.items()
                            if k != 'seal_hash'})
 
@@ -115,9 +133,10 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
          lookup_collisions=None):
     """Create a pre-registration record. R1.1.
 
-    Hashes all inputs and timestamps the record. The seal_hash covers
-    every field, the timestamp included, and appears on every transcript
-    line.
+    Hashes all inputs and timestamps the record. inputs_hash covers
+    every field but the timestamp (the same inputs give the same
+    inputs_hash at any time); seal_hash covers every field, the timestamp
+    and inputs_hash included, and appears on every transcript line.
 
     The AP-1 text is required: SealError if ap1_text_path is not given or
     not found, if the config declares no hash for it (blank, missing or
@@ -186,7 +205,9 @@ def seal(*, config, fixture_path, questions_path, ground_truth_path,
     if lookup_collisions is not None:
         record['lookup_collisions'] = collisions_text(lookup_collisions)
 
-    # Seal: hash the entire record, the timestamp included
+    # The time-independent fingerprint, then the seal over the entire
+    # record, the timestamp and inputs_hash included
+    record['inputs_hash'] = inputs_hash(record)
     record['seal_hash'] = record_hash(record)
 
     return record
@@ -226,9 +247,9 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     """Verify a pre-registration record against current files.
 
     The scorer calls this before processing. Raises SealError naming
-    every mismatch: a field missing from the record, a seal_hash that
-    does not match the record (so a rewritten field of any kind is
-    refused), and each component that differs from the current inputs:
+    every mismatch: a field missing from the record, an inputs_hash or
+    seal_hash that does not match the record (so a rewritten field of any
+    kind is refused), and each component that differs from the current inputs:
     the four text inputs, the config, the AP-1 text (always compared
     with the config's declared hash, and with the file if its path is
     given), the DOI, and the runner source hash and expected values when
@@ -247,6 +268,11 @@ def verify_seal(record, *, config, fixture_path, questions_path,
     missing = [f for f in SEALED_FIELDS if f not in record]
     if missing:
         mismatches.append(f'record: missing {", ".join(missing)}')
+    recomputed = inputs_hash(record)
+    if record.get('inputs_hash') != recomputed:
+        mismatches.append(f'inputs_hash: sealed='
+                          f'{record.get("inputs_hash")!r}, '
+                          f'recomputed={recomputed!r}')
     recomputed = record_hash(record)
     if record.get('seal_hash') != recomputed:
         mismatches.append(f'seal_hash: sealed={record.get("seal_hash")!r}, '

@@ -258,6 +258,55 @@ def test_identify_figure_no_numeric_tokens_is_auto_no_figure():
         'extracted_tokens': [], 'matched_indices': []}
 
 
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content', [
+    'The answer is \u0661\u0665.\u0662\u0660.',       # Arabic-Indic 15.20
+    'The answer is \u06f1\u06f5.\u06f2\u06f0.',       # Extended (Persian)
+    'The answer is \u0967\u096b.\u0968\u0966.',       # Devanagari
+    'The answer is \uff11\uff15.\uff12\uff10.',       # full-width
+], ids=['arabic-indic', 'extended-arabic-indic', 'devanagari', 'full-width'])
+def test_identify_figure_non_ascii_digits_route_to_adjudication(content):
+    # The review of #13: R0.4.2's digits are ASCII 0-9 only, so such
+    # a reply holds no numeric token; but it states a figure, so it must
+    # go to a person, not score AUTO-NO-FIGURE (wrong, with no look).
+    r = identify(response(content))
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert r['extracted_tokens'] == []
+    assert 'ASCII' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('content', [
+    'Happy to help, see \u00b2 and \u00bd.',        # superscript, fraction
+    '\u5341\u4e94 dollars',                           # CJK numerals (No/Lo)
+])
+def test_identify_figure_non_digit_number_characters_stay_no_figure(content):
+    # Only Unicode decimal digits (category Nd) route; superscripts,
+    # vulgar fractions and CJK numerals are not digits of any script.
+    assert identify(response(content))['outcome'] == AUTO_NO_FIGURE
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('month 12 -575.50', '575.50', ADJUDICATE_NO_MATCH),
+    ('month 12 -575.50', '-575.50', AUTO_MATCH),
+    ('In 2024 -12.5% was the change', '12.5', ADJUDICATE_NO_MATCH),
+    ('In 2024 -12.5% was the change', '-12.5', AUTO_MATCH),
+], ids=['wrong-sign-not-matched', 'negative-matched',
+        'year-wrong-sign-not-matched', 'year-negative-matched'])
+def test_identify_figure_sign_after_label_number_is_kept(
+        content, expected, outcome):
+    # The review of #13: at 3803f542 the first and third
+    # AUTO-MATCH (a wrong-sign answer scored correct) and the second and
+    # fourth go to adjudication.
+    r = identify(response(content), expected=expected)
+    assert r['outcome'] == outcome, r
+
+
 @pytest.mark.req('R2.0')
 def test_identify_figure_exactly_one_match_is_auto_match():
     r = identify(response('Balance 15200, interest 15.20 a month.'))

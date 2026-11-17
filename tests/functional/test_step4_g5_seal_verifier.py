@@ -243,9 +243,9 @@ DRIFT = (
 @pytest.mark.proposal(
     'T3-48: the expected-values digest is canonical_hash of {item_id: '
     'final value} (as Decimal, its text, or quantised to the declared '
-    'places), or of {item_id: {final, derivable, required_operation}} '
-    '(what scoring reads of each result); the format is the author\'s '
-    'proposal')
+    'places), or of {item_id: {final, derivable, required_operation, '
+    'intermediates}} (what scoring reads of each result, its worked steps '
+    'included); the format is the author\'s proposal')
 @pytest.mark.finding('T3-48')
 @pytest.mark.req('R1.1')
 def test_run_seal_record_binds_expected_values(runner):
@@ -272,7 +272,8 @@ def test_run_seal_record_binds_expected_values(runner):
         canonical_hash({k: {'final': str(r['final']),
                             'derivable': r.get('derivable', True),
                             'required_operation':
-                                r.get('required_operation')}
+                                r.get('required_operation'),
+                            'intermediates': r.get('intermediates', [])}
                         for k, r in results.items()}),
         canonical_hash(values),
         canonical_hash({k: str(v) for k, v in values.items()}),

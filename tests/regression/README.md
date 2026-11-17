@@ -78,10 +78,11 @@ run it at both commits and diff the two directories.
   temporary run directory whose `output/` the runner writes to) and the
   mock's address and port;
 - ISO and epoch timestamps;
-- this run's `seal_hash`, `config_hash` and `runner_source_hash`, read from
-  the seal the run actually made. The config hash covers the mock's port. The
-  source hash covers the code, so it changes whenever files move. The seal
-  hash covers the timestamp, so it changes on every run;
+- this run's `seal_hash`, `inputs_hash`, `config_hash` and
+  `runner_source_hash`, read from the seal the run actually made. The config
+  hash covers the mock's port. The source hash covers the code, so it changes
+  whenever files move. `inputs_hash` covers both. The seal hash covers the
+  timestamp, so it changes on every run;
 - the seal's environment fields in `report.md` §1 (`python_version`,
   `platform`, `package_versions`), which depend on the machine.
 
@@ -94,7 +95,8 @@ golden difference, and `--update` cannot write over it.
 - `hash_oracle.py` recomputes the seal the run made, from the inputs the seal
   function was given (`driver.py` captures them before the call): the file
   hashes, `config_hash` from the resolved config, the version fields from
-  the tree's `VERSION` file, and `seal_hash` from the expected record. The
+  the tree's `VERSION` file, and `inputs_hash` and `seal_hash` from the
+  expected record. The
   record must have exactly the expected fields and values, and a timestamp
   that falls within the run. Each path the seal was given must be the file
   of its role (`seal_paths` in a scenario that moves them). The source hash

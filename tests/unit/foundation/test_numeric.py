@@ -548,18 +548,21 @@ def test_extract_adjacent_tokens_both_kept():
 
 @pytest.mark.finding('S3-G1-5')
 def test_extract_sign_after_number_is_an_operator_positions():
-    toks = extract_numeric_tokens('x 10 - $3 or 7 -2', currency_symbols=['$'])
+    # '10 - $3' and '8-1' are subtractions; '7 -2' (a space before the
+    # sign, none after) keeps the sign (the review of #13).
+    toks = extract_numeric_tokens('x 10 - $3 or 7 -2 or 8-1',
+                                  currency_symbols=['$'])
     assert [(str(t.value), t.literal, t.start, t.end) for t in toks] == [
         ('10', '10', 2, 5), ('3', '$3', 7, 10), ('7', '7', 13, 15),
-        ('2', '2', 16, 17)]
+        ('-2', '-2', 15, 18), ('8', '8', 21, 22), ('1', '1', 23, 24)]
 
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.parametrize('text, expected', [
     ('was -5', ['-5']),
     ('5 - -3', ['5', '-3']),
-    ('5% \u22123', ['5', '3']),
-    ('(4) -1', ['-4', '1']),
+    ('5% \u2212 3', ['5', '3']),
+    ('(4) - 1', ['-4', '1']),
     ('x: -5, then -6', ['-5', '-6']),
 ])
 def test_extract_sign_not_after_a_number_stays_a_sign(text, expected):
@@ -1065,6 +1068,44 @@ def test_extract_minus_between_operands_is_an_operator(text, expected):
     assert values(text) == expected
 
 
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, expected', [
+    ('In 2024 -12.5% was the change', ['2024', '-12.5']),
+    ('month 12 -575.50', ['12', '-575.50']),
+    ('month 12 \u2212575.50', ['12', '-575.50']),
+    ('month 12 +575.50', ['12', '575.50']),
+    ('rate 5% -2', ['5', '-2']),
+    ('(4) -1', ['-4', '-1']),
+], ids=['year-then-percent', 'label-then-negative', 'unicode-minus',
+        'plus', 'after-percent', 'after-parenthesised'])
+def test_extract_sign_spaced_from_number_before_only_keeps_its_sign(
+        text, expected):
+    # The review of #13: a number next to a signed figure in prose
+    # ('In 2024 -12.5%', 'month 12 -575.50') is not a subtraction. The
+    # shape rule: 'a - b' (spaces both sides) and 'a-b' (none) are
+    # subtraction; 'a -b' (a space before the sign, none after) keeps
+    # the sign on b. '+' is read the same way.
+    assert values(text) == expected
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, expected', [
+    ('1437.00 - 1006.25', ['1437.00', '1006.25']),
+    ('5-3', ['5', '3']),
+    ('5- 3', ['5', '3']),
+    ('5 \u2212 3', ['5', '3']),
+    ('5 + 3', ['5', '3']),
+    ('5+3', ['5', '3']),
+    ('5\t-\t3', ['5', '3']),
+], ids=['spaced', 'unspaced', 'space-after-only', 'unicode-minus-spaced',
+        'plus-spaced', 'plus-unspaced', 'tabs'])
+def test_extract_sign_in_expression_shape_is_still_an_operator(
+        text, expected):
+    assert values(text) == expected
+
+
 @pytest.mark.finding('S3-G1-6')
 @pytest.mark.req('R0.4.2')
 @pytest.mark.parametrize('text', ['Q04', 'v2.0.1', 'item A1'])
@@ -1201,9 +1242,12 @@ def test_extract_word_characters_are_ascii_letters_and_digits(text, expected):
 @pytest.mark.parametrize('text, expected', [
     # a number dropped as inside a word does not make the sign an operator
     ('Q4 -5% decline', [('-5', True)]),
+    ('Q4 - 5% decline', [('-5', True)]),
     # a line break is not the whitespace of a subtraction
     ('Balance 1,006.25\n-575.50 paid', [('1006.25', False),
                                        ('-575.50', False)]),
+    ('Balance 1,006.25\n- 575.50 paid', [('1006.25', False),
+                                        ('-575.50', False)]),
     # the operator reading, on one line, is kept
     ('1437.00 - 1006.25', [('1437.00', False), ('1006.25', False)]),
 ])
