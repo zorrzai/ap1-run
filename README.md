@@ -579,8 +579,9 @@ component hashes and the composite `seal_hash`, checks that every line of the
 transcript (`smoke_run.jsonl`, which must be there) carries that `seal_hash`,
 and that the seal is dated no later than the first transcript record. For a
 record with `seal_format` it also checks that the record holds every sealed
-field, recomputes the expected values by running the ground-truth module, and
-compares `runner_source_hash` with this checkout's code (so verify a run from a
+field, recomputes `inputs_hash` (every sealed field but the timestamp) and
+the expected values (by running the ground-truth module), and compares
+`runner_source_hash` with this checkout's code (so verify a run from a
 checkout of its `runner_version_commit`). It reports each comparison
 individually, PASS or FAIL; what it cannot check, or should tell you (a record
 made before October 2026, `runner_modified: true`), is a WARN, never a PASS.
@@ -625,10 +626,12 @@ binds the run's timestamp, the calculator tool the run executes (it produces
 every tool result the model sees), the expected values (what the ground-truth
 module returned for each item, computed before the seal and scored against),
 and the environment: `python_version`, `platform` and `package_versions`, which
-are outside `runner_source_hash`. A run refuses to seal without the AP-1 text
-and a declared hash for it. Before the first request, and again before it
-reports, the run verifies its seal against its inputs and refuses, naming the
-input, if any has changed.
+are outside `runner_source_hash`. Its `inputs_hash` covers every field but the
+timestamp, so sealing the same inputs gives the same `inputs_hash` at any time;
+`seal_hash` covers the timestamp too, so it identifies one sealing. A run
+refuses to seal without the AP-1 text and a declared hash for it. Before the
+first request, and again before it reports, the run verifies its seal against
+its inputs and refuses, naming the input, if any has changed.
 
 | Hash | Source | Proves |
 |------|--------|--------|
@@ -639,7 +642,8 @@ input, if any has changed.
 | `calculator_hash` | `example/calculator_tool.py` | Calculator tool unchanged (records with `seal_format` only) |
 | `expected_values_hash` | the ground-truth module's results | Expected values as scored (records with `seal_format` only) |
 | `ap1_text_hash` | `reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md` | AP-1 standard text unchanged |
-| `seal_hash` | All of the above | Composite integrity |
+| `inputs_hash` | All of the above, and every other sealed field but the timestamp | The configuration sealed, whenever it was sealed (records with `seal_format` only) |
+| `seal_hash` | All of the above, and the timestamp | Composite integrity |
 
 ---
 

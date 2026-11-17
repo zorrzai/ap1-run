@@ -95,6 +95,15 @@ updated, and the standard governs.
   also says what the timestamp proves and what it does not (when the seal
   was made, or a rewrite of the record and every transcript line together).
 
+### Revision, 16 November 2026
+
+- **R1.1** the record carries an `inputs_hash`: the hash of every sealed
+  field but the timestamp, so the same inputs give the same `inputs_hash` at
+  any time and it still identifies the configuration sealed; `seal_hash`
+  covers it. Was: "Sealing the same inputs at the same timestamp yields the
+  same `seal_hash`; the hash of each sealed input does not depend on the time
+  of sealing."
+
 ---
 
 ## 1. Purpose, and the one property that matters
@@ -370,8 +379,10 @@ supplied after the fact proves nothing (R1.3).
 
 **Verification Contract.**
 - Modifying any sealed input causes the scorer to refuse, naming the mismatch.
-- Sealing the same inputs at the same timestamp yields the same `seal_hash`;
-  the hash of each sealed input does not depend on the time of sealing.
+- Sealing the same inputs yields the same `inputs_hash` at any time, and the
+  same `seal_hash` only at the same timestamp. `inputs_hash` covers every
+  sealed field but the timestamp; `seal_hash` covers every field, the
+  timestamp and `inputs_hash` included.
 - A run claiming conformance to an AP-1 text whose hash is absent from the
   record is refused.
 

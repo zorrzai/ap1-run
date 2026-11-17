@@ -8,7 +8,8 @@ Usage:
 
 Reads the seal record from report.md section 1 (Pre-Registration Record) and
 the resolved configuration from report.md section 2 (Resolved Configuration).
-Recomputes all component hashes and the seal_hash, and checks that every
+Recomputes all component hashes, the inputs_hash and the seal_hash, and
+checks that every
 line of the run's transcript carries the seal_hash and that the seal is
 dated no later than the first transcript record. Reports each comparison
 individually, pass or fail; what it cannot check, or what a reader should
@@ -20,9 +21,10 @@ them, as for the runner. Relative paths are taken from the working
 directory.
 
 A record with a seal_format field (runs since October 2026) is checked
-under the current rules: the record holds every sealed field, seal_hash
-covers the timestamp, the text inputs are hashed with LF line endings and
-no BOM, and the expected values and the runner source hash are recomputed.
+under the current rules: the record holds every sealed field, inputs_hash
+covers every field but the timestamp, seal_hash covers the timestamp and
+inputs_hash too, the text inputs are hashed with LF line endings and no
+BOM, and the expected values and the runner source hash are recomputed.
 A record without one (the published runs) is checked under the rules it
 was made with: raw bytes, and a seal_hash without the timestamp.
 
@@ -486,7 +488,8 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
                          'HEAD, or the code had uncommitted changes); '
                          'runner_version_tag does not identify the code'))
 
-    # 5. Reconstruct and verify seal_hash
+    # 5. Reconstruct and verify inputs_hash (current format only) and
+    # seal_hash
     sealed_seal_hash = seal_record.get('seal_hash', '')
     # Rebuild the hashable record exactly as seal.py does: all fields
     # except 'seal_hash' (and, in an older record, 'timestamp')
@@ -497,6 +500,20 @@ def verify_run(output_dir, fixture_dir=None, ap1_text=None, warnings=None):
     except ValueError as e:
         failures.append(('seal_hash', 'cannot read the record: %s' % e))
     else:
+        if current_format:
+            # inputs_hash: all fields except the timestamp and the two
+            # hashes over the record
+            sealed_inputs_hash = seal_record.get('inputs_hash', '')
+            computed_inputs_hash = canonical_hash(
+                {k: v for k, v in rebuilt.items()
+                 if k not in ('timestamp', 'inputs_hash', 'seal_hash')})
+            if sealed_inputs_hash == computed_inputs_hash:
+                checks.append(('inputs_hash', 'MATCH'))
+            else:
+                failures.append(('inputs_hash',
+                                 'sealed=%s, recomputed=%s' % (
+                                     sealed_inputs_hash,
+                                     computed_inputs_hash)))
         hashable = {k: v for k, v in rebuilt.items() if k not in unhashed}
         computed_seal_hash = canonical_hash(hashable)
         if sealed_seal_hash == computed_seal_hash:

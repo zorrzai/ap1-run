@@ -34,8 +34,12 @@ writing):
   environment      python_version, platform and package_versions of this
                    interpreter (the driver runs on the same one), outside
                    runner_source_hash (T3-30, T3-70)
+  inputs_hash      canonical hash of every field but 'timestamp',
+                   'inputs_hash' and 'seal_hash' (seal_format 2): the
+                   same inputs give the same inputs_hash at any time
   seal_hash        canonical hash of every field but 'seal_hash' itself,
-                   the timestamp included (seal_format 2; T3-47)
+                   the timestamp and inputs_hash included (seal_format 2;
+                   T3-47)
   runner_source_hash
                    SHA-256 over the runner's code: every .py file under
                    src/ap1_run/ outside a __pycache__ directory, and the
@@ -132,7 +136,7 @@ SEAL_KEYS = frozenset({
     'runner_version_tag',
     'runner_version_commit', 'runner_source_hash', 'python_version',
     'platform', 'package_versions', 'verification_keys', 'ev3_implemented',
-    'seal_hash'})
+    'inputs_hash', 'seal_hash'})
 
 # The packages whose versions a record names, in this order.
 RECORDED_PACKAGES = ('ap1-run', 'requests')
@@ -464,6 +468,8 @@ def expected_outcome(inputs, tree):
         'verification_keys': kw.get('verification_keys') or [],
         'ev3_implemented': False,
     }
+    # Every field so far but the timestamp, which is not in the record yet
+    record['inputs_hash'] = canonical_hash(record)
     return record, None, None
 
 
@@ -532,6 +538,17 @@ def _check_record(got, want, config, window):
         own = canonical_hash(rest)
     except HashCheckError as e:
         own = f'<{e}>'
+    # inputs_hash from the record as returned too, for the same reason
+    try:
+        own_inputs = canonical_hash({
+            k: v for k, v in got.items()
+            if k not in ('timestamp', 'inputs_hash', 'seal_hash')})
+    except HashCheckError as e:
+        own_inputs = f'<{e}>'
+    if got.get('inputs_hash') != own_inputs:
+        problems.append(f'inputs_hash: sealed {got.get("inputs_hash")!r}, '
+                        f'recomputed from the record as returned '
+                        f'{own_inputs!r}')
     if got.get('seal_hash') != recomputed:
         problems.append(f'seal_hash: sealed {got.get("seal_hash")!r}, '
                         f'recomputed {recomputed!r}')
@@ -541,7 +558,7 @@ def _check_record(got, want, config, window):
     problems += _check_timestamp(got.get('timestamp'), window)
     for key in ('fixture_hash', 'questions_hash', 'ground_truth_hash',
                 'calculator_hash', 'config_hash', 'runner_source_hash',
-                'ap1_text_hash',
+                'ap1_text_hash', 'inputs_hash',
                 'seal_hash') + (('expected_values_hash',)
                                 if want.get('expected_values_hash') else ()):
         if not _HEX64.match(str(got.get(key, ''))):

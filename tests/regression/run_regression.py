@@ -35,9 +35,10 @@ Normalisation (in the comparison, never in the runner):
   - the scratch copy's path (or the repository's and the temporary run
     directory's), and the mock endpoint's address and port
   - ISO timestamps, and the adapter's epoch timestamps
-  - this run's seal_hash, config_hash and runner_source_hash, read from
-    the seal the run actually made (the config hash covers the mock's
-    port; the source hash covers the code, and changes when files move)
+  - this run's seal_hash, inputs_hash, config_hash and runner_source_hash,
+    read from the seal the run actually made (the config hash covers the
+    mock's port; the source hash covers the code, and changes when files
+    move; inputs_hash covers both)
   - each adjudication sheet's execution id (derived from the seal hash),
     as <EXECUTION_ID_k> numbered in order of first appearance, so the
     golden still shows which sheets share an id
@@ -437,6 +438,7 @@ def normalise(text, roots, seals):
     text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
+                             ('inputs_hash', '<INPUTS_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),
                              ('runner_source_hash', '<RUNNER_SOURCE_HASH>')):
             value = seal.get(field) or ''
