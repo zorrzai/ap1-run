@@ -774,8 +774,8 @@ def test_canonical_hash_key_order_irrelevant():
 
 
 def test_canonical_hash_known_digest_of_verify_hashes_input():
-    # The input of tests/legacy/verify_hashes.py; CI compares this digest
-    # across platforms.
+    # The input of tests/regression/verify_hashes.py; CI compares this
+    # digest across platforms.
     obj = {
         'z_last': 'should sort last',
         'a_first': 'should sort first',
@@ -1022,8 +1022,9 @@ def test_canonical_hash_pinned_digest_same_on_every_platform():
     # T3-20: the CI job wrote this digest on three platforms and compared
     # nothing until verify_hashes.py pinned it; this test pins the same
     # value under pytest, so a platform that hashes differently fails here
-    # (SPEC R0.4.3 verification item 1) without the legacy script. Inputs
-    # are those of tests/legacy/verify_hashes.py, key order varied as there.
+    # (SPEC R0.4.3 verification item 1) without that script. Inputs
+    # are those of tests/regression/verify_hashes.py, key order varied as
+    # there.
     # (test_canonical_hash_known_digest_of_verify_hashes_input, step 3,
     # pins the same digest and the canonical text.)
     obj = {

@@ -6,8 +6,7 @@ listed, so a file the move forgets to fix up is still caught.
 
     python tests/regression/check_imports.py
 
-Discovery: every .py file outside tests/, the legacy test scripts
-(verify*.py, test_*.py, run_all_tests.py), output/ and virtual
+Discovery: every .py file outside tests/, output/ and virtual
 environments. Names:
   - under src/: the dotted path below src/ (src layout);
   - inside a directory with __init__.py: the dotted path from the root;
@@ -26,11 +25,6 @@ _SKIP_DIRS = {'.git', 'tests', 'output', 'graphify-out', '__pycache__',
               'review_output'}
 
 
-def _is_legacy_test(name, rel_dir):
-    return rel_dir == '' and (name.startswith(('verify', 'test_'))
-                              or name == 'run_all_tests.py')
-
-
 def discover():
     found = []
     for root, dirs, files in os.walk(REPO):
@@ -39,7 +33,7 @@ def discover():
         rel_dir = os.path.relpath(root, REPO)
         rel_dir = '' if rel_dir == '.' else rel_dir
         for f in sorted(files):
-            if not f.endswith('.py') or _is_legacy_test(f, rel_dir):
+            if not f.endswith('.py'):
                 continue
             found.append(module_for(rel_dir, f))
     return found

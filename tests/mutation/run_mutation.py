@@ -146,7 +146,7 @@ def main(argv=None):
                         help="print each surviving mutant's diff")
     parser.add_argument('--tests', action='append', metavar='FILE',
                         help='run this test file (repeatable) instead of the recorded '
-                             'ones, e.g. legacy suites, to compare their '
+                             'ones, e.g. conformance tests, to compare their '
                              'strength; cannot be combined with --record')
     args = parser.parse_args(argv)
     if args.tests and args.record:

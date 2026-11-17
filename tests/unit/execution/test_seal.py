@@ -211,6 +211,28 @@ def test_seal_no_ap1_text_path_records_declared_hash_unverified(
     assert record['ap1_text_hash'] == 'anything'
 
 
+@pytest.mark.req('R1.1')
+def test_seal_shipped_ap1_text_matches_example_config_hash(frozen):
+    # A data check on the shipped files, run on every OS CI tests: the
+    # AP-1 text in reference/ hashes to the ap1_text_hash that
+    # example/config.json declares, and seal() accepts it and records that
+    # hash. A checkout that changes the text's bytes (e.g. line endings,
+    # despite .gitattributes "reference/** -text") fails here. (From legacy
+    # verify.py test_r11_ap1_hash, "real ap1 hash matches reference file".)
+    root = Path(__file__).resolve().parents[3]
+    text = root / 'reference' / 'AP-1_v1.3_DRAFT_FOR_COMMENT.md'
+    example = root / 'example'
+    declared = json.loads((example / 'config.json').read_text(
+        encoding='utf-8'))['ap1_text_hash']
+    assert sha(text.read_bytes()) == declared
+    record = seal(config={**CONFIG, 'ap1_text_hash': declared},
+                  fixture_path=example / 'fixture.json',
+                  questions_path=example / 'questions.json',
+                  ground_truth_path=example / 'ground_truth_example.py',
+                  ap1_text_path=text)
+    assert record['ap1_text_hash'] == declared
+
+
 # -- verify_seal() ----------------------------------------------------------
 
 def verify(record, files, config=CONFIG, **kwargs):

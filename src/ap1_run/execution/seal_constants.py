@@ -5,7 +5,8 @@ is a member of the declared constants set.  A constant used but
 not declared is a silent dependency the perturbation check cannot
 detect.  This is the defect that caused E3.
 
-Separated from seal.py to stay within the 300-line module limit.
+Separated from seal.py under SPEC §12.9's former 300-line module limit
+(removed in November 2026).
 """
 
 import ast
