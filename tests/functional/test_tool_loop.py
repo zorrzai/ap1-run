@@ -53,12 +53,12 @@ def test_multi_round_loop_classifies_from_accumulated_calls(run_item, turns,
         'turn': 1, 'id': 'call_1', 'type': 'function',
         'function': {'name': 'calculator', 'arguments': json.dumps(
             {'expression': '15200.00 * 1.2 / 100 / 12'})},
-        # The example calculator evaluates in float.
-        'return_value': '{"result": "15.200000000000001"}'}]
+        # The example calculator evaluates in exact decimal (T3-59).
+        'return_value': '{"result": "15.2"}'}]
     # Round 2 carried the tool result back to the model.
     assert endpoint.requests[1]['messages'][-1] == {
         'role': 'tool', 'tool_call_id': 'call_1',
-        'content': '{"result": "15.200000000000001"}'}
+        'content': '{"result": "15.2"}'}
     assert [e['invocation_outcome'] for e in transcript] == ['INVOKED']
 
 

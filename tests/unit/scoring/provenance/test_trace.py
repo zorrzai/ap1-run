@@ -647,3 +647,18 @@ def test_resolve_negated_constant_equal_to_negated_source_is_sign_inversion():
     assert r['sign_inversion_finding'] == {
         'type': 'SIGN-INVERSION', 'matched_field': 'checking.monthly_fee',
         'source_value': '12', 'operand_value': '-12'}
+
+
+@pytest.mark.finding('T3-60')
+@pytest.mark.req('R0.4.1', 'R2.4')
+def test_transformation_is_exact_whatever_the_callers_precision():
+    # percent_to_fraction of a 31-digit source grounds its exact 33-digit
+    # result, at a caller's precision of 28 (the default).
+    from decimal import localcontext
+    source = '1.234567890123456789012345678901'
+    ctx = {'acct': {'rate': source}}
+    with localcontext() as c:
+        c.prec = 28
+        res = resolve('0.01234567890123456789012345678901', ctx=ctx,
+                      transforms=['percent_to_fraction'])
+    assert res['step'] == 2, res

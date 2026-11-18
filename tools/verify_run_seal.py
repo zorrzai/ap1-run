@@ -13,13 +13,12 @@ EXIT CODES:
     0 -- all checks pass
     1 -- at least one check failed
 
-NOTE: The on-disk config files (example/config.json, example/config_mini.json)
-contain placeholder values for model and endpoint_url. These are overwritten
-with runtime values from environment variables BEFORE the seal is computed
-(src/ap1_run/run.py, main()). The sealed config_hash therefore matches the
-RESOLVED configuration in report.md section 2, NOT the on-disk config file.
-A verifier who hashes config.json directly will get a mismatch -- that is
-correct behaviour, not a failure.
+NOTE: The config_hash is checked against the configuration report.md
+section 2 records, which is the one the run sealed. No config file on disk
+is consulted: for the published runs the runner wrote the model, endpoint
+and two sampling settings from environment variables into the config after
+loading it, so no file in example/ matches their seal. (Since then the
+runner takes every setting from the file it is given with --config.)
 """
 
 import json
@@ -137,25 +136,6 @@ def verify_run(output_dir):
         failures.append(('config_hash',
                          'sealed=%s, recomputed=%s' % (
                              sealed_config_hash, computed_config_hash)))
-
-    # 3b. TRAP CHECK: warn if on-disk config would produce a different hash
-    for cfg_name in ['config.json', 'config_mini.json']:
-        cfg_path = os.path.join(BASE_DIR, 'example', cfg_name)
-        if os.path.exists(cfg_path):
-            with open(cfg_path, encoding='utf-8') as f:
-                disk_config = json.load(f)
-            disk_hash = canonical_hash(disk_config)
-            if disk_hash == sealed_config_hash:
-                checks.append(('on-disk %s' % cfg_name,
-                                'matches seal (unexpected)'))
-            else:
-                checks.append(('on-disk %s' % cfg_name,
-                                'does NOT match seal -- EXPECTED. '
-                                'The on-disk config contains placeholder '
-                                'model/endpoint that differ from the '
-                                'runtime values. Use the RESOLVED config '
-                                'from report.md section 2, not the on-disk '
-                                'file.'))
 
     # 4. Recompute file hashes
     file_checks = [

@@ -78,6 +78,13 @@ From the same checkout and environment:
   URL. The key goes in `AP1_SMOKE_API_KEY` (see SECURITY.md).
 - Then run `python smoke_test.py`.
 
+These environment variables belong to the code of the published runs. The
+current runner takes the endpoint, the model and every sampling setting from
+the config file alone (only `AP1_SMOKE_API_KEY` is read from the
+environment). Each published model has its own configuration:
+`example/config_mini.json` (gpt-4.1-mini) and `example/config_sol.json`
+(gpt-5.6-sol), e.g. `ap1-run --config example/config_sol.json`.
+
 ## Verifying the published artifacts
 
 This recipe checks the September run directories against their seals. The

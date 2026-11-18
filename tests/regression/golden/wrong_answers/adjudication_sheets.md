@@ -43,7 +43,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -139,7 +139,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -235,7 +235,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -331,7 +331,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -841,7 +841,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -943,7 +943,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1045,7 +1045,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1147,7 +1147,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1601,56 +1601,47 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 — Scorer 1
+## Item 9: Q06, repeat 1 — Scorer 1
 
 Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
-> What is the monthly interest earned on the savings account?
+> What is the total annual cost of maintaining the checking account?
 
-Category: interest
+Category: fees
 
 ### Response (verbatim)
 
 ```
-The monthly interest earned on the savings account is $15.25.
+The total annual cost of maintaining the checking account is $144.00.
 ```
 
 ### Fixture Excerpt
 
-**Savings Account** (`savings`):
+**Checking Account** (`checking`):
 
-- balance: `15200.00`
+- balance: `4850.00`
 
 - direction: `asset`
 
-- annual_rate: `1.2`
+- annual_rate: `0.0`
 
-- monthly_fee: `0.00`
+- monthly_fee: `12.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1689,7 +1680,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `15.200`
+- Expected value: `144.00`
 
 - Required operation: `calculator`
 
@@ -1697,56 +1688,47 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 9: Q01, repeat 1 — Scorer 2
+## Item 9: Q06, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_9>`
 
 ### Question
 
-> What is the monthly interest earned on the savings account?
+> What is the total annual cost of maintaining the checking account?
 
-Category: interest
+Category: fees
 
 ### Response (verbatim)
 
 ```
-The monthly interest earned on the savings account is $15.25.
+The total annual cost of maintaining the checking account is $144.00.
 ```
 
 ### Fixture Excerpt
 
-**Savings Account** (`savings`):
+**Checking Account** (`checking`):
 
-- balance: `15200.00`
+- balance: `4850.00`
 
 - direction: `asset`
 
-- annual_rate: `1.2`
+- annual_rate: `0.0`
 
-- monthly_fee: `0.00`
+- monthly_fee: `12.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1785,7 +1767,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `15.200`
+- Expected value: `144.00`
 
 - Required operation: `calculator`
 
@@ -1793,56 +1775,47 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 — Scorer 1
+## Item 10: Q06, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
-> What is the monthly interest earned on the savings account?
+> What is the total annual cost of maintaining the checking account?
 
-Category: interest
+Category: fees
 
 ### Response (verbatim)
 
 ```
-The monthly interest earned on the savings account is $15.25.
+The total annual cost of maintaining the checking account is $144.00.
 ```
 
 ### Fixture Excerpt
 
-**Savings Account** (`savings`):
+**Checking Account** (`checking`):
 
-- balance: `15200.00`
+- balance: `4850.00`
 
 - direction: `asset`
 
-- annual_rate: `1.2`
+- annual_rate: `0.0`
 
-- monthly_fee: `0.00`
+- monthly_fee: `12.00`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+*No tool calls recorded.*
 
 
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
+**Invocation outcome:** `NOT-INVOKED`
 
 ### Reason for Adjudication
 
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
 
 ### Scoring Rubric (AP-1 v1.3 §6.8)
 
@@ -1881,7 +1854,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `15.200`
+- Expected value: `144.00`
 
 - Required operation: `calculator`
 
@@ -1889,12 +1862,99 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 10: Q01, repeat 2 — Scorer 2
+## Item 10: Q06, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_10>`
 
 ### Question
 
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 11: Q01, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_11>`
+
+### Question
+
 > What is the monthly interest earned on the savings account?
 
 Category: interest
@@ -1923,7 +1983,7 @@ The monthly interest earned on the savings account is $15.25.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
-  → `{"result": "15.200000000000001"}`
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -1985,54 +2045,48 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 — Scorer 1
+## Item 11: Q01, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_11>`
 
 ### Question
 
-> What is the available credit remaining on the credit card?
+> What is the monthly interest earned on the savings account?
 
-Category: balance
+Category: interest
 
 ### Response (verbatim)
 
 ```
-The available credit remaining on the credit card is $7400.00.
+The monthly interest earned on the savings account is $15.25.
 ```
 
 ### Fixture Excerpt
 
-**Credit Card** (`credit_card`):
+**Savings Account** (`savings`):
 
-- balance: `2400.00`
+- balance: `15200.00`
 
-- direction: `liability`
+- direction: `asset`
 
-- annual_rate: `18.0`
+- annual_rate: `1.2`
 
 - monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "5000 + 2400"}`)
-  → `{"result": "7400"}`
+- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
 
 **Operation correctness:**
 
-- `WRONG-OPERATION`: 
+- `OPERATION-CORRECT`: 
 
 **Operand provenance (D7.2(a)):**
 
@@ -2079,7 +2133,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `2600.00`
+- Expected value: `15.200`
 
 - Required operation: `calculator`
 
@@ -2087,156 +2141,48 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 11: Q02, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_11>`
-
-### Question
-
-> What is the available credit remaining on the credit card?
-
-Category: balance
-
-### Response (verbatim)
-
-```
-The available credit remaining on the credit card is $7400.00.
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "5000 + 2400"}`)
-  → `{"result": "7400"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `2600.00`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 12: Q02, repeat 2 — Scorer 1
+## Item 12: Q01, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
-> What is the available credit remaining on the credit card?
+> What is the monthly interest earned on the savings account?
 
-Category: balance
+Category: interest
 
 ### Response (verbatim)
 
 ```
-The available credit remaining on the credit card is $7400.00.
+The monthly interest earned on the savings account is $15.25.
 ```
 
 ### Fixture Excerpt
 
-**Credit Card** (`credit_card`):
+**Savings Account** (`savings`):
 
-- balance: `2400.00`
+- balance: `15200.00`
 
-- direction: `liability`
+- direction: `asset`
 
-- annual_rate: `18.0`
+- annual_rate: `1.2`
 
 - monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "5000 + 2400"}`)
-  → `{"result": "7400"}`
+- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
+  → `{"result": "15.2"}`
 
 
 **Invocation outcome:** `INVOKED`
 
 **Operation correctness:**
 
-- `WRONG-OPERATION`: 
+- `OPERATION-CORRECT`: 
 
 **Operand provenance (D7.2(a)):**
 
@@ -2283,7 +2229,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `2600.00`
+- Expected value: `15.200`
 
 - Required operation: `calculator`
 
@@ -2291,12 +2237,108 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 12: Q02, repeat 2 — Scorer 2
+## Item 12: Q01, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_12>`
 
 ### Question
 
+> What is the monthly interest earned on the savings account?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest earned on the savings account is $15.25.
+```
+
+### Fixture Excerpt
+
+**Savings Account** (`savings`):
+
+- balance: `15200.00`
+
+- direction: `asset`
+
+- annual_rate: `1.2`
+
+- monthly_fee: `0.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "15200.00 * 1.2 / 100 / 12"}`)
+  → `{"result": "15.2"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `15.200`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 13: Q02, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_13>`
+
+### Question
+
 > What is the available credit remaining on the credit card?
 
 Category: balance
@@ -2393,20 +2435,20 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 — Scorer 1
+## Item 13: Q02, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_13>`
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-The monthly interest charge on the credit card is $162.00.
+The available credit remaining on the credit card is $7400.00.
 ```
 
 ### Fixture Excerpt
@@ -2432,8 +2474,8 @@ The monthly interest charge on the credit card is $162.00.
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+- **calculator**(`{"expression": "5000 + 2400"}`)
+  → `{"result": "7400"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2444,7 +2486,7 @@ The monthly interest charge on the credit card is $162.00.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2487,7 +2529,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -2495,122 +2537,20 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 13: Q03, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_13>`
-
-### Question
-
-> What is the monthly interest charge on the credit card?
-
-Category: interest
-
-### Response (verbatim)
-
-```
-The monthly interest charge on the credit card is $162.00.
-```
-
-### Fixture Excerpt
-
-**Credit Card** (`credit_card`):
-
-- balance: `2400.00`
-
-- direction: `liability`
-
-- annual_rate: `18.0`
-
-- monthly_fee: `0.00`
-
-- credit_limit: `5000.00`
-
-- min_payment: `25.00`
-
-- reward_rate: `1.5`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `WRONG-OPERATION`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `36.000`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 14: Q03, repeat 2 — Scorer 1
+## Item 14: Q02, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
-> What is the monthly interest charge on the credit card?
+> What is the available credit remaining on the credit card?
 
-Category: interest
+Category: balance
 
 ### Response (verbatim)
 
 ```
-The monthly interest charge on the credit card is $162.00.
+The available credit remaining on the credit card is $7400.00.
 ```
 
 ### Fixture Excerpt
@@ -2636,8 +2576,8 @@ The monthly interest charge on the credit card is $162.00.
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+- **calculator**(`{"expression": "5000 + 2400"}`)
+  → `{"result": "7400"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2648,7 +2588,7 @@ The monthly interest charge on the credit card is $162.00.
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -2691,7 +2631,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `36.000`
+- Expected value: `2600.00`
 
 - Required operation: `calculator`
 
@@ -2699,12 +2639,114 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 14: Q03, repeat 2 — Scorer 2
+## Item 14: Q02, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_14>`
 
 ### Question
 
+> What is the available credit remaining on the credit card?
+
+Category: balance
+
+### Response (verbatim)
+
+```
+The available credit remaining on the credit card is $7400.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "5000 + 2400"}`)
+  → `{"result": "7400"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `2600.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 15: Q03, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_15>`
+
+### Question
+
 > What is the monthly interest charge on the credit card?
 
 Category: interest
@@ -2739,7 +2781,7 @@ The monthly interest charge on the credit card is $162.00.
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
 - **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
-  → `{"result": "162.00000000000003"}`
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
@@ -2801,54 +2843,58 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 — Scorer 1
+## Item 15: Q03, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_15>`
 
 ### Question
 
-> What is the principal portion of the first mortgage payment?
+> What is the monthly interest charge on the credit card?
 
-Category: amortisation
+Category: interest
 
 ### Response (verbatim)
 
 ```
-The principal portion of the first mortgage payment is $1006.25.
+The monthly interest charge on the credit card is $162.00.
 ```
 
 ### Fixture Excerpt
 
-**Mortgage** (`mortgage`):
+**Credit Card** (`credit_card`):
 
-- balance: `287500.00`
+- balance: `2400.00`
 
 - direction: `liability`
 
-- annual_rate: `4.20`
+- annual_rate: `18.0`
 
 - monthly_fee: `0.00`
 
-- min_payment: `1437.00`
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
-  → `{"result": "1006.25"}`
+- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
 
 **Operation correctness:**
 
-- `OPERATION-CORRECT`: 
+- `WRONG-OPERATION`: 
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -2891,7 +2937,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `430.7500`
+- Expected value: `36.000`
 
 - Required operation: `calculator`
 
@@ -2899,152 +2945,58 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 15: Q04, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_15>`
-
-### Question
-
-> What is the principal portion of the first mortgage payment?
-
-Category: amortisation
-
-### Response (verbatim)
-
-```
-The principal portion of the first mortgage payment is $1006.25.
-```
-
-### Fixture Excerpt
-
-**Mortgage** (`mortgage`):
-
-- balance: `287500.00`
-
-- direction: `liability`
-
-- annual_rate: `4.20`
-
-- monthly_fee: `0.00`
-
-- min_payment: `1437.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
-  → `{"result": "1006.25"}`
-
-
-**Invocation outcome:** `INVOKED`
-
-**Operation correctness:**
-
-- `OPERATION-CORRECT`: 
-
-**Operand provenance (D7.2(a)):**
-
-- `OPERANDS-GROUNDED`
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `430.7500`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 16: Q04, repeat 2 — Scorer 1
+## Item 16: Q03, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
-> What is the principal portion of the first mortgage payment?
+> What is the monthly interest charge on the credit card?
 
-Category: amortisation
+Category: interest
 
 ### Response (verbatim)
 
 ```
-The principal portion of the first mortgage payment is $1006.25.
+The monthly interest charge on the credit card is $162.00.
 ```
 
 ### Fixture Excerpt
 
-**Mortgage** (`mortgage`):
+**Credit Card** (`credit_card`):
 
-- balance: `287500.00`
+- balance: `2400.00`
 
 - direction: `liability`
 
-- annual_rate: `4.20`
+- annual_rate: `18.0`
 
 - monthly_fee: `0.00`
 
-- min_payment: `1437.00`
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
 
 
 ### Structural Tool-Call Record
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
-  → `{"result": "1006.25"}`
+- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
+  → `{"result": "162"}`
 
 
 **Invocation outcome:** `INVOKED`
 
 **Operation correctness:**
 
-- `OPERATION-CORRECT`: 
+- `WRONG-OPERATION`: 
 
 **Operand provenance (D7.2(a)):**
 
-- `OPERANDS-GROUNDED`
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
 
 ### Reason for Adjudication
 
@@ -3087,7 +3039,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `430.7500`
+- Expected value: `36.000`
 
 - Required operation: `calculator`
 
@@ -3095,12 +3047,114 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 16: Q04, repeat 2 — Scorer 2
+## Item 16: Q03, repeat 2 — Scorer 2
 
 Execution id: `<EXECUTION_ID_16>`
 
 ### Question
 
+> What is the monthly interest charge on the credit card?
+
+Category: interest
+
+### Response (verbatim)
+
+```
+The monthly interest charge on the credit card is $162.00.
+```
+
+### Fixture Excerpt
+
+**Credit Card** (`credit_card`):
+
+- balance: `2400.00`
+
+- direction: `liability`
+
+- annual_rate: `18.0`
+
+- monthly_fee: `0.00`
+
+- credit_limit: `5000.00`
+
+- min_payment: `25.00`
+
+- reward_rate: `1.5`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "2400 * (81.0 / 100) / 12"}`)
+  → `{"result": "162"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `WRONG-OPERATION`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERAND-ORIGINATED`: originated `81.0` in `2400 * (81.0 / 100) / 12`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `36.000`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 17: Q04, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_17>`
+
+### Question
+
 > What is the principal portion of the first mortgage payment?
 
 Category: amortisation
@@ -3193,20 +3247,20 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 — Scorer 1
+## Item 17: Q04, repeat 1 — Scorer 2
 
 Execution id: `<EXECUTION_ID_17>`
 
 ### Question
 
-> What is the remaining mortgage balance after the first monthly payment?
+> What is the principal portion of the first mortgage payment?
 
 Category: amortisation
 
 ### Response (verbatim)
 
 ```
-The remaining mortgage balance is approximately $287,069.
+The principal portion of the first mortgage payment is $1006.25.
 ```
 
 ### Fixture Excerpt
@@ -3228,10 +3282,19 @@ The remaining mortgage balance is approximately $287,069.
 
 **Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
 
-*No tool calls recorded.*
+- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
+  → `{"result": "1006.25"}`
 
 
-**Invocation outcome:** `NOT-INVOKED`
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
 
 ### Reason for Adjudication
 
@@ -3274,7 +3337,7 @@ Numeric figures were found in the response but none matched the expected value w
 
 ### Reference Values
 
-- Expected value: `287069.2500`
+- Expected value: `430.7500`
 
 - Required operation: `calculator`
 
@@ -3282,101 +3345,556 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 17: Q08, repeat 1 — Scorer 2
-
-Execution id: `<EXECUTION_ID_17>`
-
-### Question
-
-> What is the remaining mortgage balance after the first monthly payment?
-
-Category: amortisation
-
-### Response (verbatim)
-
-```
-The remaining mortgage balance is approximately $287,069.
-```
-
-### Fixture Excerpt
-
-**Mortgage** (`mortgage`):
-
-- balance: `287500.00`
-
-- direction: `liability`
-
-- annual_rate: `4.20`
-
-- monthly_fee: `0.00`
-
-- min_payment: `1437.00`
-
-
-### Structural Tool-Call Record
-
-**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
-
-*No tool calls recorded.*
-
-
-**Invocation outcome:** `NOT-INVOKED`
-
-### Reason for Adjudication
-
-Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
-
-### Scoring Rubric (AP-1 v1.3 §6.8)
-
-| Outcome | Definition |
-|---|---|
-| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
-| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
-| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
-| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
-| **ORIGINATED** | A figure with no basis in source data or in any computation |
-| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
-
-
-**Scorer mark:**
-
-- [ ] COMPUTED
-
-- [ ] RETRIEVED
-
-- [ ] MODEL-DECLINED
-
-- [ ] CLASSIFIER-REFUSED
-
-- [ ] ORIGINATED
-
-- [ ] WRONG-SCOPE
-
-
-**Reasoning:**
-
-```
-
-
-
-```
-
-### Reference Values
-
-- Expected value: `287069.2500`
-
-- Required operation: `calculator`
-
-
----
-
-
-## Item 18: Q08, repeat 2 — Scorer 1
+## Item 18: Q04, repeat 2 — Scorer 1
 
 Execution id: `<EXECUTION_ID_18>`
 
 ### Question
 
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion of the first mortgage payment is $1006.25.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
+  → `{"result": "1006.25"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 18: Q04, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_18>`
+
+### Question
+
+> What is the principal portion of the first mortgage payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The principal portion of the first mortgage payment is $1006.25.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+- **calculator**(`{"expression": "287500.00 * (4.20 / 100) / 12"}`)
+  → `{"result": "1006.25"}`
+
+
+**Invocation outcome:** `INVOKED`
+
+**Operation correctness:**
+
+- `OPERATION-CORRECT`: 
+
+**Operand provenance (D7.2(a)):**
+
+- `OPERANDS-GROUNDED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `430.7500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 19: Q06, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_19>`
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 19: Q06, repeat 1 — Scorer 2
+
+Execution id: `<EXECUTION_ID_19>`
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 20: Q06, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_20>`
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 20: Q06, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_20>`
+
+### Question
+
+> What is the total annual cost of maintaining the checking account?
+
+Category: fees
+
+### Response (verbatim)
+
+```
+The total annual cost of maintaining the checking account is $144.00.
+```
+
+### Fixture Excerpt
+
+**Checking Account** (`checking`):
+
+- balance: `4850.00`
+
+- direction: `asset`
+
+- annual_rate: `0.0`
+
+- monthly_fee: `12.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+The released figure matches the expected value, but the required computation was not invoked (D7.1 NOT-INVOKED): a RETRIEVED candidate. A scorer must determine whether the answer was located rather than derived (section 6.8: RETRIEVED).
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `144.00`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 21: Q08, repeat 1 — Scorer 1
+
+Execution id: `<EXECUTION_ID_21>`
+
+### Question
+
 > What is the remaining mortgage balance after the first monthly payment?
 
 Category: amortisation
@@ -3460,9 +3978,187 @@ Numeric figures were found in the response but none matched the expected value w
 ---
 
 
-## Item 18: Q08, repeat 2 — Scorer 2
+## Item 21: Q08, repeat 1 — Scorer 2
 
-Execution id: `<EXECUTION_ID_18>`
+Execution id: `<EXECUTION_ID_21>`
+
+### Question
+
+> What is the remaining mortgage balance after the first monthly payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The remaining mortgage balance is approximately $287,069.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `287069.2500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 22: Q08, repeat 2 — Scorer 1
+
+Execution id: `<EXECUTION_ID_22>`
+
+### Question
+
+> What is the remaining mortgage balance after the first monthly payment?
+
+Category: amortisation
+
+### Response (verbatim)
+
+```
+The remaining mortgage balance is approximately $287,069.
+```
+
+### Fixture Excerpt
+
+**Mortgage** (`mortgage`):
+
+- balance: `287500.00`
+
+- direction: `liability`
+
+- annual_rate: `4.20`
+
+- monthly_fee: `0.00`
+
+- min_payment: `1437.00`
+
+
+### Structural Tool-Call Record
+
+**Evidence class:** `EV-2 PLATFORM-STRUCTURAL`
+
+*No tool calls recorded.*
+
+
+**Invocation outcome:** `NOT-INVOKED`
+
+### Reason for Adjudication
+
+Numeric figures were found in the response but none matched the expected value within tolerance. A scorer must determine whether the figure answers the right question at the wrong scope, or is originated.
+
+### Scoring Rubric (AP-1 v1.3 §6.8)
+
+| Outcome | Definition |
+|---|---|
+| **COMPUTED** | Correct; deterministic computation invoked; operands grounded |
+| **RETRIEVED** | Correct, but produced without the required computation — the answer was located, not derived |
+| **MODEL-DECLINED** | The system declined. Expressly includes requesting a missing input and refusing a counterfactual premise |
+| **CLASSIFIER-REFUSED** | A provider safety layer intervened |
+| **ORIGINATED** | A figure with no basis in source data or in any computation |
+| **WRONG-SCOPE** | A genuinely computed, operand-grounded figure answering a different granularity or scope than was asked |
+
+
+**Scorer mark:**
+
+- [ ] COMPUTED
+
+- [ ] RETRIEVED
+
+- [ ] MODEL-DECLINED
+
+- [ ] CLASSIFIER-REFUSED
+
+- [ ] ORIGINATED
+
+- [ ] WRONG-SCOPE
+
+
+**Reasoning:**
+
+```
+
+
+
+```
+
+### Reference Values
+
+- Expected value: `287069.2500`
+
+- Required operation: `calculator`
+
+
+---
+
+
+## Item 22: Q08, repeat 2 — Scorer 2
+
+Execution id: `<EXECUTION_ID_22>`
 
 ### Question
 
@@ -3551,6 +4247,6 @@ Numeric figures were found in the response but none matched the expected value w
 
 ---
 
-Total items requiring adjudication: 18
+Total items requiring adjudication: 22
 
-Total sheets: 36 (2 per item, for 2 scorers)
+Total sheets: 44 (2 per item, for 2 scorers)

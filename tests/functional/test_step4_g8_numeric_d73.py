@@ -59,8 +59,7 @@ def run_example(tmp_path, monkeypatch, responses, **config_changes):
     for name in [n for n in list(os.environ) if n.startswith('AP1_SMOKE_')]:
         monkeypatch.delenv(name)
     monkeypatch.setenv('AP1_SMOKE_API_KEY', 'sk-step4-not-a-real-key-0000')
-    monkeypatch.setenv('AP1_SMOKE_ENDPOINT', mock.url)
-    monkeypatch.setenv('AP1_SMOKE_MODEL', 'mock-model')
+    mock.point_config(config_path)  # T3-80: config only
     monkeypatch.setattr(time, 'sleep', lambda seconds: None)
     # main() puts the fixture directory on sys.path and imports the
     # example modules; keep that from leaking into other tests.
@@ -230,9 +229,6 @@ def test_run_report_counts_transcriptions_rounded_under_declared_policy(
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a run sealed with European separators '
-                          'parses the responses with US separators')
 def test_run_european_separators_parse_the_released_figure(
         tmp_path, monkeypatch, capsys):
     # SPEC R0.4.2: tokens are parsed with the configured decimal_separator
@@ -254,10 +250,6 @@ def test_run_european_separators_parse_the_released_figure(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: the subtrahend in "1437.00 - 430.75" is '
-                          'extracted as -430.75, hiding a second mention of '
-                          'the expected value from figure identification')
 def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
         tmp_path, monkeypatch, capsys):
     # End-to-end check: does S3-G1-5 reach figure
@@ -274,3 +266,91 @@ def test_run_expected_value_as_subtrahend_and_answer_routes_ambiguous(
                             'principal portion is $430.75.'}]})
     assert {c: r['figure_outcome'] for c, r in rows(out, 'Q04').items()} \
         == dict.fromkeys(BOTH, 'ADJUDICATE-AMBIGUOUS')
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_wrong_sign_after_a_label_number_is_not_auto_matched(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: a sign after a number with a space before it
+    # and none after ('month 12 -430.75') is the figure's sign, not a
+    # subtraction. Q04 expects +430.75, so this reply's -430.75 matches
+    # nothing and goes to adjudication; at 3803f542 it read 430.75 and
+    # AUTO-MATCHed, a wrong-sign answer scored correct.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'For payment 1 -430.75 is the principal '
+                            'portion.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_currency_before_a_signed_figure_is_not_auto_matched(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: with the example's currency_symbols ['$', 'USD'],
+    # 'For payment 1 $-430.75' read '1 $' and +430.75, so this wrong-sign
+    # reply AUTO-MATCHed Q04's expected +430.75 at 70d3744a. The '$'
+    # belongs to -430.75, which matches nothing.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'For payment 1 $-430.75 is the principal '
+                            'portion.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_currency_glued_before_a_sign_is_not_auto_matched(
+        tmp_path, monkeypatch, capsys):
+    # The maintainer's decision on the second review of #13: 'For payment 1$-430.75'
+    # (no space either side of the '$', a sign after it) reads 1 $ and
+    # +430.75 and AUTO-MATCHed Q04's expected +430.75 at 53099b15. Whether
+    # the '-' is the figure's sign or a subtraction is a person's call.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'For payment 1$-430.75 is the principal '
+                            'portion.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
+# -- S3-G1-7: a figure in other scripts' digits goes to a person ------------
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_reply_in_arabic_indic_digits_routes_to_adjudication(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: R0.4.2 reads ASCII digits only, so a reply
+    # whose figure is '\u0664\u0663\u0660.\u0667\u0665' (430.75 in
+    # Arabic-Indic digits) holds no numeric token; it must go to
+    # adjudication, not AUTO-NO-FIGURE (scored wrong with no human look).
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'The principal portion is '
+                            '\u0664\u0663\u0660.\u0667\u0665 dollars.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_run_ascii_step_beside_another_scripts_answer_routes_to_adjudication(
+        tmp_path, monkeypatch, capsys):
+    # The review of #13: 'Step: 430.75 was wrong; final answer' then 420.00
+    # in Arabic-Indic digits AUTO-MATCHed Q04's expected 430.75 at 70d3744a,
+    # on the step the reply calls wrong. Any digit of another script in the
+    # reply now sends it to adjudication.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'Step: 430.75 was wrong; final answer '
+                            '\u0664\u0662\u0660\u066b\u0660\u0660'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))

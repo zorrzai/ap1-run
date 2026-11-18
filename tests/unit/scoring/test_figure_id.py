@@ -240,6 +240,151 @@ def test_identify_figure_no_numeric_tokens_is_auto_no_figure():
         'extracted_tokens': [], 'matched_indices': []}
 
 
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content', [
+    'The answer is \u0661\u0665.\u0662\u0660.',       # Arabic-Indic 15.20
+    'The answer is \u06f1\u06f5.\u06f2\u06f0.',       # Extended (Persian)
+    'The answer is \u0967\u096b.\u0968\u0966.',       # Devanagari
+    'The answer is \uff11\uff15.\uff12\uff10.',       # full-width
+], ids=['arabic-indic', 'extended-arabic-indic', 'devanagari', 'full-width'])
+def test_identify_figure_non_ascii_digits_route_to_adjudication(content):
+    # The review of #13: R0.4.2's digits are ASCII 0-9 only, so such
+    # a reply holds no numeric token; but it states a figure, so it must
+    # go to a person, not score AUTO-NO-FIGURE (wrong, with no look).
+    r = identify(response(content))
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert r['extracted_tokens'] == []
+    assert 'ASCII' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R2.0')
+@pytest.mark.parametrize('content', [
+    'Happy to help, see \u00b2 and \u00bd.',        # superscript, fraction
+    '\u5341\u4e94 dollars',                           # CJK numerals (No/Lo)
+])
+def test_identify_figure_non_digit_number_characters_stay_no_figure(content):
+    # Only Unicode decimal digits (category Nd) route; superscripts,
+    # vulgar fractions and CJK numerals are not digits of any script.
+    assert identify(response(content))['outcome'] == AUTO_NO_FIGURE
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected', [
+    ('Step: 430.75 was wrong; final answer '
+     '\u0664\u0662\u0660\u066b\u0660\u0660', '430.75'),
+    ('Step: 430.75 was wrong; final answer \uff14\uff12\uff10.00',
+     '430.75'),
+    ('The answer is 15.20, or \u0967\u096b.\u0968\u0966', '15.20'),
+], ids=['arabic-indic-final-answer', 'full-width-final-answer',
+        'devanagari-beside-match'])
+def test_identify_figure_non_ascii_digits_beside_a_match_route_to_adjudication(
+        content, expected):
+    # The review of #13: 'Step: 430.75 was wrong; final answer
+    # \u0664\u0662\u0660\u066b\u0660\u0660' (420.00 in Arabic-Indic digits)
+    # AUTO-MATCHed an expected 430.75 on the step it calls wrong, since the
+    # other-script check ran only when extraction found no ASCII token. Any
+    # Unicode decimal digit other than ASCII 0-9 anywhere in the reply now
+    # sends an automatic outcome to a person.
+    r = identify(response(content), expected=expected)
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert 'ASCII' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('15.20 or 15.20, or \u0661\u0665.\u0662\u0660', '15.20',
+     ADJUDICATE_AMBIGUOUS),
+    ('It is 9.99, or \u0661\u0665.\u0662\u0660', '15.20',
+     ADJUDICATE_NO_MATCH),
+], ids=['two-matches-stay-ambiguous', 'no-match-stays-none-matching'])
+def test_identify_figure_non_ascii_digits_leave_adjudicated_outcomes_alone(
+        content, expected, outcome):
+    # An outcome that already goes to a person keeps its own reason.
+    assert identify(response(content), expected=expected)['outcome'] \
+        == outcome
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('For month 12 $-575.50 was paid', '575.50', ADJUDICATE_NO_MATCH),
+    ('For month 12 $-575.50 was paid', '-575.50', AUTO_MATCH),
+], ids=['wrong-sign-not-matched', 'negative-matched'])
+def test_identify_figure_currency_before_a_signed_figure_keeps_the_sign(
+        content, expected, outcome):
+    # The review of #13, with example/config.json's currency_symbols: at
+    # 70d3744a the first AUTO-MATCHes (a wrong-sign answer scored correct)
+    # and the second goes to adjudication.
+    r = identify(response(content), expected=expected,
+                 currency_symbols=['$', 'USD'])
+    assert r['outcome'] == outcome, r
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected', [
+    ('For month 12$-575.50 was paid', '575.50'),
+    ('10$-3$', '3'),
+    ('10$-3$', '10'),
+    ('rate 5%$-3', '3'),
+    ('month 12$\u2212575.50', '575.50'),
+    ('month 12$+575.50', '575.50'),
+], ids=['label-dollar-minus', 'subtraction-subtrahend', 'subtraction-minuend',
+        'after-percent', 'unicode-minus', 'plus'])
+def test_identify_figure_currency_glued_before_a_sign_is_not_auto_matched(
+        content, expected):
+    # The maintainer's decision on the second review of #13: with no space on
+    # either side of a currency symbol and a sign right after it
+    # ('12$-575.50', '10$-3$'), the text does not say whether the sign is
+    # the figure's or a subtraction. The extractor keeps its reading (12 $,
+    # then 575.50 after an operator); the reply goes to a person rather
+    # than AUTO-MATCH.
+    r = identify(response(content), expected=expected,
+                 currency_symbols=['$', 'USD'])
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert 'currency' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, currency_symbols', [
+    ('10$ - 3$', '3', ['$', 'USD']),
+    ('pay 10$, then -3', '-3', ['$', 'USD']),
+    ('For month 12 $-575.50 was paid', '-575.50', ['$', 'USD']),
+    ('12$-575.50', '-575.50', []),
+], ids=['spaced-subtraction', 'comma-between', 'space-before-currency',
+        'no-currencies-configured'])
+def test_identify_figure_currency_not_glued_before_a_sign_still_auto_matches(
+        content, expected, currency_symbols):
+    assert identify(response(content), expected=expected,
+                    currency_symbols=currency_symbols)['outcome'] == AUTO_MATCH
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('month 12 -575.50', '575.50', ADJUDICATE_NO_MATCH),
+    ('month 12 -575.50', '-575.50', AUTO_MATCH),
+    ('In 2024 -12.5% was the change', '12.5', ADJUDICATE_NO_MATCH),
+    ('In 2024 -12.5% was the change', '-12.5', AUTO_MATCH),
+], ids=['wrong-sign-not-matched', 'negative-matched',
+        'year-wrong-sign-not-matched', 'year-negative-matched'])
+def test_identify_figure_sign_after_label_number_is_kept(
+        content, expected, outcome):
+    # The review of #13: at 3803f542 the first and third
+    # AUTO-MATCH (a wrong-sign answer scored correct) and the second and
+    # fourth go to adjudication.
+    r = identify(response(content), expected=expected)
+    assert r['outcome'] == outcome, r
+
+
 @pytest.mark.req('R2.0')
 def test_identify_figure_exactly_one_match_is_auto_match():
     r = identify(response('Balance 15200, interest 15.20 a month.'))
@@ -323,15 +468,18 @@ def test_identify_figure_negative_token_does_not_match_positive_expected():
 
 
 def test_identify_figure_uses_given_extractor_with_currency_symbols():
+    # T3-41: the extractor also receives the separators (defaults '.'
+    # and ',' when none are given).
     seen = {}
 
-    def extractor(text, currency_symbols=None):
-        seen['args'] = (text, currency_symbols)
+    def extractor(text, currency_symbols=None, decimal_sep=None,
+                  grouping_sep=None):
+        seen['args'] = (text, currency_symbols, decimal_sep, grouping_sep)
         return [token('1'), token('15.20', 'fifteen twenty', 5)]
 
     r = identify(response('anything'), extract_tokens_fn=extractor,
                  currency_symbols=['$'])
-    assert seen['args'] == ('anything', ['$'])
+    assert seen['args'] == ('anything', ['$'], '.', ',')
     assert r['outcome'] == AUTO_MATCH
     assert r['reason'] == "exactly one token matches: 'fifteen twenty'"
     assert r['matched_indices'] == [1]
@@ -387,10 +535,6 @@ def test_identify_figure_percentage_token_does_not_match_money_value():
 
 @pytest.mark.finding('T3-41')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-41: a locale-ambiguous token raises out of '
-                          'identify_figure instead of routing to '
-                          'adjudication')
 def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     # SPEC R0.4.2 "Locale ambiguity": where a token admits more than one
     # reading under the configured separators, "the item routes to
@@ -409,3 +553,35 @@ def test_identify_figure_locale_ambiguous_token_routes_to_adjudication():
     except AmbiguousLocaleError as e:
         outcome = f'raised AmbiguousLocaleError: {e}'
     assert outcome.startswith('ADJUDICATE')
+
+
+# --- The configured separators (T3-41) ---
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2')
+def test_identify_figure_default_extractor_uses_configured_separators():
+    r = identify(response('Die Zinsen betragen 1.006,25 $.'), '1006.25',
+                 decimal_separator=',', grouping_separator='.')
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('1006.25'))
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2')
+def test_identify_figure_structured_answer_uses_configured_separators():
+    r = identify(response('', answer='1.006,25'), '1006.25',
+                 structured_answer_field='answer',
+                 decimal_separator=',', grouping_separator='.')
+    assert (r['outcome'], r['released_figure']) == (AUTO_MATCH, D('1006.25'))
+
+
+@pytest.mark.finding('T3-41')
+@pytest.mark.req('R0.4.2', 'R2.0')
+def test_identify_figure_real_locale_ambiguity_routes_to_adjudication():
+    r = identify(response('The answer is 1.780.'), '1.78',
+                 decimal_separator='.', grouping_separator='.')
+    assert r == {
+        'outcome': ADJUDICATE_AMBIGUOUS, 'released_figure': None,
+        'reason': "locale-ambiguous token under the configured separators: "
+                  "'1.780': separator '.' is configured as both decimal "
+                  "and grouping -- cannot disambiguate",
+        'extracted_tokens': None, 'matched_indices': []}

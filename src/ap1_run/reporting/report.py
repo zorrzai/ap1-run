@@ -17,6 +17,7 @@ Contents (SPEC.md R3.3 interface):
   7.  D7.2(b) operation-correctness counts
   8.  Proportion auto-scored vs adjudicated, per dimension
   9.  D2 mechanism classes per surface
+  9b. D2.2 execution conditions, sampling parameters sent, parameter echo
   10. Every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID cell with reason
   11. Quantisation and near-miss findings
   12. DECLARATION of which dimensions were NOT measured
@@ -113,6 +114,10 @@ def generate_report(*, summary, config, seal_record, transcript_records=None):
 
     # 9. D2 mechanism classes per surface
     sections.append(_section_d2_mechanisms(summary))
+
+    # 9b. D2.2 execution conditions and parameter echo
+    sections.append(_section_d2_conditions(summary, config,
+                                           transcript_records))
 
     # 10. UNMEASURED / UNOBSERVABLE / UNMEASURABLE / VOID cells
     sections.append(_section_unmeasured_cells(summary, transcript_records))
@@ -613,6 +618,74 @@ def _section_d2_mechanisms(summary):
     else:
         lines.append('*No per-surface D2 data available.*\n')
 
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def _serving_line(transcript_records):
+    """What the recorded responses say served them: the 'model' and
+    'system_fingerprint' of each response body, with counts."""
+    models, fingerprints = {}, {}
+    for rec in transcript_records or []:
+        body = rec.get('response_received')
+        if not isinstance(body, dict):
+            continue
+        for key, counts in (('model', models),
+                            ('system_fingerprint', fingerprints)):
+            value = body.get(key)
+            if value:
+                counts[str(value)] = counts.get(str(value), 0) + 1
+    if not models and not fingerprints:
+        return ('- Serving stack and version: not disclosed by the '
+                'endpoint; the runner cannot observe it.')
+
+    def listed(counts):
+        return ', '.join(f'{value} ({n})' for value, n in
+                         sorted(counts.items())) or 'not reported'
+    return (f'- Serving stack and version: as the responses report it, '
+            f'model {listed(models)}; backend fingerprints '
+            f'(system_fingerprint) {listed(fingerprints)}; the runner '
+            f'observes nothing more.')
+
+
+def _section_d2_conditions(summary, config, transcript_records=None):
+    """Section 9b: the D2.2 disclosures.
+
+    AP-1 v1.3 D2.2: every D2 result reports the serving stack and
+    version, whether a deterministic or batch-invariant mode was enabled,
+    the concurrency conditions, and all sampling parameters sent; where
+    the platform echoes the parameters it applied, a parameter requested
+    and silently ignored is a platform finding. What the endpoint does not
+    disclose is said, not left out.
+    """
+    lines = ['## 9b. D2.2 Execution Conditions\n']
+    lines.append(_serving_line(transcript_records))
+    sampling = config.get('sampling') or {}
+    seed = sampling.get('seed')
+    if seed is not None and not isinstance(seed, dict):
+        lines.append(f'- Deterministic or batch-invariant mode: none '
+                     f'requested by the runner beyond the `seed` sent '
+                     f'(`{seed}`); whether the endpoint honours it, or '
+                     f'enables such a mode, is not disclosed.')
+    else:
+        lines.append('- Deterministic or batch-invariant mode: none '
+                     'requested by the runner; whether the endpoint enables '
+                     'one is not disclosed.')
+    lines.append('- Concurrency: one request at a time, sequentially, from '
+                 'a single process.')
+    lines.append('- Sampling parameters sent:')
+    for name, value in sorted(sampling.items()):
+        if isinstance(value, dict) and value.get('value') == 'omitted':
+            lines.append(f'  - `{name}`: not sent ({value.get("reason")})')
+        else:
+            lines.append(f'  - `{name}`: `{value}`')
+    if not sampling:
+        lines.append('  - none')
+    echo = summary.get('parameter_echo') or {}
+    lines.append(f'- Parameter echo: `{echo.get("status", "UNVERIFIED")}` '
+                 f'({echo.get("responses", 0)} responses checked)')
+    for finding in echo.get('findings', []):
+        lines.append(f'  - Platform finding (D2.2): {finding}')
     lines.append('')
     return '\n'.join(lines)
 
