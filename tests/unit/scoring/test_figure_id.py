@@ -273,9 +273,6 @@ def test_identify_figure_non_digit_number_characters_stay_no_figure(content):
 
 @pytest.mark.finding('S3-G1-7')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-7: digits of another script are checked only '
-                          'when no ASCII token was found')
 @pytest.mark.parametrize('content, expected', [
     ('Step: 430.75 was wrong; final answer '
      '\u0664\u0662\u0660\u066b\u0660\u0660', '430.75'),

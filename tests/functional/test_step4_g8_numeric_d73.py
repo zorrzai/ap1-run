@@ -327,9 +327,6 @@ def test_run_reply_in_arabic_indic_digits_routes_to_adjudication(
 
 @pytest.mark.finding('S3-G1-7')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-7: another script\'s digits are checked only '
-                          'when no ASCII token was found')
 def test_run_ascii_step_beside_another_scripts_answer_routes_to_adjudication(
         tmp_path, monkeypatch, capsys):
     # The review of #13: 'Step: 430.75 was wrong; final answer' then 420.00

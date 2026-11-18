@@ -300,7 +300,8 @@ A numeric token is recognised as, in order:
    `grouping_separator`. A digit is one of the ASCII digits `0`–`9`; the
    digits of other scripts (Arabic-Indic `٣`, full-width `３`) are not digits
    here, so text written in them holds no numeric token (a response with
-   such digits and no numeric token routes to adjudication, R2.0 step 4);
+   such digits anywhere routes to adjudication, never to an automatic
+   outcome, R2.0 step 4);
 4. an optional `decimal_separator` followed by fractional digits;
 5. an optional trailing `%`.
 
@@ -521,9 +522,9 @@ token per R0.4.2 with its literal text, span and context. Then:
 
 | Condition | Outcome |
 |---|---|
-| Exactly one extracted value matches the expected value within `answer_tolerance` | `AUTO-MATCH` |
+| Exactly one extracted value matches the expected value within `answer_tolerance`, and no digits of another script | `AUTO-MATCH` |
 | No extracted value matches, no numeric tokens present, and no digits of another script | `AUTO-NO-FIGURE` |
-| No numeric tokens present, but digits of another script (R0.4.2) | `ADJUDICATE — figures present, none matching` |
+| Digits of another script (R0.4.2), and no numeric tokens present or exactly one extracted value matches | `ADJUDICATE — figures present, none matching` |
 | Two or more extracted values match | `ADJUDICATE — ambiguous` |
 | No match, but numeric tokens present | `ADJUDICATE — figures present, none matching` |
 

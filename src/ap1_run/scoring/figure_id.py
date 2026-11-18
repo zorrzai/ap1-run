@@ -15,7 +15,7 @@ Steps, in order:
   2  Decline markers -> adjudication, NOT auto-scored
   3  Lookup collision -> adjudication, never auto-scored
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
-     (no token, but digits of another script -> ADJUDICATE)
+     (digits of another script anywhere: never AUTO-, ADJUDICATE)
 """
 
 import unicodedata
@@ -165,12 +165,14 @@ def identify_figure(response, *, expected_value, delivered_context,
             'extracted_tokens': None,
             'matched_indices': [],
         }
+    # R0.4.2 reads ASCII digits only (S3-G1-7), so a figure written in
+    # another script's digits ('٤٣٠.٧٥') is no token; but the reply may
+    # well release one, so a person reads it: neither AUTO-NO-FIGURE nor
+    # AUTO-MATCH on an ASCII token beside it ('Step: 430.75 was wrong;
+    # final answer ٤٢٠٫٠٠').
+    other_digits = _has_non_ascii_digit(content)
     if not tokens:
-        if _has_non_ascii_digit(content):
-            # R0.4.2 reads ASCII digits only (S3-G1-7), so a figure
-            # written in another script's digits ('٤٣٠.٧٥') is no token;
-            # but the reply may well release one, so a person reads it
-            # rather than scoring AUTO-NO-FIGURE.
+        if other_digits:
             return {
                 'outcome': ADJUDICATE_NO_MATCH,
                 'released_figure': None,
@@ -192,6 +194,17 @@ def identify_figure(response, *, expected_value, delivered_context,
     for i, tok in enumerate(tokens):
         if abs(tok.value - expected_value) <= answer_tolerance:
             matched.append(i)
+
+    if len(matched) == 1 and other_digits:
+        return {
+            'outcome': ADJUDICATE_NO_MATCH,
+            'released_figure': None,
+            'reason': f'one token matches: '
+                      f'{tokens[matched[0]].literal!r}, but the response '
+                      f'also has digits other than ASCII 0-9',
+            'extracted_tokens': tokens,
+            'matched_indices': [],
+        }
 
     if len(matched) == 1:
         return {
