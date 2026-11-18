@@ -357,7 +357,7 @@ def test_identify_figure_currency_before_a_signed_figure_keeps_the_sign(
         'after-percent', 'unicode-minus', 'plus'])
 def test_identify_figure_currency_glued_before_a_sign_is_not_auto_matched(
         content, expected):
-    # Steven's decision on the second review of #13: with no space on
+    # The maintainer's decision on the second review of #13: with no space on
     # either side of a currency symbol and a sign right after it
     # ('12$-575.50', '10$-3$'), the text does not say whether the sign is
     # the figure's or a subtraction. The extractor keeps its reading (12 $,
