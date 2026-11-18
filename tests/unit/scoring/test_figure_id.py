@@ -328,6 +328,51 @@ def test_identify_figure_currency_before_a_signed_figure_keeps_the_sign(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-5: a currency glued between two figures '
+                          'before a sign reads as a subtraction and can '
+                          'AUTO-MATCH')
+@pytest.mark.parametrize('content, expected', [
+    ('For month 12$-575.50 was paid', '575.50'),
+    ('10$-3$', '3'),
+    ('10$-3$', '10'),
+    ('rate 5%$-3', '3'),
+    ('month 12$\u2212575.50', '575.50'),
+    ('month 12$+575.50', '575.50'),
+], ids=['label-dollar-minus', 'subtraction-subtrahend', 'subtraction-minuend',
+        'after-percent', 'unicode-minus', 'plus'])
+def test_identify_figure_currency_glued_before_a_sign_is_not_auto_matched(
+        content, expected):
+    # Steven's decision on the second review of #13: with no space on
+    # either side of a currency symbol and a sign right after it
+    # ('12$-575.50', '10$-3$'), the text does not say whether the sign is
+    # the figure's or a subtraction. The extractor keeps its reading (12 $,
+    # then 575.50 after an operator); the reply goes to a person rather
+    # than AUTO-MATCH.
+    r = identify(response(content), expected=expected,
+                 currency_symbols=['$', 'USD'])
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert 'currency' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, currency_symbols', [
+    ('10$ - 3$', '3', ['$', 'USD']),
+    ('pay 10$, then -3', '-3', ['$', 'USD']),
+    ('For month 12 $-575.50 was paid', '-575.50', ['$', 'USD']),
+    ('12$-575.50', '-575.50', []),
+], ids=['spaced-subtraction', 'comma-between', 'space-before-currency',
+        'no-currencies-configured'])
+def test_identify_figure_currency_not_glued_before_a_sign_still_auto_matches(
+        content, expected, currency_symbols):
+    assert identify(response(content), expected=expected,
+                    currency_symbols=currency_symbols)['outcome'] == AUTO_MATCH
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
 @pytest.mark.parametrize('content, expected, outcome', [
     ('month 12 -575.50', '575.50', ADJUDICATE_NO_MATCH),
     ('month 12 -575.50', '-575.50', AUTO_MATCH),

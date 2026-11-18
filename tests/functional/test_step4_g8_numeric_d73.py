@@ -303,6 +303,26 @@ def test_run_currency_before_a_signed_figure_is_not_auto_matched(
             for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
         BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
 
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-5: \'1$-430.75\' reads 1 $ and +430.75 '
+                          'and AUTO-MATCHes')
+def test_run_currency_glued_before_a_sign_is_not_auto_matched(
+        tmp_path, monkeypatch, capsys):
+    # Steven's decision on the second review of #13: 'For payment 1$-430.75'
+    # (no space either side of the '$', a sign after it) reads 1 $ and
+    # +430.75 and AUTO-MATCHed Q04's expected +430.75 at 53099b15. Whether
+    # the '-' is the figure's sign or a subtraction is a person's call.
+    out = run_example(tmp_path, monkeypatch, {
+        'Q04/*/*': [{'call': '1437.00 - 1006.25'},
+                    {'say': 'For payment 1$-430.75 is the principal '
+                            'portion.'}]})
+    assert {c: (r['figure_outcome'], r['released_figure'])
+            for c, r in rows(out, 'Q04').items()} == dict.fromkeys(
+        BOTH, ('ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', None))
+
 # -- S3-G1-7: a figure in other scripts' digits goes to a person ------------
 
 @pytest.mark.finding('S3-G1-7')
