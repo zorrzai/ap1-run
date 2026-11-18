@@ -1446,7 +1446,9 @@ also hold there; the G7 Inspect and G8 tool files do not.
   space before it and none after (`month 12 -575.50`) it stays the figure's sign (dc7b365f, after
   the review of #13); a currency symbol with a space before it and a sign or digit right after it
   (`month 12 $-575.50`) is the figure's, so the label number no longer takes it and the sign is
-  kept (03d45f6e, after the second review of #13)
+  kept (03d45f6e, after the second review of #13); with no space on either side of the currency
+  and a sign right after it (`12$-575.50`, `10$-3$`) the reading stays a subtraction, but a single
+  match goes to adjudication, not AUTO-MATCH (e8d2e1a0, the maintainer's decision on that review)
 
 **S3-G1-6 · low · Digits inside identifiers produce numeric tokens**
 - What's wrong: `Q04` → 4, `v2.0.1` → 2.0 and 1, `1e5` → 1 and 5; there is no word boundary.
