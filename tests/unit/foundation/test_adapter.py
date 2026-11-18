@@ -1,11 +1,13 @@
 """Unit tests for the R0.2 endpoint adapter (foundation/adapter.py).
 
-No network: requests.post and time.sleep are replaced by fakes. The real
-HTTP path is covered end to end by the regression scenarios, which run
-against tests/fixtures/mock_endpoint.py (clean, transport_errors, ...).
+No network: the adapter's post (adapter._post) and time.sleep are replaced
+by fakes, except in the proxy tests at the end, which use local servers.
+The real HTTP path is covered end to end by the regression scenarios, which
+run against tests/fixtures/mock_endpoint.py (clean, transport_errors, ...).
 """
 
 import json
+from types import SimpleNamespace
 
 import pytest
 import requests
@@ -22,12 +24,16 @@ OK = {'choices': [{'message': {'role': 'assistant', 'content': '42'}}]}
 
 
 class FakeResponse:
-    def __init__(self, status_code=200, payload=None, text=None):
+    def __init__(self, status_code=200, payload=None, text=None,
+                 content=None):
         self.status_code = status_code
         self._payload = payload
         if text is None:
-            text = json.dumps(payload) if payload is not None else ''
+            text = (content.decode('latin-1') if content is not None
+                    else json.dumps(payload) if payload is not None else '')
         self.text = text
+        # The body's bytes, as requests.Response.content has them
+        self.content = text.encode('utf-8') if content is None else content
 
     def json(self):
         if self._payload is None:
@@ -59,7 +65,7 @@ class FakeTransport:
 def transport(monkeypatch):
     def _install(*outcomes):
         t = FakeTransport(*outcomes)
-        monkeypatch.setattr(adapter._requests, 'post', t.post)
+        monkeypatch.setattr(adapter, '_post', t.post)
         monkeypatch.setattr(adapter.time, 'sleep', t.sleep)
         monkeypatch.setattr(adapter.time, 'time', lambda: 1000.5)
         return t
@@ -90,7 +96,80 @@ def test_error_hierarchy():
 @pytest.mark.req('R0.2')
 def test_send_returns_raw_response_unmodified(transport):
     _, raw, _ = ok_send(transport)
-    assert raw is OK
+    assert raw == OK and isinstance(raw, dict)
+
+
+# A body whose spelling a parse and re-serialisation would change: keys
+# not in sorted order, a number with trailing zeros, a non-ASCII
+# character, and spacing of its own.
+RAW_BODY = ('{"model":"m","x": 15.200, "choices":[{"message":{"role":'
+            '"assistant","content":"15.20 \\u2212 0.00 = 15.20 −"}}],'
+            '"id": "r1"}')
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_keeps_the_body_text_byte_for_byte(transport):
+    # The parsed response is the body's JSON; its raw_text is the body as
+    # received, so 15.200, the key order and the spacing survive.
+    transport(FakeResponse(200, content=RAW_BODY.encode('utf-8')))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == json.loads(RAW_BODY)
+    assert raw['x'] == 15.2
+    assert adapter.raw_text(raw).encode('utf-8') == RAW_BODY.encode('utf-8')
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_keeps_the_text_of_a_list_body(transport):
+    # A body that is not a chat completion (here a list) keeps its text
+    # too; the engine reads it as an unrecognised shape.
+    transport(FakeResponse(200, content=b'[1.50, {"b": 1, "a": 2}]'))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == [1.5, {'b': 1, 'a': 2}]
+    assert adapter.raw_text(raw) == '[1.50, {"b": 1, "a": 2}]'
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('body, parsed', [
+    (b'15.200', 15.2), (b'null', None), (b'"x"', 'x')],
+    ids=['number', 'null', 'string'])
+def test_send_scalar_body_is_returned_parsed_without_its_text(
+        transport, body, parsed):
+    # The stated limit of "byte for byte" (SPEC R0.2: a body that is a
+    # JSON object or array): a bare scalar body, never a chat completion
+    # and read as an unrecognised shape, is returned as parsed, without
+    # its text, so 15.200 keeps no spelling of its own.
+    transport(FakeResponse(200, content=body))
+    raw, _ = send(URL, messages=MESSAGES)
+    assert raw == parsed and type(raw) is type(parsed)
+    assert adapter.raw_text(raw) is None
+
+
+def test_raw_text_of_a_response_not_from_send_is_none():
+    assert adapter.raw_text({'choices': []}) is None
+    assert adapter.raw_text(None) is None
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_send_200_body_not_utf8_raises_adapter_error(transport):
+    # JSON between systems is UTF-8 (RFC 8259 8.1); a body that is not
+    # cannot be kept as text, and is refused as a body that is not JSON
+    # is: an AdapterError, so the round is recorded as failed.
+    transport(FakeResponse(200, content=b'{"x": "caf\xe9"}'))
+    with pytest.raises(AdapterError, match='response is not UTF-8'):
+        send(URL, messages=MESSAGES)
 
 
 @pytest.mark.finding('T3-52')
@@ -100,7 +179,7 @@ def test_send_minimal_body_and_headers(transport):
         'url': URL,
         'json': {'model': '', 'messages': MESSAGES},
         'headers': {'Content-Type': 'application/json'},
-        'timeout': 120}]
+        'timeout': 120, 'allow_redirects': False}]
 
 
 def test_send_model_tools_key_and_timeout(transport):
@@ -193,6 +272,39 @@ def test_send_request_record_as_sent(transport):
                       'timestamp': 1000.5}]}
 
 
+@pytest.mark.finding('S4-G4-1')
+@pytest.mark.req('R0.2')
+def test_send_request_record_unchanged_when_caller_extends_messages(
+        transport):
+    # SPEC R0.2 "The request as sent": the record holds copies, so a
+    # caller that goes on extending its message list (the engine's tool
+    # loop) or its tools does not change what the record says was sent.
+    messages = [{'role': 'user', 'content': 'hi'}]
+    tools = [{'type': 'function', 'function': {'name': 'calculator'}}]
+    transport(FakeResponse(200, OK))
+    _, record = send(URL, messages=messages, tools=tools)
+    messages.append({'role': 'assistant', 'content': 'later'})
+    messages[0]['content'] = 'changed'
+    tools[0]['function']['name'] = 'changed'
+    assert record['messages'] == [{'role': 'user', 'content': 'hi'}]
+    assert record['tools'] == [{'type': 'function',
+                                'function': {'name': 'calculator'}}]
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('status', [301, 302, 307, 308])
+def test_send_redirect_not_followed_http_error(transport, status):
+    # SPEC R0.2: no network call to any host but the configured endpoint.
+    # requests is told not to follow redirects, and a 3xx is an HTTP
+    # error like any other non-200 status, never retried.
+    t = transport(FakeResponse(status, text=''))
+    with pytest.raises(HTTPError) as e:
+        send(URL, messages=MESSAGES)
+    assert e.value.status_code == status
+    assert [c['allow_redirects'] for c in t.calls] == [False]
+
+
 def test_send_request_record_defaults(transport):
     _, _, record = ok_send(transport)
     assert (record['model'], record['tools'], record['sampling_as_sent']) \
@@ -211,7 +323,7 @@ def test_send_retries_transport_failure_then_succeeds(transport):
     t = transport(requests.ConnectionError('refused'),
                   requests.Timeout('slow'), FakeResponse(200, OK))
     raw, record = send(URL, messages=MESSAGES)
-    assert raw is OK
+    assert raw == OK
     assert len(t.calls) == 3
     assert t.sleeps == [1.0, 1.0]
     assert record['attempts'] == [
@@ -512,3 +624,77 @@ def test_send_refuses_a_sampling_value_with_no_finite_float(transport, value):
     with pytest.raises(AdapterError, match='no finite non-zero float'):
         send(URL, messages=MESSAGES, sampling={'temperature': value})
     assert t.calls == []
+
+
+# -- No proxy from the environment (SPEC R0.2 single-host egress) ----------
+
+PROXY_VARIABLES = ('HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy',
+                   'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy')
+
+
+@pytest.fixture
+def proxy(monkeypatch):
+    """A local HTTP server that answers any request as a proxy would, and
+    records what reached it; and a closed local port for the endpoint."""
+    import socket
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    seen = []
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            length = int(self.headers.get('Content-Length') or 0)
+            seen.append((self.path, self.headers.get('Authorization'),
+                         self.rfile.read(length)))
+            body = json.dumps({'choices': [{'message': {
+                'role': 'assistant', 'content': 'from the proxy'}}]})
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body.encode())
+
+        def log_message(self, *args):
+            pass
+
+    server = HTTPServer(('127.0.0.1', 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    with socket.socket() as s:
+        s.bind(('127.0.0.1', 0))
+        closed = s.getsockname()[1]
+    for name in PROXY_VARIABLES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(adapter.time, 'sleep', lambda seconds: None)
+    yield SimpleNamespace(
+        url=f'http://127.0.0.1:{server.server_port}', seen=seen,
+        endpoint=f'http://127.0.0.1:{closed}/v1/chat/completions')
+    server.shutdown()
+    server.server_close()
+
+
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+@pytest.mark.parametrize('variable', ['HTTP_PROXY', 'http_proxy',
+                                      'ALL_PROXY', 'all_proxy'])
+def test_send_ignores_a_proxy_named_in_the_environment(proxy, monkeypatch,
+                                                       variable):
+    # SPEC R0.2: "The adapter makes no network call to any host other than
+    # the configured endpoint". A proxy named in the environment is never
+    # contacted: the request (the key, the fixture data) goes only to the
+    # endpoint, here a closed port, so the send fails.
+    monkeypatch.setenv(variable, proxy.url)
+    with pytest.raises(AdapterError, match='transport failure'):
+        adapter.send(proxy.endpoint, messages=[
+            {'role': 'user', 'content': 'FIXTURE DATA 15200'}],
+            model='m', api_key='sk-test-not-a-real-key-000')
+    assert proxy.seen == []
+
+
+def test_proxy_fixture_proxy_answers_when_asked(proxy):
+    # The fixture's proxy is reachable and answers: the test above would
+    # see it if the adapter used it.
+    r = requests.post(proxy.url + '/x', json={}, timeout=5)
+    assert r.json()['choices'][0]['message']['content'] == 'from the proxy'
+    assert len(proxy.seen) == 1

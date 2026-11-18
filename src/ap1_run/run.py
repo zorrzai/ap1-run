@@ -21,7 +21,13 @@ Usage:
 
     Options (ap1-run --help) move the inputs and outputs from example/,
     reference/ and output/: --config, --fixture-dir, --output-dir,
-    --ap1-text.
+    --ap1-text. --rescore <transcript> runs the scoring pass alone on a
+    run's transcript (no endpoint, no key).
+
+Two passes (SPEC §2): the execution pass sends every request and writes
+the transcript (smoke_run.jsonl), with no scoring in it; the scoring pass
+(runner/scoring_pass.py) then reads the transcript, never writing to it,
+and writes the report, the adjudication sheets and the summary.
 
 On Windows only, if AP1_SMOKE_API_KEY is not set, the runner will attempt
 to read from Windows Credential Manager (target: ap1-smoke:openai).
@@ -38,14 +44,11 @@ import os
 import sys
 import time
 
-from ap1_run.execution.context import (
-    build_delivered_context, check_lookup_collision,
-)
+from ap1_run.execution.context import build_delivered_context
 from ap1_run.execution.ap1_texts import (
     check_ap1_text_version, resolve_ap1_text,
 )
 from ap1_run.execution.engine import execute_item
-from ap1_run.execution.perturbation_guard import HELD_CONSTANT
 from ap1_run.execution.seal import (
     SealError, perturbation_check, seal as create_seal, source_fields_check,
     verify_seal,
@@ -61,33 +64,16 @@ from ap1_run.execution.version import (
 from ap1_run.foundation import adapter
 from ap1_run.foundation.config import load_config, validate_minimum_n
 from ap1_run.foundation.numeric import in_decimal_context
-from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.credentials import get_api_key
-from ap1_run.runner.executions import (
-    Findings, apply_question_measurability, record_not_scored,
-    record_transport_failure, record_underivable, score_execution,
-)
-from ap1_run.runner.outputs import write_outputs
+from ap1_run.runner.outputs import OUTPUT_FILES
+from ap1_run.runner.scoring_pass import CONDITIONS, score_run
+# The disclaimer is the scoring pass's; still importable as run.DISCLAIMER.
+from ap1_run.runner.scoring_pass import DISCLAIMER  # noqa: F401
 from ap1_run.runner.settings import (
     check_condition_guard, check_output_dir, parse_args, print_sampling,
 )
-from ap1_run.runner.summary import (
-    build_summary, classify_reproducibility, find_d2_cap,
-    verify_invocation_consistency,
-)
-from ap1_run.scoring.accuracy import summarise_accuracy
-
-# NOTE: This disclaimer is a hand correction (E4). It will be replaced
-# by a generated disclaimer once the conformance-declaration mechanism
-# (operator_declaration + conformance_checks) is built.
-DISCLAIMER = (
-    'THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.\n'
-    '\n'
-    'It is not conformant: no adjudication, no second scorer, no blind set,\n'
-    'the fixture is the shipped example (10 items, burned under AP-1 \xa75.8),\n'
-    'and the D1 minimum of 40 items is not met.\n'
-    'No figure from it may be reported, cited, quoted or described as an AP-1\n'
-    'result, by us or by anyone, in any document.\n'
+from ap1_run.scoring.rescore import (
+    PRE_REGISTRATION, rescore_transcript, write_pre_registration,
 )
 
 # The repository root: this file is src/ap1_run/run.py.
@@ -107,6 +93,10 @@ def main(argv=None):
 
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
+    # -- The scoring pass alone, on a run's transcript (no key needed) --
+    if args.rescore:
+        return rescore(args)
 
     # -- Read API key (Rule 0c) --
     # The key is NEVER printed, echoed, logged, or written to any file.
@@ -147,9 +137,14 @@ def main(argv=None):
     os.makedirs(output_dir, exist_ok=True)
     transcript_path = os.path.join(output_dir, 'smoke_run.jsonl')
 
-    # Remove old transcript if present
-    if os.path.exists(transcript_path):
-        os.remove(transcript_path)
+    # Remove every file an earlier run wrote here: its transcript and
+    # pre-registration record, and its scoring outputs, so a run that stops
+    # before its own outputs leaves none of the earlier run's beside its
+    # transcript (T3-38)
+    for name in ('smoke_run.jsonl', PRE_REGISTRATION) + OUTPUT_FILES:
+        old = os.path.join(output_dir, name)
+        if os.path.exists(old):
+            os.remove(old)
 
     # -- Tool definitions (R1.3: operator-declared, not runner-authored) --
     tools = config.get('tools')
@@ -239,13 +234,10 @@ def main(argv=None):
     # Every one of these is a required field, validated by load_config
     # (repeat_count an int, answer_tolerance a Decimal): no defaults (R0.1).
     repeat_count = config['repeat_count']
-    conditions = ['base', 'instruction_removed']
+    conditions = CONDITIONS
     items = questions['items']
 
     sampling = config['sampling']
-    answer_tolerance = config['answer_tolerance']
-    decline_markers = config['decline_markers']
-    currency_symbols = config['currency_symbols']
 
     # -- Adapter wrapper (binds api_key) --
     def adapter_send(endpoint_url, *, messages, tools=None,
@@ -264,8 +256,10 @@ def main(argv=None):
     check_seal()
     ground_truth_compute = sealed_compute(expected_values)
 
-    # -- Collector for all findings --
-    findings = Findings()
+    # -- The pre-registration record, beside the transcript, so the run
+    # can be scored again from them (scoring/rescore.py) --
+    write_pre_registration(output_dir, seal_record=seal_record,
+                           config=config)
 
     print(f'Running {len(items)} items x {len(conditions)} conditions x {repeat_count} repeats')
     print(f'Total requests: {len(items) * len(conditions) * repeat_count}')
@@ -279,121 +273,69 @@ def main(argv=None):
             ctx = build_delivered_context(fixture, item['source_accounts'])
             gt = ground_truth_compute(item_id, ctx)
 
-            # Check derivability
+            # An underivable item is VOID: not sent (R1.2)
             if not gt.get('derivable', True):
                 print(f'  {item_id}/{condition}: VOID (underivable)')
-                record_underivable(findings, item_id, condition)
                 continue
-
-            expected = gt['final']
-            collision, collision_field = check_lookup_collision(expected, ctx)
 
             for rep in range(1, repeat_count + 1):
                 print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
 
                 # === CALL engine.execute_item — THE TESTED PATH ===
-                try:
-                    result = execute_item(
-                        item,
-                        condition=condition,
-                        config=config,
-                        fixture=fixture,
-                        ground_truth_compute=ground_truth_compute,
-                        adapter_send=adapter_send,
-                        system_prompt=arm['system_prompt'],
-                        tools=arm['tools'],
-                        transcript_path=transcript_path,
-                        seal_hash=seal_hash,
-                        repeat=rep,
-                    )
-                except adapter.RateLimitError:
-                    print('RATE-LIMITED')
-                    record_transport_failure(findings, item_id, condition,
-                                             rep, 'rate_limited')
-                    continue
-                except adapter.AdapterError as e:
-                    print(f'TRANSPORT_ERROR: {e}')
-                    record_transport_failure(findings, item_id, condition,
-                                             rep, str(e))
-                    continue
+                # A failed request (rate limit or transport error) comes
+                # back UNMEASURED with its cause (T3-65).
+                result = execute_item(
+                    item,
+                    condition=condition,
+                    config=config,
+                    fixture=fixture,
+                    ground_truth_compute=ground_truth_compute,
+                    adapter_send=adapter_send,
+                    system_prompt=arm['system_prompt'],
+                    tools=arm['tools'],
+                    transcript_path=transcript_path,
+                    seal_hash=seal_hash,
+                    repeat=rep,
+                )
 
                 status = result.get('status', 'UNKNOWN')
-                if status in ('VOID', 'UNMEASURED'):
-                    print(f'{status}')
-                    record_not_scored(findings, item_id, condition, rep,
-                                      status, result)
+                if status != 'EXECUTED':
+                    print(status)
                     continue
-
-                # -- Score the execution (runner/executions.py) --
-                score_execution(
-                    findings, result, item_id=item_id, condition=condition,
-                    rep=rep, expected=expected, ctx=ctx, collision=collision,
-                    config=config, answer_tolerance=answer_tolerance,
-                    decline_markers=decline_markers,
-                    currency_symbols=currency_symbols,
-                    transcript_path=transcript_path, seal_hash=seal_hash)
+                print(f'{status} | {result.get("evidence_class", "")} | '
+                      f'{result.get("invocation_outcome", "")}')
 
                 # Brief delay to avoid rate limiting
                 time.sleep(0.5)
 
-    # -- D7.2 measurability per question, from all its executions --
-    apply_question_measurability(findings)
-
     # -- The seal again, before anything is reported (T3-17) --
     check_seal()
 
-    # -- Consistency check (FATAL on mismatch) --
-    verify_invocation_consistency(findings.all_results)
-    print('  Invocation consistency check: PASSED (0 mismatches)')
+    # -- Pass 2: scoring (R2). Reads the transcript; never writes to it.
+    # It scores against the sealed expected values (T3-48). --
+    print()
+    print('SCORING THE TRANSCRIPT (scoring pass: reads it, writes nothing '
+          'back)')
+    print('=' * 60)
+    score_run(transcript_path, config=config, seal_record=seal_record,
+              fixture=fixture, questions=questions,
+              ground_truth_compute=ground_truth_compute,
+              output_dir=output_dir)
+    print(f'Transcript written to {transcript_path}')
 
-    # -- Console Report --
-    print_run_report(
-        findings.all_results, conditions, disclaimer=DISCLAIMER,
-        grammar_issues=findings.grammar_issues,
-        decline_findings=findings.decline_findings,
-        tool_call_structures=findings.tool_call_structures,
-        evidence_findings=findings.evidence_findings,
-        unmeasured_cells=findings.unmeasured_cells,
-        transcription_results=findings.transcription_results,
-        release_coverage_results=findings.release_coverage_results)
+    return 0
 
-    # -- D1 aggregation --
-    d1_summary = summarise_accuracy(findings.all_accuracy_results)
-    d1_summary['n'] = len(findings.all_accuracy_results)
 
-    # -- D2 classification per (item, condition) per surface --
-    d2_cap_reason = find_d2_cap(sampling)
-    d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
-                                          d2_cap_reason)
-
-    summary = build_summary(
-        findings.all_results, findings.evidence_findings,
-        d1_summary=d1_summary, d2_results=d2_results,
-        d2_cap_reason=d2_cap_reason,
-        transcription_results=findings.transcription_results,
-        release_coverage_results=findings.release_coverage_results,
-        parameter_echo=findings.parameter_echo,
-        held_constant=HELD_CONSTANT)
-
-    # 3j-3l. D1, D2, operand provenance
-    print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)
-
-    # -- Output files: report, adjudication sheets, disclaimer, summary --
-    write_outputs(
-        output_dir, transcript_path, summary=summary, config=config,
-        seal_record=seal_record, questions=questions, fixture=fixture,
-        release_coverage_results=findings.release_coverage_results,
-        disclaimer=DISCLAIMER,
-        smoke_summary={
-            'seal_hash': seal_hash,
-            'all_results': findings.all_results,
-            'grammar_issues': findings.grammar_issues,
-            'decline_findings': findings.decline_findings,
-            'tool_call_structures': findings.tool_call_structures,
-            'evidence_findings': findings.evidence_findings,
-            'unmeasured_cells': findings.unmeasured_cells,
-        })
-
+def rescore(args):
+    """ap1-run --rescore: the scoring pass alone on args.rescore, with the
+    run's config (--config) and inputs (--fixture-dir), into
+    --output-dir. Returns the exit code."""
+    print(f'Re-scoring transcript: {args.rescore}')
+    print('=' * 60)
+    rescore_transcript(args.rescore, config_path=args.config,
+                       fixture_dir=args.fixture_dir,
+                       output_dir=args.output_dir)
+    print(f'Transcript scored (not changed): {args.rescore}')
     return 0
 
 

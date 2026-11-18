@@ -1,6 +1,10 @@
 {
   "_disclaimer": "THIS IS AN INSTRUMENT SMOKE TEST, NOT AN AP-1 EVALUATION.  It is not conformant: no adjudication, no second scorer, no blind set, the fixture is the shipped example (10 items, burned under AP-1 §5.8), and the D1 minimum of 40 items is not met. No figure from it may be reported, cited, quoted or described as an AP-1 result, by us or by anyone, in any document.",
   "seal_hash": "<SEAL_HASH>",
+  "scored_transcript": {
+    "sha256": "<TRANSCRIPT_SHA256>",
+    "records": 111
+  },
   "all_results": [
     {
       "item_id": "Q01",
@@ -291,7 +295,7 @@
       "condition": "base",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "rate limited (HTTP 429): {\"error\": {\"message\": \"Rate limit reached\"}}"
+      "cause": "rate_limited: rate limited (HTTP 429): {\"error\": {\"message\": \"Rate limit reached\"}}"
     },
     {
       "item_id": "Q03",
@@ -381,7 +385,7 @@
       "condition": "base",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "HTTP 500: {\"error\": {\"message\": \"server error\"}}"
+      "cause": "transport_error: HTTP 500: {\"error\": {\"message\": \"server error\"}}"
     },
     {
       "item_id": "Q04",
@@ -483,21 +487,21 @@
       "condition": "base",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+      "cause": "transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     {
       "item_id": "Q05",
       "condition": "base",
       "repeat": 2,
       "status": "UNMEASURED",
-      "cause": "transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+      "cause": "transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     {
       "item_id": "Q06",
       "condition": "base",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "response is not valid JSON: this is not json"
+      "cause": "transport_error: response is not valid JSON: this is not json"
     },
     {
       "item_id": "Q06",
@@ -753,14 +757,14 @@
       "condition": "base",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
     },
     {
       "item_id": "Q08",
       "condition": "base",
       "repeat": 2,
       "status": "UNMEASURED",
-      "cause": "HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
     },
     {
       "item_id": "Q09",
@@ -2309,14 +2313,14 @@
       "condition": "instruction_removed",
       "repeat": 1,
       "status": "UNMEASURED",
-      "cause": "HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
     },
     {
       "item_id": "Q08",
       "condition": "instruction_removed",
       "repeat": 2,
       "status": "UNMEASURED",
-      "cause": "HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
     },
     {
       "item_id": "Q09",
@@ -3108,5 +3112,60 @@
       "invocation_outcome": "INVOKED"
     }
   ],
-  "unmeasured_cells": []
+  "unmeasured_cells": [
+    {
+      "item_id": "Q03",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "rate_limited: rate limited (HTTP 429): {\"error\": {\"message\": \"Rate limit reached\"}}"
+    },
+    {
+      "item_id": "Q04",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "transport_error: HTTP 500: {\"error\": {\"message\": \"server error\"}}"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    },
+    {
+      "item_id": "Q05",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "transport_error: transport failure after 3 attempts: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+    },
+    {
+      "item_id": "Q06",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "transport_error: response is not valid JSON: this is not json"
+    },
+    {
+      "item_id": "Q08",
+      "condition": "base",
+      "repeat": 1,
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+    },
+    {
+      "item_id": "Q08",
+      "condition": "base",
+      "repeat": 2,
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+    },
+    {
+      "item_id": "Q08",
+      "condition": "instruction_removed",
+      "repeat": 1,
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+    },
+    {
+      "item_id": "Q08",
+      "condition": "instruction_removed",
+      "repeat": 2,
+      "cause": "transport_error: HTTP 401: {\"error\": {\"message\": \"Incorrect API key provided: [REDACTED]\"}}"
+    }
+  ]
 }

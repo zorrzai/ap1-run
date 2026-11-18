@@ -272,3 +272,35 @@ def test_read_all_bad_utf8_in_a_complete_line_raises(tmp_path):
     p.write_bytes(b'{"item_id": "Q\xff1"}\n')
     with pytest.raises(transcript.TranscriptError, match='line 1'):
         transcript.read_all(p)
+
+
+# -- round_entry and the raw body (SPEC R0.2) -------------------------------
+
+RAW_BYTES = ("R0.2 'unmodified' read as byte for byte: each answered round "
+             "keeps the response body as received, as text (response_raw), "
+             "beside the parsed response every reader uses; the reading and "
+             "the field are this test's proposal, for review")
+
+ROUND = {'kind': 'round', 'round': 0, 'request_sent': {'messages': []},
+         'response_received': {'x': 15.2}, 'error': None}
+
+
+@pytest.mark.proposal(RAW_BYTES)
+@pytest.mark.finding('T3-52')
+@pytest.mark.req('R0.2')
+def test_round_entry_carries_the_raw_body_when_the_record_has_it():
+    record = dict(ROUND, response_raw='{"x": 15.200}')
+    assert transcript.round_entry(record) == {
+        'round': 0, 'request': {'messages': []}, 'response': {'x': 15.2},
+        'response_raw': '{"x": 15.200}'}
+
+
+@pytest.mark.finding('T3-52')
+def test_round_entry_of_a_record_without_the_raw_body_has_none():
+    # A transcript written before the raw body was kept (the published
+    # runs) reads as before.
+    assert transcript.round_entry(ROUND) == {
+        'round': 0, 'request': {'messages': []}, 'response': {'x': 15.2}}
+    failed = dict(ROUND, error='HTTP 500', response_received=None)
+    assert transcript.round_entry(failed) == {
+        'round': 0, 'request': {'messages': []}, 'error': 'HTTP 500'}

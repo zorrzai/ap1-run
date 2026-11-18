@@ -8,9 +8,14 @@ raw response unmodified.
 
 Dependencies: requests (the external dependency used by this module).
 No SDK. No interpretation, no retry-on-content, no normalisation.
-Network calls target only the configured endpoint. Note: HTTP redirects are followed by default (requests library behaviour) and could reach other hosts.
+Network calls target only the configured endpoint: HTTP redirects are not
+followed (a 3xx is an HTTP error), and the environment is ignored (no proxy
+from HTTP_PROXY, HTTPS_PROXY, ALL_PROXY or the system settings, no .netrc
+credentials), so no request reaches another host.
 """
 
+import copy
+import json
 import math
 import re
 import time
@@ -92,11 +97,48 @@ def wire_value(name, value):
     return f
 
 
+class RawResponse(dict):
+    """A response as received: the parsed JSON (the dict itself, which
+    every reader uses) and its body text, exactly as it arrived
+    (raw_text: the body's bytes decoded as UTF-8, so that
+    raw_text.encode('utf-8') is those bytes). SPEC R0.2: "unmodified"
+    means byte for byte, so key order and number spelling (15.200, not
+    15.2) are kept in the text the transcript stores. Only a body whose
+    JSON is an object or an array (every chat completion) keeps its text
+    this way: a bare scalar (a string, number or null) is returned as
+    parsed, with no raw_text."""
+
+    raw_text = None
+
+
+class RawList(list):
+    """A response whose JSON is a list (not a chat completion, so read as
+    an unrecognised shape), with its body text as RawResponse has it."""
+
+    raw_text = None
+
+
+def raw_text(response):
+    """The body text a response arrived as (RawResponse.raw_text), or None
+    for a response that did not come from send."""
+    return getattr(response, 'raw_text', None)
+
+
 MAX_RETRIES = 3     # on transport failure only, per R0.2
 RETRY_DELAY = 1.0   # seconds between transport-failure retries
 
 # Request body fields a sampling parameter may not set (S3-G1-21).
 BODY_FIELDS = ('model', 'messages', 'tools')
+
+
+def _post(url, **kwargs):
+    """requests.post, without the environment: trust_env is off, so no
+    proxy, .netrc credential or CA bundle is taken from environment
+    variables or system settings (SPEC R0.2: no network call to a host
+    other than the configured endpoint)."""
+    with _requests.Session() as session:
+        session.trust_env = False
+        return session.post(url, **kwargs)
 
 
 def send(endpoint_url, *, messages, tools=None, sampling=None,
@@ -109,15 +151,20 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     Returns:
         (raw_response_dict, request_record)
-        raw_response_dict: The response JSON, unmodified.
+        raw_response_dict: The response JSON, unmodified: for a body
+            that is a JSON object or array (every chat completion), a
+            RawResponse (or RawList), the parsed body, whose raw_text is
+            the body byte for byte; a bare scalar body (a string, number
+            or null) is returned as parsed, with no raw_text.
         request_record: The request AS SENT, including every
             sampling parameter with its value or explicit omission.
 
     Raises:
         AdapterError: Unrecoverable transport failure after all retries
-            (carrying request_record); or, before anything is sent, a
-            sampling parameter that names a body field or whose value is
-            a non-finite number.
+            (carrying request_record); a 200 response whose body is not
+            UTF-8 or not JSON; or, before anything is sent, a sampling
+            parameter that names a body field or whose value is a
+            non-finite number.
         RateLimitError: HTTP 429.
         HTTPError: Non-200, non-429 status.
     """
@@ -151,11 +198,13 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
+    # A copy, so the record stays the request as sent when the caller
+    # goes on to extend its message list (SPEC R0.2).
     request_record = {
         "endpoint_url": endpoint_url,
         "model": model or "",
-        "messages": messages,
-        "tools": tools,
+        "messages": copy.deepcopy(messages),
+        "tools": copy.deepcopy(tools),
         "sampling_as_sent": sampling_as_sent,
     }
 
@@ -163,9 +212,12 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            resp = _requests.post(
+            # Never follow a redirect, nor a proxy from the environment:
+            # either could send the request (with the key and the fixture
+            # data in it) to another host (SPEC R0.2).
+            resp = _post(
                 endpoint_url, json=body, headers=headers,
-                timeout=timeout)
+                timeout=timeout, allow_redirects=False)
             attempts.append({
                 "attempt": attempt,
                 "status_code": resp.status_code,
@@ -205,12 +257,31 @@ def send(endpoint_url, *, messages, tools=None, sampling=None,
                 status_code=resp.status_code,
                 body=masked_body)
 
+        # The body as received, kept as text beside its parse (SPEC R0.2:
+        # byte for byte). JSON between systems is UTF-8 (RFC 8259 8.1);
+        # a body that is not cannot be kept as text, and is refused as a
+        # body that is not JSON is.
         try:
-            raw = resp.json()
-        except ValueError as e:
+            text = resp.content.decode('utf-8')
+        except UnicodeDecodeError:
+            raise AdapterError(
+                f"response is not UTF-8: {_mask_credentials(resp.text[:200])}"
+            ) from None
+        try:
+            parsed = json.loads(text)
+        except ValueError:
             raise AdapterError(
                 f"response is not valid JSON: {_mask_credentials(resp.text[:200])}"
             ) from None
+        # A body that is neither an object nor a list (a bare string,
+        # number or null) is returned as parsed, without its text.
+        raw = parsed
+        if isinstance(parsed, dict):
+            raw = RawResponse(parsed)
+        elif isinstance(parsed, list):
+            raw = RawList(parsed)
+        if raw is not parsed:
+            raw.raw_text = text
 
         return raw, request_record
 

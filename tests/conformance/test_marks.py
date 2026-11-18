@@ -58,6 +58,9 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/functional/test_step4_g4_transcript.py::test_run_ev0_record_names_cause_and_round[dropped-connection]',
     'tests/functional/test_step4_g4_transcript.py::test_run_ev0_record_names_cause_and_round[http-503]',
     'tests/functional/test_step4_g4_transcript.py::test_run_ev0_record_names_cause_and_round[unrecognised-shape]',
+    'tests/functional/test_step4_g4_transcript.py::test_run_every_mock_reply_recorded_as_the_bytes_it_sent',
+    'tests/functional/test_step4_g4_transcript.py::test_run_round_records_keep_each_response_byte_for_byte',
+    'tests/functional/test_step4_g4_transcript.py::test_run_with_raw_responses_passes_the_run_seal_verifier',
     'tests/functional/test_step4_g5_seal_verifier.py::test_run_ground_truth_values_changing_between_computations_refused',
     'tests/functional/test_step4_g5_seal_verifier.py::test_run_seal_record_binds_expected_values',
     'tests/functional/test_step4_g5_seal_verifier.py::test_run_seal_record_carries_environment_fields',
@@ -73,6 +76,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_engine.py::test_execute_item_later_send_fails_error_state_names_cause_and_round',
     'tests/unit/execution/test_engine.py::test_execute_item_model_controlled_arguments_recorded_no_raise[true-plus]',
     'tests/unit/execution/test_engine.py::test_execute_item_model_controlled_arguments_recorded_no_raise[true-times]',
+    'tests/unit/execution/test_engine.py::test_execute_item_records_each_round_body_as_received',
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[content-filter]',
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[refusal]',
     'tests/unit/execution/test_engine.py::test_execute_item_unrecognised_later_response_error_state_names_round',
@@ -94,6 +98,12 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_version.py::test_source_hash_scratch_file_outside_package_leaves_it_unchanged',
     'tests/unit/execution/test_version.py::test_source_hash_venv_inside_clone_leaves_it_unchanged[.venv]',
     'tests/unit/execution/test_version.py::test_source_hash_venv_inside_clone_leaves_it_unchanged[venv]',
+    'tests/unit/foundation/test_adapter.py::test_send_200_body_not_utf8_raises_adapter_error',
+    'tests/unit/foundation/test_adapter.py::test_send_keeps_the_body_text_byte_for_byte',
+    'tests/unit/foundation/test_adapter.py::test_send_keeps_the_text_of_a_list_body',
+    'tests/unit/foundation/test_adapter.py::test_send_scalar_body_is_returned_parsed_without_its_text[null]',
+    'tests/unit/foundation/test_adapter.py::test_send_scalar_body_is_returned_parsed_without_its_text[number]',
+    'tests/unit/foundation/test_adapter.py::test_send_scalar_body_is_returned_parsed_without_its_text[string]',
     'tests/unit/foundation/test_config.py::test_load_config_example_config_mini_is_the_mini_runs_config',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D5-5-20]',
     'tests/unit/foundation/test_config.py::test_minimum_n_minimum_named_is_the_declared_versions[D6-1-10]',
@@ -106,6 +116,7 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[devanagari-point-5]',
     'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-3]',
     'tests/unit/foundation/test_numeric.py::test_parse_decimal_refuses_non_ascii_digits[full-width-grouped]',
+    'tests/unit/foundation/test_transcript.py::test_round_entry_carries_the_raw_body_when_the_record_has_it',
     'tests/unit/reporting/test_adjudication.py::test_sheet_key_joins_every_sheet_back_to_its_arm',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[content-filter]',
     'tests/unit/reporting/test_adjudication.py::test_sheet_refusal_shows_text_and_provisional_outcome[refusal]',
@@ -158,9 +169,9 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/provenance/test_classify.py': 2,
     'tests/unit/scoring/provenance/test_trace.py': 4,
     'tests/unit/scoring/test_operation_correctness.py': 112,
-    'tests/unit/scoring/test_release_coverage.py': 34,
+    'tests/unit/scoring/test_release_coverage.py': 31,
 }
-MIN_STRICT_XFAIL_CASES = 139
+MIN_STRICT_XFAIL_CASES = 94
 
 
 @pytest.fixture(scope='module')

@@ -85,8 +85,10 @@ def sheets_of(out):
 
 
 def transcript_of(out):
+    """The transcript's execution records (without the round records)."""
     lines = (out / 'smoke_run.jsonl').read_text('utf-8').splitlines()
-    return [json.loads(line) for line in lines if line.strip()]
+    records = [json.loads(line) for line in lines if line.strip()]
+    return [r for r in records if r.get('kind') != 'round']
 
 
 def results_of(out):

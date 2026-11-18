@@ -158,6 +158,38 @@ class Report(unittest.TestCase):
                       hash_oracle.check_report(wrong, record)[0])
 
 
+class EnvironmentNormalisation(unittest.TestCase):
+    # pre_registration.json repeats the seal's environment fields, which
+    # name the machine; the comparison masks them only where they hold
+    # this interpreter's own value.
+
+    def record(self, **fields):
+        seal = dict(hash_oracle.environment(), questions_hash='e' * 64)
+        seal.update(fields)
+        return json.dumps({'seal_record': seal}, indent=2, sort_keys=True,
+                          ensure_ascii=False) + '\n'
+
+    def test_this_machines_values_are_masked(self):
+        text = run_regression.normalise(self.record(), [], [])
+        for key in ('python_version', 'platform', 'package_versions'):
+            self.assertIn(f'"{key}": "<ENVIRONMENT>"', text)
+        self.assertIn('"questions_hash": "' + 'e' * 64 + '"', text)
+
+    def test_another_machines_value_is_not_masked(self):
+        text = run_regression.normalise(
+            self.record(platform='Other-OS-1.0', python_version='PyPy 0.1'),
+            [], [])
+        self.assertIn('"platform": "Other-OS-1.0"', text)
+        self.assertIn('"python_version": "PyPy 0.1"', text)
+        self.assertIn('"package_versions": "<ENVIRONMENT>"', text)
+
+    def test_a_value_under_another_key_is_not_masked(self):
+        here = hash_oracle.environment()['platform']
+        text = run_regression.normalise(
+            json.dumps({'note': here}, ensure_ascii=False), [], [])
+        self.assertIn(json.dumps(here, ensure_ascii=False), text)
+
+
 class Snapshot(unittest.TestCase):
 
     def test_round_trip_keeps_types(self):

@@ -36,6 +36,8 @@ Model: gpt-5.6-sol
 | `timestamp` | `<TIMESTAMP>` |
 | `verification_keys` | `[]` |
 
+Transcript scored: SHA-256 `<TRANSCRIPT_SHA256>`, 2933 records.
+
 ## 2. Resolved Configuration
 
 ```json
@@ -1306,7 +1308,7 @@ Total operands resolved: 4722
   - `reasoning_effort`: `none`
   - `temperature`: not sent (platform-rejected)
   - `top_p`: not sent (operator-declared)
-- Parameter echo: `UNVERIFIED` (1000 responses checked)
+- Parameter echo: `UNVERIFIED` (1932 responses checked)
 
 ## 10. Non-Outcome Cells
 
@@ -1314,7 +1316,7 @@ Total operands resolved: 4722
 
 | Item | Condition | Status | Reason |
 |---|---|---|---|
-| Q08 | base | UNOBSERVABLE | Evidence class: EV-0 UNOBSERVABLE |
+| Q08 | base | UNOBSERVABLE | UNOBSERVABLE: round 1: request failed: HTTP 502: replayed mid-loop failure: the recorded loop ended here without a response |
 
 ## 11. Quantisation and Near-Miss Findings
 

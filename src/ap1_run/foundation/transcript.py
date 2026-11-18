@@ -3,6 +3,13 @@
 Spec: AP-1 Runner Build Spec v0.3, section 3 R0.3.
 
 Owns run.jsonl: append-only, one line per interaction, never rewritten.
+
+An execution writes each round of its tool loop as a round record (kind
+ROUND_RECORD) the moment the round's response arrives, and then one record
+of the whole execution, which carries every round again (SPEC R0.2: every
+request and response is written before any other processing). A round's
+response is kept twice: parsed (response_received, which every reader
+uses) and as the body text received, byte for byte (response_raw).
 """
 
 import json
@@ -13,6 +20,11 @@ from pathlib import Path
 
 class TranscriptError(Exception):
     """Transcript operation failure."""
+
+
+# The kind of a round record: one round's request as sent and raw response
+# (or, if its request failed, the error), written as it arrives.
+ROUND_RECORD = 'round'
 
 
 def append(path, *, item_id, arm_id, condition, request_sent,
@@ -64,28 +76,67 @@ def read_all(path):
     records before it are returned (S3-G1-17). Invalid JSON anywhere
     else raises TranscriptError.
     """
+    return parse(read_bytes(path), path)
+
+
+def read_bytes(path):
+    """A transcript's bytes, read once (b'' if there is no file), for a
+    reader that must hash and parse the same bytes (parse)."""
     path = Path(path)
     if not path.exists():
-        return []
-
-    records = []
-    # Read as bytes and decode line by line, so that a last line cut
-    # inside a multibyte character is a torn line like any other.
+        return b''
     with open(path, 'rb') as f:
-        for line_num, raw_bytes in enumerate(f, 1):
-            complete = raw_bytes.endswith(b'\n')
-            try:
-                line = raw_bytes.decode('utf-8').strip()
-                if not line:
-                    continue
-                records.append(json.loads(line))
-            except (UnicodeDecodeError, json.JSONDecodeError) as e:
-                if not complete:
-                    warnings.warn(
-                        f'transcript {path}: line {line_num} is incomplete '
-                        f'(interrupted write) and was left out: {e}')
-                    break
-                raise TranscriptError(
-                    f'invalid JSON at line {line_num}: {e}') from e
+        return f.read()
+
+
+def parse(data, path='transcript'):
+    """The records in a transcript's bytes, as read_all reads them; path
+    names the transcript in a warning."""
+    records = []
+    # Decode line by line, so that a last line cut inside a multibyte
+    # character is a torn line like any other.
+    lines = data.split(b'\n')
+    for line_num, raw_bytes in enumerate(lines, 1):
+        complete = line_num < len(lines)   # a newline follows it
+        try:
+            line = raw_bytes.decode('utf-8').strip()
+            if not line:
+                continue
+            records.append(json.loads(line))
+        except (UnicodeDecodeError, json.JSONDecodeError) as e:
+            if not complete:
+                warnings.warn(
+                    f'transcript {path}: line {line_num} is incomplete '
+                    f'(interrupted write) and was left out: {e}')
+                break
+            raise TranscriptError(
+                f'invalid JSON at line {line_num}: {e}') from e
 
     return records
+
+
+def round_entry(record):
+    """A round record as the entry for its round in the execution
+    record's rounds: {'round', 'request', 'response'}, or 'error' in place
+    of 'response' for a round whose request failed; with 'response_raw',
+    the response body as received (SPEC R0.2), if the record has it (a
+    transcript written before it was kept has not)."""
+    entry = {'round': record['round'], 'request': record['request_sent']}
+    if record.get('error') is not None:
+        entry['error'] = record['error']
+    else:
+        entry['response'] = record['response_received']
+        if 'response_raw' in record:
+            entry['response_raw'] = record['response_raw']
+    return entry
+
+
+def error_state_text(error_state):
+    """A record's error state as one line of text. An EV-0 state is
+    structured, {'cause', 'round'} (T3-35); its text is derived from it:
+    'UNOBSERVABLE: round <n>: <cause>'. Any other state is already text."""
+    if isinstance(error_state, dict):
+        number = error_state.get('round')
+        where = f'round {number}: ' if number is not None else ''
+        return f'UNOBSERVABLE: {where}{error_state.get("cause", "")}'
+    return '' if error_state is None else str(error_state)

@@ -12,7 +12,7 @@ for.
 
 ## Network behaviour
 
-**The instrument targets only the endpoint declared in configuration.** Note: the `requests` library follows HTTP redirects by default; a redirecting endpoint could cause a request to a different host.
+**The instrument targets only the endpoint declared in configuration.** HTTP redirects are not followed: a redirect from the endpoint is an HTTP error and is recorded as one. Proxies named in the environment (`HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`) or in the system settings are ignored, and so are `.netrc` credentials and a CA bundle named in `REQUESTS_CA_BUNDLE`: the request goes to the endpoint directly, verified against the bundled certificates. So no request reaches a different host. A network that allows traffic only through a proxy cannot run the instrument; a proxy, if ever needed, would have to be a declared and recorded configuration field, which does not exist.
 
 There is no telemetry, no analytics, no usage reporting, no licence check, no
 update check, and no hosted component. Nothing is transmitted to ZORRZ or to any third party at any time.

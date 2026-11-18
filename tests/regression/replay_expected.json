@@ -1,7 +1,7 @@
 {
   "_about": "Differences a replay of a published run is expected to show, because a fix changes how the published transcript is scored. Checked by hard_checks.check_replay: any difference not listed here fails the run, and so does a listed move that does not happen. new_execution_fields: fields new in the replay, each with an expectation computed per execution by hard_checks from the published fields (NEW_FIELD_EXPECTATIONS). numeric_paths / numeric_text_paths: the leaves (field[].key) whose numbers are compared as exact Decimals, for a fix that only respells a value. moves: execution (item/condition/repeat) -> field -> [published value, replayed value].",
   "output/run_e_mini": {
-    "new_top_level_keys": [],
+    "new_top_level_keys": ["scored_transcript"],
     "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
     "numeric_paths": [
       "provenance_results[].operand_resolutions[].operand_literal",
@@ -210,7 +210,7 @@
     }
   },
   "output/run_f_sol": {
-    "new_top_level_keys": [],
+    "new_top_level_keys": ["scored_transcript"],
     "new_execution_fields": ["answer_outcome", "answer_outcome_reason"],
     "numeric_paths": [
       "provenance_results[].operand_resolutions[].operand_literal",
