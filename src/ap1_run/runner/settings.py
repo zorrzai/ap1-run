@@ -16,8 +16,6 @@ from ap1_run.execution.perturbation_guard import (
     check_single_variable_perturbation,
 )
 
-AP1_TEXT = os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
-
 # The files a run writes to its output directory.
 RUN_OUTPUT_FILES = ('smoke_run.jsonl', 'report.md', 'smoke_summary.json')
 
@@ -26,7 +24,9 @@ def parse_args(argv, base_dir):
     """The command-line options, as absolute paths.
 
     Every option defaults to the path the runner has always used under
-    base_dir (the repository root), so a run without options is unchanged.
+    base_dir (the repository root), so a run without options is unchanged;
+    --ap1-text defaults to None: the text is then chosen by the config's
+    ap1_version (execution/ap1_texts.py, V12-4).
     output_dir_explicit says whether --output-dir was given.
     """
     example_dir = os.path.join(base_dir, 'example')
@@ -49,16 +49,20 @@ def parse_args(argv, base_dir):
              '(default: output/, where files of the same name are '
              'replaced); a directory given here that already holds a run '
              'is refused')
+    # No default path: None, and the run takes the text of the config's
+    # ap1_version.
     parser.add_argument(
-        '--ap1-text', default=os.path.join(base_dir, AP1_TEXT),
-        help='the AP-1 text to seal; its hash must match the one the '
-             'runner expects (default: ' + AP1_TEXT + ')')
+        '--ap1-text',
+        help='the AP-1 text to seal; its hash must match the config\'s '
+             'ap1_text_hash (default: the text of the config\'s '
+             'ap1_version under reference/)')
     args = parser.parse_args(argv)
     args.output_dir_explicit = args.output_dir is not None
     if not args.output_dir_explicit:
         args.output_dir = os.path.join(base_dir, 'output')
     for name in ('config', 'fixture_dir', 'output_dir', 'ap1_text'):
-        setattr(args, name, os.path.abspath(getattr(args, name)))
+        if getattr(args, name) is not None:
+            setattr(args, name, os.path.abspath(getattr(args, name)))
     return args
 
 

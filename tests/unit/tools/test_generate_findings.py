@@ -105,17 +105,24 @@ def test_pct_zero_denominator_is_unquantised_zero(gf):
     assert str(gf.pct(5, 0)) == '0'
 
 
-@pytest.mark.finding('S3-G8-6')
-def test_pct_rounds_half_to_even(gf):
-    # quantize() uses the context's rounding, ROUND_HALF_EVEN; the module
-    # imports ROUND_HALF_UP and never uses it. Correct: half up, 6.3.
-    assert str(gf.pct(1, 16)) == '6.2'
-    assert str(gf.pct(3, 16)) == '18.8'
+def test_import_leaves_the_decimal_context_alone():
+    # Importing the tool must not change the caller's precision (it once
+    # set the global precision to 50, which other tests then ran under).
+    from decimal import getcontext, localcontext
+    with localcontext() as ctx:
+        ctx.prec = 28
+        load_tool()
+        assert getcontext().prec == 28
 
 
-def test_import_sets_decimal_precision_50(gf):
-    from decimal import getcontext
-    assert getcontext().prec == 50
+def test_figures_are_computed_at_precision_50(gf):
+    # pct, compute_figures, generate and main run at precision 50 whatever
+    # the caller's context: 45 places of 1/3 % need 47 digits.
+    from decimal import localcontext
+    with localcontext() as ctx:
+        ctx.prec = 28
+        assert str(gf.pct(1, 3, places=45)) == '33.' + '3' * 45
+        assert ctx.prec == 28
 
 
 def test_fmt_int_with_thousands_separator(gf):
@@ -443,14 +450,6 @@ def test_compute_b_ops_per_exec_is_a_rounded_float(figures):
     assert isinstance(v['b_ops_per_exec'], float)
 
 
-@pytest.mark.finding('S3-G8-8')
-def test_compute_empty_run_b_raises_zero_division(figures):
-    # Run A guards its Q10 average against zero; run B's ops-per-execution
-    # does not. Correct: a clear error naming the empty run (or 0).
-    with pytest.raises(ZeroDivisionError):
-        figures(b=[])
-
-
 def test_compute_q10_calls_per_execution_of_run_a(figures):
     v = figures(a=[result('Q10', ops=['OPERATION-CORRECT'] * 3),
                    result('Q10', ops=['OPERATION-CORRECT'] * 2),
@@ -509,23 +508,31 @@ def test_compute_wrong_operation_ratio_uses_thousands_separator(figures):
 
 
 @pytest.mark.finding('S3-G8-7')
-def test_compute_base_noninvocation_bound_assumes_500_base_executions(
-        figures):
-    # The denominator is fixed at 500 (10 items x 50 repeats), whatever
-    # the run holds: here a single base execution. Correct: the run's own
-    # count of base executions.
-    v = figures(a=[result('Q01')])
-    assert v['a_base_noninvoke_cp'] == (
-        '0/500 (p_upper < %.4f, 95%% Clopper–Pearson)'
-        % clopper_pearson_upper_k0(500))
-
-
-@pytest.mark.finding('S3-G8-7')
 def test_compute_base_noninvocation_ratio_when_some(figures):
     # S3-G8-7: the denominator is a fixed 500, not the run's base count.
     v = figures(b=[result('Q01', invocation='NOT-INVOKED'),
-                   result('Q02', invocation='NOT-INVOKED')])
-    assert v['b_base_noninvoke_cp'] == '2/500'
+                   result('Q02', invocation='NOT-INVOKED'),
+                   result('Q03'), result('Q01', condition=IR)])
+    assert v['b_base_noninvoke_cp'] == '2/3'
+
+
+def test_pct_rounds_below_half_down_and_ties_up(gf):
+    assert str(gf.pct(1, 3)) == '33.3'
+    assert str(gf.pct(2, 3)) == '66.7'
+    assert str(gf.pct(3, 16)) == '18.8'
+    assert str(gf.pct(1, 16, places=0)) == '6'
+    assert str(gf.pct(1, 8, places=1)) == '12.5'
+    assert str(gf.pct(1, 80, places=2)) == '1.25'
+
+
+def test_compute_empty_run_b_gives_zero_ops_per_execution(figures):
+    assert figures(b=[])['b_ops_per_exec'] == 0
+
+
+def test_compute_base_noninvocation_without_base_executions(figures):
+    # No base execution at all: no bound, the ratio 0/0.
+    v = figures(a=[result('Q01', condition=IR)])
+    assert v['a_base_noninvoke_cp'] == '0/0'
 
 
 def test_compute_superseded_run_counts(figures):
@@ -712,9 +719,6 @@ def test_paths_are_fixed_under_the_repository_root(gf):
 @pytest.mark.finding('S3-G8-6')
 @pytest.mark.parametrize('num, denom, shown', [(1, 16, '6.3'), (5, 16, '31.3'),
                                                (9, 16, '56.3')])
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-6: pct rounds half to even; ROUND_HALF_UP is '
-                          'imported and never used')
 def test_pct_rounds_half_up(gf, num, denom, shown):
     # Correct: the module imports ROUND_HALF_UP for pct, and the example
     # config's quantisation declares "rounding": "ROUND_HALF_UP", so
@@ -724,9 +728,6 @@ def test_pct_rounds_half_up(gf, num, denom, shown):
 
 
 @pytest.mark.finding('S3-G8-7')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-7: the base non-invocation bound uses a '
-                          'fixed n = 500')
 def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
     # Correct: n is the run's own count of base executions: here 2 (the
     # instruction_removed result does not count).
@@ -736,9 +737,22 @@ def test_compute_base_noninvocation_bound_uses_the_runs_base_count(figures):
         % clopper_pearson_upper_k0(2))
 
 
+@pytest.mark.finding('S3-G8-7')
+@pytest.mark.req('AP-1 D7.5')
+def test_compute_base_noninvocation_bound_counts_observed_executions(figures):
+    # AP-1 v1.3 D7.5: the bound is over the executions the zero count is
+    # taken over, those with an invocation outcome. A VOID or UNMEASURED
+    # base record has none: 2 observed, not 4 (and no KeyError).
+    void = {'item_id': 'Q03', 'condition': 'base', 'status': 'VOID'}
+    unmeasured = {'item_id': 'Q04', 'condition': 'base',
+                  'status': 'UNMEASURED', 'error': 'HTTP 500'}
+    v = figures(a=[result('Q01'), result('Q02'), void, unmeasured])
+    assert v['a_base_noninvoke_cp'] == (
+        '0/2 (p_upper < %.4f, 95%% Clopper–Pearson)'
+        % clopper_pearson_upper_k0(2))
+
+
 @pytest.mark.finding('S3-G8-8')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G8-8: an empty run B raises ZeroDivisionError')
 def test_compute_empty_run_b_no_zero_division(figures):
     # Correct: like run A's guarded average, an empty run B gives 0 ops per
     # execution, or a clear error that names the empty run; never a bare

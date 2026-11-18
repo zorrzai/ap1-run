@@ -171,7 +171,9 @@ def test_parse_args_defaults_are_the_fixed_paths():
         'fixture_dir': native('/repo/example'),
         'output_dir': native('/repo/output'),
         'output_dir_explicit': False,
-        'ap1_text': native('/repo/reference/AP-1_v1.3_DRAFT_FOR_COMMENT.md'),
+        # V12-4: no fixed text; the run takes the text of the config's
+        # ap1_version (execution/ap1_texts.py).
+        'ap1_text': None,
     }
 
 
@@ -234,12 +236,8 @@ def test_parse_args_help_text(capsys, monkeypatch):
         '(default: output/, where files of the same name are replaced); a '
         'directory given here that already holds a run is refused\n'
         '  --ap1-text AP1_TEXT   the AP-1 text to seal; its hash must match '
-        'the one the runner expects '
-        # AP1_TEXT is built with os.path.join, so its help shows the native
-        # separator (a backslash on Windows); the other defaults are literals
-        '(default: '
-        + os.path.join('reference', 'AP-1_v1.3_DRAFT_FOR_COMMENT.md')
-        + ')\n')
+        "the config's ap1_text_hash (default: the text of the config's "
+        'ap1_version under reference/)\n')
 
 
 def test_parse_args_output_dir_given_as_the_default_path_is_explicit():

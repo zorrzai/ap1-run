@@ -6,6 +6,7 @@
     "fixture_path": "inputs/my_example/fixture.json",
     "questions_path": "inputs/my_example/questions.json",
     "ground_truth_path": "inputs/my_example/ground_truth_example.py",
+    "calculator_path": "inputs/my_example/calculator_tool.py",
     "ap1_text_path": "texts/ap1.md"
   },
   "exercises": ["ap1-run --config --fixture-dir --output-dir --ap1-text"],

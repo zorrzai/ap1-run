@@ -35,9 +35,10 @@ Normalisation (in the comparison, never in the runner):
   - the scratch copy's path (or the repository's and the temporary run
     directory's), and the mock endpoint's address and port
   - ISO timestamps, and the adapter's epoch timestamps
-  - this run's seal_hash, config_hash and runner_source_hash, read from
-    the seal the run actually made (the config hash covers the mock's
-    port; the source hash covers the code, and changes when files move)
+  - this run's seal_hash, inputs_hash, config_hash and runner_source_hash,
+    read from the seal the run actually made (the config hash covers the
+    mock's port; the source hash covers the code, and changes when files
+    move; inputs_hash covers both)
   - each adjudication sheet's execution id (derived from the seal hash),
     as <EXECUTION_ID_k> numbered in order of first appearance, so the
     golden still shows which sheets share an id
@@ -410,6 +411,10 @@ _EPOCH = re.compile(r'("timestamp":\s*)\d{9,}(?:\.\d+)?')
 _MOCK = re.compile(r'http://127\.0\.0\.1:\d+')
 # Printed before the seal exists, so not covered by the seal's values.
 _SOURCE_HASH_LINE = re.compile(r'(Runner source hash: )[0-9a-f]+')
+# The environment fields of the seal (T3-30, T3-70) in report.md section 1: they
+# depend on the machine, not on the code.
+_ENVIRONMENT_ROW = re.compile(
+    r'(\| `(?:python_version|platform|package_versions)` \| `)[^`]*(` \|)')
 
 
 _EXECUTION_ID = re.compile(r'(Execution id: `)([0-9a-f]{12})(`)')
@@ -430,8 +435,10 @@ def normalise(text, roots, seals):
         lambda m: m.group(1) + ids.setdefault(
             m.group(2), f'<EXECUTION_ID_{len(ids) + 1}>') + m.group(3),
         text)
+    text = _ENVIRONMENT_ROW.sub(r'\1<ENVIRONMENT>\2', text)
     for seal in seals:
         for field, label in (('seal_hash', '<SEAL_HASH>'),
+                             ('inputs_hash', '<INPUTS_HASH>'),
                              ('config_hash', '<CONFIG_HASH>'),
                              ('runner_source_hash', '<RUNNER_SOURCE_HASH>')):
             value = seal.get(field) or ''

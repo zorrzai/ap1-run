@@ -74,6 +74,16 @@ class CanonicalHash(unittest.TestCase):
         self.assertEqual(pins, [
             '831709b2231846ed20fd63ff0bc0764d73cee50db271f733e6a2f1c377c7cff3'])
 
+    def test_text_hash_drops_a_bom_and_makes_line_endings_lf(self):
+        lf = hashlib.sha256(b'a\nb\n').hexdigest()
+        for data in (b'a\nb\n', b'a\r\nb\r\n', b'a\rb\r',
+                     b'\xef\xbb\xbfa\r\nb\n'):
+            self.assertEqual(hash_oracle.text_hash(data), lf, data)
+        # Only a leading BOM goes, and other bytes are kept.
+        self.assertNotEqual(hash_oracle.text_hash(b'a\xef\xbb\xbf\n'),
+                            hash_oracle.text_hash(b'a\n'))
+        self.assertNotEqual(hash_oracle.text_hash(b'a\n\n'), lf)
+
     def test_float_is_refused(self):
         with self.assertRaises(hash_oracle.HashCheckError):
             hash_oracle.canonical_hash({'a': [1.5]})
@@ -161,6 +171,12 @@ class Snapshot(unittest.TestCase):
         self.assertIs(type(back['b']), bool)
         self.assertEqual(str(back['d']), '0.010')
 
+    def test_bytes_round_trip(self):
+        data = b'\xef\xbb\xbfa\r\nb\x00'
+        back = hash_oracle.from_snapshot(driver.snapshot({'x': data}))
+        self.assertEqual(back, {'x': data})
+        self.assertIs(type(back['x']), bytes)
+
     def test_a_tuple_is_a_sequence_not_text(self):
         self.assertEqual(driver.snapshot(()), ['list', []])
         self.assertEqual(hash_oracle.from_snapshot(driver.snapshot(('k',))),
@@ -182,14 +198,19 @@ class SourceHash(unittest.TestCase):
     def setUp(self):
         self.root = tempfile.mkdtemp(prefix='ap1-oracle-')
         files = {
-            'b.py': b'B',
-            'a.py': b'A',
-            'pkg/c.py': b'C',
-            'pkg/data.txt': b'not hashed',
+            'src/ap1_run/b.py': b'B',
+            'src/ap1_run/a.py': b'A',
+            'src/ap1_run/pkg/c.py': b'C',
+            'VERSION': b'V',
+            'src/ap1_run/pkg/data.txt': b'not hashed',
+            'src/ap1_run/__pycache__/m.py': b'excluded',
+            'src/ap1_run_extra/x.py': b'excluded',
+            'src/other/y.py': b'excluded',
+            'tests/unit/test_a.py': b'excluded',
+            'tools/t.py': b'excluded',
+            '.venv/lib/site-packages/m.py': b'excluded',
+            'scratch.py': b'excluded',
             'output/run.py': b'excluded',
-            'output_x.py': b'excluded',
-            'review_output_1/r.py': b'excluded',
-            '__pycache__/m.py': b'excluded',
         }
         for rel, data in files.items():
             path = os.path.join(self.root, *rel.split('/'))
@@ -202,12 +223,22 @@ class SourceHash(unittest.TestCase):
 
     def test_files_and_known_answer(self):
         self.assertEqual(
-            [p.replace(os.sep, '/')
-             for p in hash_oracle.source_hash_files(self.root)],
-            ['a.py', 'b.py', 'pkg/c.py'])
+            hash_oracle.source_hash_files(self.root),
+            ['VERSION', 'src/ap1_run/a.py', 'src/ap1_run/b.py',
+             'src/ap1_run/pkg/c.py'])
         want = hashlib.sha256(
-            b'a.py\x00A\x00b.py\x00B\x00pkg/c.py\x00C\x00').hexdigest()
+            b'VERSION\x00V\x00src/ap1_run/a.py\x00A\x00'
+            b'src/ap1_run/b.py\x00B\x00src/ap1_run/pkg/c.py\x00C\x00'
+        ).hexdigest()
         self.assertEqual(hash_oracle.runner_source_hash(self.root), want)
+
+    def test_version_directory_is_not_hashed(self):
+        os.remove(os.path.join(self.root, 'VERSION'))
+        os.makedirs(os.path.join(self.root, 'VERSION'))
+        with open(os.path.join(self.root, 'VERSION', 'x'), 'wb') as f:
+            f.write(b'v')
+        self.assertNotIn('VERSION', hash_oracle.source_hash_files(self.root))
+        self.assertNotIn('VERSION/x', hash_oracle.source_hash_files(self.root))
 
 
 
@@ -259,9 +290,11 @@ class SourceFileList(unittest.TestCase):
     def test_untracked_files_are_named_not_listed(self):
         root = tempfile.mkdtemp(prefix='ap1-source-list-')
         try:
-            files = {'a.py': 'tracked', 'pkg/b.py': 'tracked',
-                     'output/c.py': 'tracked', 'scratch.py': 'untracked',
-                     'notes.txt': 'tracked'}
+            files = {'src/ap1_run/a.py': 'tracked',
+                     'src/ap1_run/pkg/b.py': 'tracked',
+                     'tests/c.py': 'tracked',
+                     'src/ap1_run/scratch.py': 'untracked',
+                     'src/ap1_run/notes.txt': 'tracked'}
             for rel in files:
                 path = os.path.join(root, *rel.split('/'))
                 os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -279,15 +312,19 @@ class SourceFileList(unittest.TestCase):
                     listed = check_source_files.tracked_source_files()
             finally:
                 check_source_files.REPO = repo
-            self.assertEqual(listed, ['a.py', 'pkg/b.py'])
+            self.assertEqual(listed,
+                             ['src/ap1_run/a.py', 'src/ap1_run/pkg/b.py'])
             self.assertIn('1 untracked file(s)', err.getvalue())
-            self.assertIn('scratch.py', err.getvalue())
+            self.assertIn('src/ap1_run/scratch.py', err.getvalue())
         finally:
             shutil.rmtree(root)
 
 class PublishedSourceHash(unittest.TestCase):
-    """The oracle's source-hash rule, on the code of the September runs,
-    gives the runner_source_hash their seals record (docs/REPRODUCING.md).
+    """The pre-T3-70 source-hash rule (hash_oracle
+    .source_hash_files_september()), on the code of the September runs,
+    gives the runner_source_hash their seals record (docs/REPRODUCING.md):
+    the September seals can still be reproduced. The runner no longer
+    uses that rule (T3-70); the oracle keeps it for this check only.
 
     The tree is the tag's blobs as stored, written out byte for byte: at
     the tag, .py files are stored as they were on disk when the runs were
@@ -296,11 +333,11 @@ class PublishedSourceHash(unittest.TestCase):
     clone (CI checks out with full history).
 
     What this pins: the byte reading (the tag has CRLF and LF files), the
-    path encoding, the NUL framing and the sort, over a nearly flat tree
-    (44 .py files at the top, 7 in ap1_inspect/, 2 in example/; no tests/,
-    src/ or tools/). It cannot see a rule change that only affects deeper
-    or other directories, such as no longer hashing tests/: which files
-    are in scope is pinned by check_source_files.py."""
+    path encoding and the NUL framing, which the current rule shares
+    (hash_oracle.source_hash_over()), and the old rule's sort, over a
+    nearly flat tree (44 .py files at the top, 7 in ap1_inspect/, 2 in
+    example/; no tests/, src/ or tools/). Which files the current rule
+    takes in is pinned by check_source_files.py and SourceHash."""
 
     TAG = 'e7-quantise-fix'
     # docs/REPRODUCING.md, and report.md section 1 of both September runs.
@@ -371,7 +408,7 @@ class PublishedSourceHash(unittest.TestCase):
 
     def test_rule_recomputes_the_published_hash_from_the_tag(self):
         self.write_tag_tree()
-        self.assertEqual(hash_oracle.runner_source_hash(self.root),
+        self.assertEqual(hash_oracle.runner_source_hash_september(self.root),
                          self.PUBLISHED)
 
 class ReplayComparison(unittest.TestCase):

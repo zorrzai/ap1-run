@@ -16,7 +16,8 @@ import os
 import re
 import sys
 from collections import Counter, defaultdict
-from decimal import Decimal, getcontext, ROUND_HALF_UP
+import functools
+from decimal import Context, Decimal, ROUND_HALF_UP, localcontext
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # This clone's src/ goes first, before any ap1_run import, so the tool
@@ -26,7 +27,18 @@ sys.path.insert(0, os.path.join(ROOT, 'src'))
 
 from ap1_run.reporting.report import clopper_pearson_upper_k0  # noqa: E402
 
-getcontext().prec = 50
+# The tool's figures are computed at precision 50, in a local context:
+# importing it leaves the caller's decimal context as it was.
+CONTEXT = Context(prec=50)
+
+
+def _at_precision_50(function):
+    """Run `function` in CONTEXT."""
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        with localcontext(CONTEXT):
+            return function(*args, **kwargs)
+    return wrapper
 
 OUTPUT = os.path.join(ROOT, "output")
 TEMPLATE = os.path.join(ROOT, "findings", "FINDINGS.template.md")
@@ -38,12 +50,14 @@ def load_json(path):
         return json.load(f)
 
 
+@_at_precision_50
 def pct(num, denom, places=1):
     """Compute percentage using Decimal, quantised to `places` decimal places."""
     if denom == 0:
         return Decimal("0")
     q = Decimal("0.1") if places == 1 else Decimal(10) ** -places
-    return (Decimal(num) / Decimal(denom) * 100).quantize(q)
+    return (Decimal(num) / Decimal(denom) * 100).quantize(
+        q, rounding=ROUND_HALF_UP)
 
 
 def fmt(n):
@@ -76,6 +90,7 @@ def classify_originated_mechanism(provenance_result):
         return "untraceable"
 
 
+@_at_precision_50
 def compute_figures():
     """Compute every placeholder value from the run artifacts."""
     run_a = load_json(os.path.join(OUTPUT, "run_a_mini", "smoke_summary.json"))
@@ -96,12 +111,12 @@ def compute_figures():
         v[f"{pfx}_ir_count"] = len(ir)
 
         # Invocation
-        v[f"{pfx}_invoked_base"] = sum(1 for r in base if r["invocation_outcome"] == "INVOKED")
-        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
-        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r["invocation_outcome"] == "INVOKED")
+        v[f"{pfx}_invoked_base"] = sum(1 for r in base if r.get("invocation_outcome") == "INVOKED")
+        v[f"{pfx}_not_invoked_ir"] = sum(1 for r in ir if r.get("invocation_outcome") == "NOT-INVOKED")
+        v[f"{pfx}_invoked_ir"] = sum(1 for r in ir if r.get("invocation_outcome") == "INVOKED")
 
         # NOT-INVOKED by item
-        ni_items = Counter(r["item_id"] for r in ir if r["invocation_outcome"] == "NOT-INVOKED")
+        ni_items = Counter(r["item_id"] for r in ir if r.get("invocation_outcome") == "NOT-INVOKED")
         for item, count in ni_items.items():
             v[f"{pfx}_ni_{item}"] = count
 
@@ -144,7 +159,7 @@ def compute_figures():
         for r in results:
             for op in r.get("operation_correctness", []):
                 if op["outcome"] == "WRONG-OPERATION":
-                    fig = r["figure_outcome"]
+                    fig = r.get("figure_outcome")
                     if fig == "AUTO-MATCH":
                         wo_correct += 1
                     elif fig in ("AUTO-MISMATCH", "MISMATCH"):
@@ -238,13 +253,13 @@ def compute_figures():
                 v[f"{pfx}_orig_item_{item_id}_{mech_name}"] = count
 
         # D1
-        d1 = Counter(r["figure_outcome"] for r in results)
+        d1 = Counter(r.get("figure_outcome") for r in results)
         v[f"{pfx}_d1_auto_match"] = d1.get("AUTO-MATCH", 0)
 
         # Per-item detail
         for qid in ["Q07", "Q08", "Q10"]:
             qr = [r for r in results if r["item_id"] == qid]
-            qd1 = Counter(r["figure_outcome"] for r in qr)
+            qd1 = Counter(r.get("figure_outcome") for r in qr)
             qwo = sum(1 for r in qr for op in r.get("operation_correctness", [])
                        if op["outcome"] == "WRONG-OPERATION")
             qtot = sum(1 for r in qr for op in r.get("operation_correctness", []))
@@ -257,7 +272,7 @@ def compute_figures():
 
         # Q08 base only
         q08_base = [r for r in base if r["item_id"] == "Q08"]
-        v[f"{pfx}_Q08_base_am"] = sum(1 for r in q08_base if r["figure_outcome"] == "AUTO-MATCH")
+        v[f"{pfx}_Q08_base_am"] = sum(1 for r in q08_base if r.get("figure_outcome") == "AUTO-MATCH")
         v[f"{pfx}_Q08_base_total"] = len(q08_base)
 
         # Step-4 by item
@@ -325,7 +340,10 @@ def compute_figures():
                 v[f"{pfx}_{qid}_am_pct"] = pct(v[am_key], v[total_key])
 
     # Ops per execution (for F4)
-    v["b_ops_per_exec"] = round(v["b_total_ops"] / v["b_total_entries"], 2)
+    # An empty run B has no executions: 0 calls per execution
+    v["b_ops_per_exec"] = (
+        round(v["b_total_ops"] / v["b_total_entries"], 2)
+        if v["b_total_entries"] else 0)
 
     # Q10 calls per execution for Run A
     q10_a = [r for r in run_a["all_results"] if r["item_id"] == "Q10"]
@@ -337,7 +355,7 @@ def compute_figures():
     for pfx, run in [("a", run_a), ("b", run_b)]:
         base_r = [r for r in run["all_results"] if r["condition"] == "base"]
         v[f"{pfx}_not_invoked_base"] = sum(
-            1 for r in base_r if r["invocation_outcome"] == "NOT-INVOKED")
+            1 for r in base_r if r.get("invocation_outcome") == "NOT-INVOKED")
 
     # D7.5 Clopper-Pearson bounds for zero-failure figures
     # The zero item-wrong count holds over the AUTO-SCORED population only.
@@ -364,9 +382,15 @@ def compute_figures():
             v[f"{pfx}_wo_item_wrong_cp"] = f"{auto_scored_wrong}/{auto_scored_wo:,}"
 
     # D7.5 bound for zero base non-invocations (D7.1b invocation figure)
-    for pfx in ("a", "b"):
+    for pfx, run in [("a", run_a), ("b", run_b)]:
         k_val = v.get(f"{pfx}_not_invoked_base", 0)
-        n_val = 500  # 10 items x 50 repeats, base condition
+        # n is the run's own count of base-condition executions with an
+        # invocation outcome: the executions the zero count is taken over
+        # (AP-1 D7.5). A VOID or UNMEASURED record has none.
+        n_val = sum(1 for r in run["all_results"]
+                    if r["condition"] == "base"
+                    and r.get("invocation_outcome") in ("INVOKED",
+                                                        "NOT-INVOKED"))
         if k_val == 0 and n_val > 0:
             bound = clopper_pearson_upper_k0(n_val)
             v[f"{pfx}_base_noninvoke_cp"] = (
@@ -446,6 +470,7 @@ def compute_figures():
     return v
 
 
+@_at_precision_50
 def generate(values=None, template_path=None, target_path=None):
     """Generate FINDINGS.md from template and computed values.
 
@@ -512,6 +537,7 @@ def generate(values=None, template_path=None, target_path=None):
     return result
 
 
+@_at_precision_50
 def main():
     values = compute_figures()
     result = generate(values, target_path=TARGET)

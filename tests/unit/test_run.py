@@ -36,6 +36,11 @@ def compute(item_id, ctx):
     return {'final': Decimal('10.00'), 'derivable': True}
 '''
 
+CALCULATOR = '''
+def execute_calculator(expression):
+    return '0'
+'''
+
 CONFIG = {
     'endpoint_url': 'http://mock/v1',
     'model': 'mock-model',
@@ -69,6 +74,7 @@ class Run:
         self.calls = []
         self.results = {}     # (item, condition, rep) -> result or exception
         self.refuse = set()   # R3.1 guards that raise SealError
+        self.verify_refusals = []  # verify_seal calls that raise, by index
         self.version = {'version_tag': 'v9.9.9',
                         'version_commit': '0123456789abcdef0123'}
         monkeypatch.setattr(sys, 'path', list(sys.path))
@@ -83,7 +89,7 @@ class Run:
                      'compute_runner_source_hash',
                      'perturbation_check', 'source_fields_check',
                      'declared_constants_check',
-                     'create_seal', 'check_condition_guard',
+                     'create_seal', 'verify_seal', 'check_condition_guard',
                      'build_delivered_context', 'check_lookup_collision',
                      'execute_item', 'score_execution',
                      'verify_invocation_consistency', 'print_run_report',
@@ -94,10 +100,11 @@ class Run:
 
     def write_inputs(self, config=None):
         fx = self.fixture_dir
-        (fx / 'config.json').write_text(json.dumps(config or self.config))
-        (fx / 'fixture.json').write_text(json.dumps(FIXTURE))
-        (fx / 'questions.json').write_text(json.dumps(QUESTIONS))
-        (fx / 'ground_truth_example.py').write_text(GROUND_TRUTH)
+        (fx / 'config.json').write_bytes(json.dumps(config or self.config).encode())
+        (fx / 'fixture.json').write_bytes(json.dumps(FIXTURE).encode())
+        (fx / 'questions.json').write_bytes(json.dumps(QUESTIONS).encode())
+        (fx / 'ground_truth_example.py').write_bytes(GROUND_TRUTH.encode())
+        (fx / 'calculator_tool.py').write_bytes(CALCULATOR.encode())
 
     def argv(self, output_dir=True):
         return (['--config', str(self.fixture_dir / 'config.json'),
@@ -149,6 +156,12 @@ class Run:
     def create_seal(self, **kwargs):
         self.calls.append(('seal', kwargs))
         return {'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}
+
+    def verify_seal(self, record, **kwargs):
+        self.calls.append(('verify_seal', record, kwargs))
+        if len(self.named('verify_seal')) in self.verify_refusals:
+            raise SealError('seal verification failed:\n  fixture: changed')
+        return True
 
     def check_condition_guard(self, *args):
         self.calls.append(('guard',) + args)
@@ -273,7 +286,9 @@ def test_main_full_run_calls(r, capsys):
 
     assert r.config_path == os.path.join(fx, 'config.json')
     assert r.named('version') == [(run.BASE_DIR,)]
-    assert r.named('source_hash') == [(run.BASE_DIR,)]
+    # Hashed for the seal, then again by each of the two seal checks
+    # (before the first request and before reporting), from disk.
+    assert r.named('source_hash') == [(run.BASE_DIR,)] * 3
     guards = r.named('gt_guard')
     assert [g[0] for g in guards] == [
         'perturbation', 'source_fields', 'declared_constants']
@@ -281,12 +296,36 @@ def test_main_full_run_calls(r, capsys):
                and g[2] == FIXTURE and g[3] == QUESTIONS for g in guards)
     (seal,), = r.named('seal')
     config = seal.pop('config')
+    # T3-48: the expected values of every item, computed before the seal;
+    # T3-72: the bytes read are the bytes sealed.
+    expected_values = {'Q1': {'final': D('10.00'), 'derivable': True},
+                       'Q3': {'derivable': False},
+                       'Q2': {'final': D('10.00')}}
     assert seal == {
         'fixture_path': os.path.join(fx, 'fixture.json'),
         'questions_path': os.path.join(fx, 'questions.json'),
         'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'calculator_path': os.path.join(fx, 'calculator_tool.py'),
         'ap1_text_path': str(r.tmp / 'ap1.md'),
-        'runner_source_hash': 'feedfacecafebeef' + '0' * 48}
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values,
+        'loaded': {'fixture': json.dumps(FIXTURE).encode(),
+                   'questions': json.dumps(QUESTIONS).encode(),
+                   'ground_truth': GROUND_TRUTH.encode(),
+                   'calculator': CALCULATOR.encode()}}
+    # T3-17: the seal is verified, the whole record and every input,
+    # before the first request and again before anything is reported.
+    verified = {
+        'config': config,
+        'fixture_path': os.path.join(fx, 'fixture.json'),
+        'questions_path': os.path.join(fx, 'questions.json'),
+        'ground_truth_path': os.path.join(fx, 'ground_truth_example.py'),
+        'calculator_path': os.path.join(fx, 'calculator_tool.py'),
+        'ap1_text_path': str(r.tmp / 'ap1.md'),
+        'runner_source_hash': 'feedfacecafebeef' + '0' * 48,
+        'expected_values': expected_values}
+    assert r.named('verify_seal') == [
+        ({'seal_hash': 'SEAL', 'ap1_text_hash': 'TEXTHASH'}, verified)] * 2
     assert config['endpoint_url'] == 'http://mock/v1'
     assert config['model'] == 'mock-model'
     assert (config['runner_version_tag'], config['runner_version_commit'],
@@ -415,13 +454,15 @@ def test_main_full_run_calls(r, capsys):
 
     # the order of the stages
     stages = [c[0] for c in r.calls if c[0] in (
-        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'consistency',
-        'run_report', 'summarise', 'd2_cap', 'd2', 'summary',
-        'scoring_report', 'outputs')]
+        'version', 'source_hash', 'gt_guard', 'seal', 'guard', 'verify_seal',
+        'execute', 'consistency', 'run_report', 'summarise', 'd2_cap', 'd2',
+        'summary', 'scoring_report', 'outputs')]
     assert stages == ['version', 'source_hash', 'gt_guard', 'gt_guard',
-                      'gt_guard', 'seal', 'guard',
-                      'consistency', 'run_report', 'summarise', 'd2_cap',
-                      'd2', 'summary', 'scoring_report', 'outputs']
+                      'gt_guard', 'seal', 'guard', 'source_hash',
+                      'verify_seal'] + ['execute'] * 8 + [
+                      'source_hash', 'verify_seal', 'consistency',
+                      'run_report', 'summarise',
+                      'd2_cap', 'd2', 'summary', 'scoring_report', 'outputs']
 
 
 @pytest.mark.finding('T3-7')
@@ -440,6 +481,86 @@ def test_main_ground_truth_guard_refusal_stops_before_seal_and_requests(
     assert [g[0] for g in r.named('gt_guard')] == ran
     assert r.named('seal') == [] and r.named('execute') == []
     assert 'Ground-truth guards' not in capsys.readouterr().out
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_any_request(r, capsys):
+    r.verify_refusals = [1]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert r.named('execute') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-17')
+@pytest.mark.req('R1.1')
+def test_main_seal_verification_refused_before_anything_is_reported(r):
+    r.verify_refusals = [2]
+    with pytest.raises(SealError, match='fixture: changed'):
+        r.main()
+    assert len(r.named('execute')) == 8
+    assert r.named('consistency') == [] and r.named('outputs') == []
+
+
+@pytest.mark.finding('T3-48', 'T3-72')
+def test_main_scores_against_the_sealed_expected_values(r):
+    # The module is not called again after the seal: a module whose
+    # answer changes between calls cannot change the expected values.
+    real_seal = r.create_seal
+
+    def seal_then_change(**kwargs):
+        record = real_seal(**kwargs)
+        sys.modules['ground_truth_example'].compute = \
+            lambda item_id, ctx: {'final': D('99')}
+        return record
+    r.create_seal = seal_then_change
+    run.create_seal = seal_then_change
+    assert r.main() == 0
+    assert {k['expected'] for _, k in r.named('score')} == {D('10.00')}
+    compute = r.named('execute')[0][1]['ground_truth_compute']
+    assert compute('Q1', {}) == {'final': D('10.00'), 'derivable': True}
+
+
+@pytest.mark.finding('T3-72')
+def test_main_runs_the_ground_truth_file_not_a_shadowing_package(r):
+    package = r.fixture_dir / 'ground_truth_example'
+    package.mkdir()
+    (package / '__init__.py').write_text('raise ImportError("shadow")\n')
+    assert r.main() == 0
+    assert sys.modules['ground_truth_example'].__file__ == str(
+        r.fixture_dir / 'ground_truth_example.py')
+
+
+V12_HASH = '14659fc1c2a3357c22081a9109841475861c34f2b315ee7eb546e80fecbb58a5'
+
+
+@pytest.mark.finding('V12-4')
+def test_main_ap1_text_of_the_declared_version(r, monkeypatch):
+    # Without --ap1-text the seal takes the text of the config's version.
+    r.config['ap1_version'] = 'v1.2'
+    monkeypatch.setattr(r, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
+    monkeypatch.setattr(run, 'create_seal', r.create_seal)
+    assert run.main(r.argv()[:-2]) == 0
+    assert r.named('seal')[0][0]['ap1_text_path'] == os.path.join(
+        run.BASE_DIR, 'reference', 'AP-1_Admissibility_Protocol_v1.2.md')
+
+
+@pytest.mark.finding('V12-4')
+def test_main_version_label_over_another_text_refused_before_requests(r):
+    # The fake seal records 'TEXTHASH', which is no v1.2 text.
+    r.config['ap1_version'] = 'v1.2'
+    with pytest.raises(SealError, match='not the AP-1 v1.2 text'):
+        r.main()
+    assert r.named('seal') and r.named('execute') == []
+    assert r.named('verify_seal') == []
+
+
+def test_main_unknown_version_without_ap1_text_refused_before_seal(r):
+    r.config['ap1_version'] = 'v7'
+    with pytest.raises(SealError, match="no text is known for ap1_version"):
+        run.main(r.argv()[:-2])
+    assert r.named('seal') == []
 
 
 def test_main_adapter_send_binds_the_key(r, monkeypatch):
@@ -543,9 +664,12 @@ def test_main_under_powered_claim_refused_before_seal_and_requests(r):
 
 
 @pytest.mark.finding('T3-12', 'V12-7')
-def test_main_minimum_n_counts_the_question_items(r):
+def test_main_minimum_n_counts_the_question_items(r, monkeypatch):
     # Under v1.2, D6 needs one item with a conflict_class: Q2 has one.
     r.config.update(dimensions_claimed=['D6'], ap1_version='v1.2')
+    # V12-4: a v1.2 run must seal the v1.2 text.
+    monkeypatch.setattr(run, 'create_seal', lambda **kw: r.calls.append(
+        ('seal', kw)) or {'seal_hash': 'SEAL', 'ap1_text_hash': V12_HASH})
     questions = json.loads(json.dumps(QUESTIONS))
     questions['items'][2]['conflict_class'] = 'stated twice'
     (r.fixture_dir / 'questions.json').write_text(json.dumps(questions))

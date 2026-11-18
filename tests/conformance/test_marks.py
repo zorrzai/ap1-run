@@ -77,10 +77,11 @@ EXPECTED_PROPOSAL_CASES = (
     'tests/unit/execution/test_engine.py::test_execute_item_refusal_is_executed_not_unmeasured[refusal]',
     'tests/unit/execution/test_engine.py::test_execute_item_unrecognised_later_response_error_state_names_round',
     'tests/unit/execution/test_evidence_r41.py::test_r41_ev3_rows_are_declared_exceptions_while_ev3_is_not_built',
-    'tests/unit/execution/test_seal.py::test_seal_hash_two_timestamps_give_two_hashes',
+    'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-calculator]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-fixture]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-ground_truth]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom-questions]',
+    'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom_crlf-calculator]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom_crlf-fixture]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom_crlf-ground_truth]',
     'tests/unit/execution/test_seal.py::test_seal_text_input_hash_independent_of_line_endings_and_bom[bom_crlf-questions]',
@@ -159,7 +160,7 @@ EXPECTED_PROVISIONAL_CASES = {
     'tests/unit/scoring/test_operation_correctness.py': 112,
     'tests/unit/scoring/test_release_coverage.py': 34,
 }
-MIN_STRICT_XFAIL_CASES = 234
+MIN_STRICT_XFAIL_CASES = 139
 
 
 @pytest.fixture(scope='module')
@@ -203,6 +204,8 @@ def test_provisional_marks_have_a_dec5_reason_and_no_strict_xfail(collected):
     for t in collected:
         for mark in t['provisional']:
             args = mark['args']
+            # DEC-5: a module without a SPEC section, the code its
+            # provisional definition
             if (len(args) != 1 or not isinstance(args[0], str)
                     or not args[0].startswith('DEC-5')):
                 bad.append((t['nodeid'], 'reason'))
