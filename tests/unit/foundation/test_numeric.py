@@ -1254,3 +1254,62 @@ def test_extract_word_characters_are_ascii_letters_and_digits(text, expected):
 def test_extract_sign_is_an_operator_only_after_a_kept_number_on_its_line(
         text, expected):
     assert _values(text) == expected
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.xfail(strict=True, raises=AssertionError,
+                   reason='S3-G1-5: a label number takes the next figure\'s '
+                          'currency symbol, and the sign after it is then '
+                          'read as an operator')
+@pytest.mark.parametrize('text, expected', [
+    ('For month 12 $-575.50 was paid',
+     [('12', False, '', '12'), ('-575.50', False, '$', '$-575.50')]),
+    ('month 12 USD-575.50',
+     [('12', False, '', '12'), ('-575.50', False, 'USD', 'USD-575.50')]),
+    ('month 12 $−575.50',
+     [('12', False, '', '12'), ('-575.50', False, '$', '$−575.50')]),
+    ('month 12 $+575.50',
+     [('12', False, '', '12'), ('575.50', False, '$', '$+575.50')]),
+    ('month 12 $575.50',
+     [('12', False, '', '12'), ('575.50', False, '$', '$575.50')]),
+    ('rate 5% $-3',
+     [('5', True, '', '5%'), ('-3', False, '$', '$-3')]),
+], ids=['dollar-minus', 'code-minus', 'unicode-minus', 'plus', 'unsigned',
+        'after-percent'])
+def test_extract_currency_touching_the_next_figure_belongs_to_it(
+        text, expected):
+    # The review of #13: with currency_symbols ['$', 'USD'] (as in
+    # example/config.json), 'For month 12 $-575.50 was paid' read '12 $'
+    # and then +575.50: the trailing-currency pattern let the label number
+    # take the '$', and the empty gap left then made the '-' an operator,
+    # so a wrong-sign answer AUTO-MATCHed +575.50. A currency symbol with
+    # a space before it and none after, before a sign or a digit, belongs
+    # to the figure that follows, and that figure keeps its sign.
+    assert tokens(text, currency_symbols=['$', 'USD']) == expected
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2')
+@pytest.mark.parametrize('text, expected', [
+    ('1437.00 USD - 1006.25 USD = 430.75 USD',
+     [('1437.00', 'USD'), ('1006.25', 'USD'), ('430.75', 'USD')]),
+    ('1437.00 $ - 1006.25 $', [('1437.00', '$'), ('1006.25', '$')]),
+    ('10$-3$', [('10', '$'), ('3', '$')]),
+    ('month 12 $ -575.50', [('12', '$'), ('-575.50', '')]),
+    ('5 USD', [('5', 'USD')]),
+    ('pay $ 5 now', [('5', '$')]),
+    ('x 10 - $3', [('10', ''), ('3', '$')]),
+    ('-5 USD', [('-5', 'USD')]),
+    ('(5 $)-3', [('-5', '$'), ('3', '')]),
+], ids=['code-subtraction', 'dollar-subtraction', 'touching-both-sides',
+        'space-after-currency', 'trailing-code', 'leading-spaced',
+        'operator-then-currency', 'signed-trailing', 'parenthesised'])
+def test_extract_trailing_currency_not_touching_a_next_figure_unchanged(
+        text, expected):
+    # The cases around the one above that keep their reading: a currency
+    # symbol with a space after it, or touching the number before it,
+    # stays that number's trailing currency, so a subtraction with
+    # trailing currencies is still a subtraction.
+    assert [(str(t.value), t.currency) for t in extract_numeric_tokens(
+        text, currency_symbols=['$', 'USD'])] == expected
