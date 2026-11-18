@@ -289,6 +289,102 @@ def test_identify_figure_non_digit_number_characters_stay_no_figure(content):
     assert identify(response(content))['outcome'] == AUTO_NO_FIGURE
 
 
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected', [
+    ('Step: 430.75 was wrong; final answer '
+     '\u0664\u0662\u0660\u066b\u0660\u0660', '430.75'),
+    ('Step: 430.75 was wrong; final answer \uff14\uff12\uff10.00',
+     '430.75'),
+    ('The answer is 15.20, or \u0967\u096b.\u0968\u0966', '15.20'),
+], ids=['arabic-indic-final-answer', 'full-width-final-answer',
+        'devanagari-beside-match'])
+def test_identify_figure_non_ascii_digits_beside_a_match_route_to_adjudication(
+        content, expected):
+    # The review of #13: 'Step: 430.75 was wrong; final answer
+    # \u0664\u0662\u0660\u066b\u0660\u0660' (420.00 in Arabic-Indic digits)
+    # AUTO-MATCHed an expected 430.75 on the step it calls wrong, since the
+    # other-script check ran only when extraction found no ASCII token. Any
+    # Unicode decimal digit other than ASCII 0-9 anywhere in the reply now
+    # sends an automatic outcome to a person.
+    r = identify(response(content), expected=expected)
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert 'ASCII' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-7')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('15.20 or 15.20, or \u0661\u0665.\u0662\u0660', '15.20',
+     ADJUDICATE_AMBIGUOUS),
+    ('It is 9.99, or \u0661\u0665.\u0662\u0660', '15.20',
+     ADJUDICATE_NO_MATCH),
+], ids=['two-matches-stay-ambiguous', 'no-match-stays-none-matching'])
+def test_identify_figure_non_ascii_digits_leave_adjudicated_outcomes_alone(
+        content, expected, outcome):
+    # An outcome that already goes to a person keeps its own reason.
+    assert identify(response(content), expected=expected)['outcome'] \
+        == outcome
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, outcome', [
+    ('For month 12 $-575.50 was paid', '575.50', ADJUDICATE_NO_MATCH),
+    ('For month 12 $-575.50 was paid', '-575.50', AUTO_MATCH),
+], ids=['wrong-sign-not-matched', 'negative-matched'])
+def test_identify_figure_currency_before_a_signed_figure_keeps_the_sign(
+        content, expected, outcome):
+    # The review of #13, with example/config.json's currency_symbols: at
+    # 70d3744a the first AUTO-MATCHes (a wrong-sign answer scored correct)
+    # and the second goes to adjudication.
+    r = identify(response(content), expected=expected,
+                 currency_symbols=['$', 'USD'])
+    assert r['outcome'] == outcome, r
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected', [
+    ('For month 12$-575.50 was paid', '575.50'),
+    ('10$-3$', '3'),
+    ('10$-3$', '10'),
+    ('rate 5%$-3', '3'),
+    ('month 12$\u2212575.50', '575.50'),
+    ('month 12$+575.50', '575.50'),
+], ids=['label-dollar-minus', 'subtraction-subtrahend', 'subtraction-minuend',
+        'after-percent', 'unicode-minus', 'plus'])
+def test_identify_figure_currency_glued_before_a_sign_is_not_auto_matched(
+        content, expected):
+    # Steven's decision on the second review of #13: with no space on
+    # either side of a currency symbol and a sign right after it
+    # ('12$-575.50', '10$-3$'), the text does not say whether the sign is
+    # the figure's or a subtraction. The extractor keeps its reading (12 $,
+    # then 575.50 after an operator); the reply goes to a person rather
+    # than AUTO-MATCH.
+    r = identify(response(content), expected=expected,
+                 currency_symbols=['$', 'USD'])
+    assert r['outcome'] == ADJUDICATE_NO_MATCH, r
+    assert r['released_figure'] is None
+    assert 'currency' in r['reason']
+
+
+@pytest.mark.finding('S3-G1-5')
+@pytest.mark.req('R0.4.2', 'R2.0')
+@pytest.mark.parametrize('content, expected, currency_symbols', [
+    ('10$ - 3$', '3', ['$', 'USD']),
+    ('pay 10$, then -3', '-3', ['$', 'USD']),
+    ('For month 12 $-575.50 was paid', '-575.50', ['$', 'USD']),
+    ('12$-575.50', '-575.50', []),
+], ids=['spaced-subtraction', 'comma-between', 'space-before-currency',
+        'no-currencies-configured'])
+def test_identify_figure_currency_not_glued_before_a_sign_still_auto_matches(
+        content, expected, currency_symbols):
+    assert identify(response(content), expected=expected,
+                    currency_symbols=currency_symbols)['outcome'] == AUTO_MATCH
+
+
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
 @pytest.mark.parametrize('content, expected, outcome', [
