@@ -203,7 +203,11 @@ def _build_extraction_re(decimal_sep, grouping_sep, currency_symbols):
         syms = sorted(currency_symbols, key=len, reverse=True)
         cur = '(?:' + '|'.join(re.escape(s) for s in syms) + ')'
         cur_lead = '(?:' + cur + r'\s*)?'
-        cur_trail = r'(?:\s*' + cur + ')?'
+        # A trailing currency touches the number (or '%') before it, or
+        # is not touching a sign or digit after it: in 'month 12 $-575.50'
+        # the '$' is the next figure's, not the label's (S3-G1-5).
+        cur_trail = (r'(?:\s*(?:(?<=\S)' + cur + '|' + cur
+                     + r'(?![+\-\u2212]?[0-9])))?')
     else:
         cur_lead = ''
         cur_trail = ''
@@ -252,7 +256,7 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
     Returns list of NumericToken sorted by position.
     Raises AmbiguousLocaleError if any token is ambiguous.
 
-    Two readings of the free text, beyond the token grammar:
+    Three readings of the free text, beyond the token grammar:
     - A sign after a number, in the shape of an expression, is a binary
       operator, not the sign of the next token: with nothing between
       the number and the sign ('5-3', '5- 3'), or with spaces or tabs
@@ -263,6 +267,12 @@ def extract_numeric_tokens(text, *, decimal_sep='.', grouping_sep=',',
       the same way. A number dropped as inside a word does not count
       ('Q4 - 5%' gives -5%), nor does one on the line before
       ('1,006.25\n- 575.50').
+    - A currency symbol with a space before it and a sign or digit
+      right after it is the next figure's leading currency, not the
+      previous number's trailing one: 'month 12 $-575.50' gives 12 and
+      $-575.50 (S3-G1-5). Touching the number before it ('10$-3$'), or
+      with a space after it ('1437.00 USD - 1006.25 USD'), it stays
+      trailing.
     - Digits inside a word are not a token: 'Q04', 'v2.0.1', 'item A1'
       give nothing (S3-G1-6). A word character is an ASCII letter or
       digit ('__430.75__' and CJK text around a figure still give it). A

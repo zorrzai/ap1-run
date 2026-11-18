@@ -289,9 +289,6 @@ def test_run_wrong_sign_after_a_label_number_is_not_auto_matched(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: the label number takes the figure\'s $, '
-                          'and the figure\'s minus is read as an operator')
 def test_run_currency_before_a_signed_figure_is_not_auto_matched(
         tmp_path, monkeypatch, capsys):
     # The review of #13: with the example's currency_symbols ['$', 'USD'],

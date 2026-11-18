@@ -312,8 +312,6 @@ def test_identify_figure_non_ascii_digits_leave_adjudicated_outcomes_alone(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: \'12 $-575.50\' reads 12 $ and +575.50')
 @pytest.mark.parametrize('content, expected, outcome', [
     ('For month 12 $-575.50 was paid', '575.50', ADJUDICATE_NO_MATCH),
     ('For month 12 $-575.50 was paid', '-575.50', AUTO_MATCH),

@@ -1258,10 +1258,6 @@ def test_extract_sign_is_an_operator_only_after_a_kept_number_on_its_line(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: a label number takes the next figure\'s '
-                          'currency symbol, and the sign after it is then '
-                          'read as an operator')
 @pytest.mark.parametrize('text, expected', [
     ('For month 12 $-575.50 was paid',
      [('12', False, '', '12'), ('-575.50', False, '$', '$-575.50')]),
