@@ -22,11 +22,13 @@ Contents (SPEC.md R3.3 interface):
   11. Quantisation and near-miss findings
   12. DECLARATION of which dimensions were NOT measured
 
-Clopper-Pearson:
-  k=0 only (closed form): p_upper = 1 - alpha^(1/n), alpha = 0.05.
-  For k>0: point estimate with n, no bound. AP-1 v1.3 D7.5 specifies
-  the zero-failure form only. This is a declared limitation, not a
-  silent omission.
+Clopper-Pearson (AP-1 v1.3 D7.5; scoring/invocation.py):
+  k=0 (closed form): p_upper = 1 - alpha^(1/n), alpha = 0.05.
+  k>0: the exact bound, the 1 - alpha quantile of Beta(k+1, n-k), the
+  general form DISPOSITION C-1 adopts. Computed in Decimal and shown
+  rounded up, so a displayed bound is never below the exact one.
+  k>0: the exact two-sided 95% interval beside it, as the published
+  paper prints it, its ends rounded outward.
 
 D2 Mechanism Classes:
   D2 is auto-measured. Per surface, report: mechanism class,
@@ -40,10 +42,20 @@ Classification: DETERMINISTIC. No model, no network.
 import json
 import math
 from datetime import datetime, timezone
-from decimal import ROUND_DOWN, ROUND_HALF_UP, Decimal
+from decimal import MAX_PREC, ROUND_DOWN, ROUND_HALF_UP, Decimal, localcontext
 
 from ap1_run.foundation.transcript import error_state_text
-from ap1_run.scoring.invocation import format_failing_questions
+from ap1_run.runner.executions import LOOP_EXHAUSTED
+from ap1_run.scoring.accuracy import (
+    CATEGORY_MINIMUM_N, clopper_pearson_interval,
+)
+from ap1_run.scoring.answer_outcome import (
+    NO_OUTCOME_KINDS, OTHER, ROUTED,
+)
+from ap1_run.scoring.invocation import (
+    _exact_upper_bound, clopper_pearson_upper, format_failing_questions,
+    round_up,
+)
 
 
 # -- All seven dimensions per AP-1 v1.3 --------------------------------
@@ -55,6 +67,15 @@ AUTO_MEASURED = {'D1', 'D2', 'D7'}
 
 # Dimensions requiring human adjudication
 HUMAN_ADJUDICATED = {'D3', 'D4', 'D5', 'D6'}
+
+
+# The README's statement (T3-45): report.md is the artifact most likely
+# to be forwarded, so it says what a run is before its first section.
+DEMONSTRATION_STATEMENT = (
+    '> **Demonstration run, not a conformance result.** ap1-run implements '
+    'the AP-1 v1.3 Draft for Comment; v1.2 remains the version in force. '
+    'A run of this instrument is a demonstration run, not a conformance '
+    'result under either version (README, "Which version of AP-1").\n')
 
 
 def generate_report(*, summary, config, seal_record, transcript_records=None,
@@ -83,11 +104,14 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
     sections.append(f'AP-1 Version: {config.get("ap1_version", "unknown")}\n')
     sections.append(f'Version DOI: {config.get("ap1_version_doi", "unknown")}\n')
     sections.append(f'Model: {config.get("model", "unknown")}\n')
+    if 'served' in summary:
+        sections.append(_served_lines(summary['served']))
+    sections.append(DEMONSTRATION_STATEMENT)
     sections.append('---\n')
 
     # 1. Pre-registration record
-    sections.append(_section_preregistration(seal_record, config,
-                                             scored_transcript, rescore))
+    sections.append(_section_preregistration(seal_record, scored_transcript,
+                                             rescore))
 
     # 2. Resolved configuration
     sections.append(_section_configuration(config))
@@ -120,7 +144,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
     sections.append(_section_scoring_proportions(summary))
 
     # 9. D2 mechanism classes per surface
-    sections.append(_section_d2_mechanisms(summary))
+    sections.append(_section_d2_mechanisms(summary, config))
 
     # 9b. D2.2 execution conditions and parameter echo
     sections.append(_section_d2_conditions(summary, config,
@@ -133,7 +157,7 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
     sections.append(_section_quantisation(summary))
 
     # 12. Declaration of unmeasured dimensions
-    sections.append(_section_unmeasured_dimensions(config))
+    sections.append(_section_unmeasured_dimensions(config, summary))
 
     # Declared limitations
     sections.append(_section_declared_limitations())
@@ -143,11 +167,59 @@ def generate_report(*, summary, config, seal_record, transcript_records=None,
 
 # -- Section generators ------------------------------------------------
 
+def _served_lines(served):
+    """What the responses say served them: model snapshots and backend
+    fingerprints, with how many responses each, and the freeze status
+    (V12-8; AP-1 §5.2 asks for confirmation that the system was frozen
+    for the run)."""
+    def listed(counts):
+        return ', '.join(f'{value} ({n})' for value, n in
+                         sorted(counts.items())) or 'not reported'
+    models, fingerprints = served['models'], served['fingerprints']
+    return (f'Served model (as the responses report it, with responses): '
+            f'{listed(models)}\n\n'
+            f'Backend fingerprints (system_fingerprint): '
+            f'{listed(fingerprints)}\n\n'
+            f'> Freezing (AP-1 \u00a75.2): {_freeze_status(served)}\n')
+
+
+def _freeze_status(served):
+    """Whether the responses show the system frozen, always stated: not
+    shown (more than one model or fingerprint), not verified (an
+    identifier missing from some or all responses), or consistent with a
+    frozen system (one model and one fingerprint in every response). The
+    runner sees only what the endpoint reports, so it never says the
+    system was frozen."""
+    models, fingerprints = served['models'], served['fingerprints']
+    total = served.get('responses')
+    if len(models) > 1 or len(fingerprints) > 1:
+        return ('not shown: more than one served model or backend '
+                'fingerprint; the run does not show that the system under '
+                'test was frozen for its duration.')
+    if total is None:
+        return 'not verified: the number of responses is not recorded.'
+    if total == 0:
+        return 'not verified: no response was received.'
+    gaps = []
+    for counts, name in ((models, 'served model'),
+                         (fingerprints, 'backend fingerprint')):
+        missing = total - sum(counts.values())
+        if missing == total:
+            gaps.append(f'the responses report no {name}')
+        elif missing:
+            gaps.append(f'{missing} of {total} responses report no {name}')
+    if gaps:
+        return f'not verified: {"; ".join(gaps)}.'
+    return (f'not verified by the runner; consistent with a frozen system: '
+            f'all {total} responses report one served model and one '
+            f'backend fingerprint.')
+
+
 _RUNNER_FIELDS = ('runner_version_tag', 'runner_version_commit',
                   'runner_modified', 'runner_source_hash')
 
 
-def _section_preregistration(seal_record, config, scored_transcript=None,
+def _section_preregistration(seal_record, scored_transcript=None,
                              rescore=None):
     """Section 1: Pre-registration record, the transcript scored, and,
     for a re-score, that it is one and which runner scored it."""
@@ -203,28 +275,403 @@ def _section_dimension_results(summary, config):
     for dim in ALL_DIMENSIONS:
         if dim in dims_claimed:
             dim_data = summary.get(f'{dim.lower()}_results', {})
-            if dim_data:
+            if dim_data and dim == 'D7':
+                lines.extend(_d7_rows(summary, dim_data))
+            elif dim_data and dim == 'D2':
+                questions, runs = _d2_n(dim_data, config)
+                n = questions if runs is None else f'{questions} × {runs}'
+                below = ('; below AP-1 D2\'s 10 × 50'
+                         if _d2_below_minimum(questions, runs) else '')
+                lines.append(f'| D2 | Measured | {n} | '
+                             f'{_d2_class_counts(dim_data)}{below} (§9) |')
+            elif dim_data:
                 n = dim_data.get('n', dim_data.get('auto_scored_n', 'N/A'))
                 result = _format_dim_result(dim, dim_data)
                 lines.append(f'| {dim} | Measured | {n} | {result} |')
             else:
                 lines.append(f'| {dim} | Claimed but no results | — | — |')
         else:
-            lines.append(f'| {dim} | **NOT MEASURED** | — | — |')
+            # Not claimed is a choice, not a gap: the words of section 12
+            # ("NOT MEASURED" is for a claimed dimension; requested in
+            # review)
+            lines.append(f'| {dim} | not claimed | — | '
+                         f'{_unclaimed_reason(dim)} (§12) |')
+
+    d1 = summary.get('d1_results', {})
+    by_category = d1.get('by_category')
+    uncategorised = d1.get('uncategorised') or []
+    if 'D1' in dims_claimed and (by_category or uncategorised):
+        lines.extend(_d1_category_rows(by_category or {}, uncategorised))
+    for dim, entry in summary.get('kinds', {}).items():
+        lines.extend(_kind_rows(dim, entry))
 
     lines.append('')
     return '\n'.join(lines)
+
+
+KIND_HEADINGS = {'D5': 'D5 per Attack Kind',
+                 'D6': 'D6 per Kind of Bad Data'}
+
+
+def _kind_rows(dim, entry):
+    """D5 or D6 items per kind (SPEC R0.1): AP-1's fixed kinds first,
+    then the kinds the question set defines, each with its definition;
+    any label naming no fixed or defined kind (a run sealed before the
+    loader refused them), so none is dropped silently; and, if a fixed
+    kind the declared AP-1 version requires has no item, the line saying
+    the result is not a full AP-1 one."""
+    lines = [f'\n### {KIND_HEADINGS[dim]}\n',
+             f'> SPEC R0.1: the items of each {dim} kind; AP-1\'s own '
+             f'(fixed) kinds first, then the kinds this question set '
+             f'defines, with their definitions. A defined kind never '
+             f'stands in for a fixed one. {dim} is scored by human '
+             f'adjudication: these are item counts, not results.\n',
+             '| Kind | Fixed or defined | Items | Definition |',
+             '|---|---|---|---|']
+    for kind in entry['kinds']:
+        definition = kind['definition'].replace('|', '\\|')
+        lines.append(f'| `{kind["name"]}` '
+                     f'| {"fixed" if kind["fixed"] else "defined"} '
+                     f'| {kind["n"]} | {definition} |')
+    undefined = entry.get('undefined', {})
+    if undefined:
+        listed = ', '.join(f'`{label}` ({n})'
+                           for label, n in undefined.items())
+        lines.append(f'\n**{dim}: labels naming no fixed or defined kind '
+                     f'(counted for no kind):** {listed}. The loader '
+                     f'refuses such a label; this run was sealed without '
+                     f'that check.')
+    if entry['missing']:
+        missing = ', '.join(f'`{name}`' for name in entry['missing'])
+        plural = 's' if len(entry['missing']) > 1 else ''
+        lines.append(f'\n**{dim}: not a full AP-1 {dim} result.** No item '
+                     f'of the fixed kind{plural} {missing}: the declared '
+                     f'AP-1 version names each of them, and a full result '
+                     f'needs at least one item of every one. The counts '
+                     f'above stand as they are.')
+    return lines
+
+
+def _d1_category_rows(by_category, uncategorised=()):
+    """D1 per category with n and a 95% interval (AP-1 v1.3 D1; T3-32).
+    Base condition only; n counts questions; a question is correct if all
+    its base executions are. The questions with no category are listed
+    under the table, with their count, so none is dropped silently."""
+    lines = ['\n### D1 per Category\n',
+             '> AP-1 v1.3 D1: results per category, with 95% confidence '
+             'intervals and n stated; no category claim where n < 10. '
+             'Base condition only; the instruction-removed repeats '
+             'measure D7. n counts questions; a question is correct only '
+             'if every base execution of it is. Interval: exact two-sided '
+             '95% Clopper-Pearson.\n',
+             '| Category | n (questions) | Executions | Correct | Incorrect '
+             '| No Figure | Awaiting Adjudication | Accuracy (95% CI) |',
+             '|---|---|---|---|---|---|---|---|']
+    for category, c in by_category.items():
+        if c['interval'] is not None:
+            lower, upper = c['interval']
+            result = (f'{c["correct_questions"]}/{c["n"]} '
+                      f'({_percent(c["correct_questions"], c["n"])}%; 95% '
+                      f'CI {_round_down(lower * 100)}%-'
+                      f'{round_up(upper * 100, Decimal("0.1"))}%)')
+        elif c['n'] < CATEGORY_MINIMUM_N:
+            result = 'no category claim: n < 10'
+        else:
+            result = (f'no rate: {c["pending"]} executions await '
+                      f'adjudication')
+        lines.append(f'| {category} | {c["n"]} | {c["executions"]} '
+                     f'| {c["correct"]} | {c["incorrect"]} '
+                     f'| {c["no_figure"]} | {c["pending"]} | {result} |')
+    if uncategorised:
+        count = len(uncategorised)
+        lines.append(
+            f'\nNot in any category: {count} '
+            f'question{"" if count == 1 else "s"} '
+            f'({", ".join(f"`{q}`" for q in uncategorised)}). '
+            f'{"It is" if count == 1 else "They are"} in no row above and '
+            f'in no category\'s n.')
+    return lines
+
+
+def _round_down(value):
+    """A lower bound shown to 0.1, rounded down so it stays a bound."""
+    return value.quantize(Decimal('0.1'), rounding=ROUND_DOWN)
+
+
+def _interval_text(failures, n):
+    """'two-sided 95% interval [L%, U%]': the exact two-sided 95%
+    Clopper-Pearson interval on a failure rate, 0 <= failures <= n, as
+    percentages to 0.01% (as the published paper prints it), the lower
+    end rounded down and the upper end up, so the interval shown contains
+    the exact one."""
+    lower, upper = clopper_pearson_interval(failures, n)
+    with localcontext() as ctx:
+        ctx.prec = MAX_PREC  # exact: only the quantize rounds
+        low = (lower * 100).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+        high = round_up(upper * 100, Decimal('0.01'))
+    return f'two-sided 95% interval [{low}%, {high}%]'
+
+
+# What a run measured of each part of D7 (AP-1 v1.3 D7 "Report all
+# four"; T3-29): a part is measured when every observation it needs was
+# made, partly measured when some were not, and not measured when none
+# was. Each status follows from the counts the run computed, per arm and
+# evidence class, never from the part being claimed.
+MEASURED, PARTLY, NOT_MEASURED = 'measured', 'partly measured', 'not measured'
+_STATUS_CELL = {MEASURED: 'Measured', PARTLY: 'Partly measured',
+                NOT_MEASURED: '**NOT MEASURED**'}
+
+# The two arms of D7.1 (AP-1 D7.1 and D7.6, with the instruction removed)
+D7_ARMS = ('base', 'instruction_removed')
+
+
+def _status_of(statuses):
+    """The status of a part made of parts with these statuses."""
+    if all(s == MEASURED for s in statuses):
+        return MEASURED
+    if all(s == NOT_MEASURED for s in statuses):
+        return NOT_MEASURED
+    return PARTLY
+
+
+# Outcomes that are an observation of invocation (D7.1), and the
+# statuses of a planned computable execution never observed
+_OBSERVED_INVOCATION = ('INVOKED', 'NOT-INVOKED')
+_NOT_OBSERVED = ('UNMEASURED', 'NOT-RUN')
+
+
+def _never_observed(summary, cond=None):
+    """The planned computable executions (of arm cond, or of the run)
+    with no response observed: UNMEASURED (transport failure, rate
+    limit, interrupted) or NOT-RUN. VOID items are not computable."""
+    return sum(1 for c in summary.get('non_outcome_cells', [])
+               if c.get('status') in _NOT_OBSERVED
+               and (cond is None or c.get('condition') == cond))
+
+
+def _arm_questions(summary, cond):
+    """(computable questions, questions with an observed outcome) of an
+    arm, from the per-execution evidence and the cells never observed;
+    None if the summary has no per-execution evidence."""
+    evidence = summary.get('item_evidence')
+    if not evidence:
+        return None
+    seen = [e for e in evidence if e.get('condition') == cond]
+    computable = {e.get('item_id') for e in seen} | {
+        c.get('item_id') for c in summary.get('non_outcome_cells', [])
+        if c.get('status') in _NOT_OBSERVED and c.get('condition') == cond}
+    observed = {e.get('item_id') for e in seen
+                if e.get('invocation_outcome') in _OBSERVED_INVOCATION}
+    return computable, observed
+
+
+def _d71_arms(summary):
+    """D7.1 per arm: [(status, text)]. An arm is measured only if every
+    planned computable execution of it was observed: its questions in n
+    per evidence class (§5), its UNOBSERVABLE executions, its executions
+    never observed (UNMEASURED or not run), and the computable questions
+    left out of n."""
+    evidence = summary.get('invocation_evidence', {})
+    figures = summary.get('invocation_figures', {}).values()
+    arms = []
+    for cond in list(D7_ARMS) + [c for c in evidence if c not in D7_ARMS]:
+        classes = evidence.get(cond, {}).get('classes', {}).values()
+        executions = sum(c['executions'] for c in classes)
+        unobservable = sum(c['unobservable_executions'] for c in classes)
+        never = _never_observed(summary, cond)
+        observed = [f'n = {f["n"]}, {f.get("evidence_class") or "no class"}'
+                    for f in figures
+                    if f.get('condition') == cond and f.get('n')]
+        if len(observed) > 1:
+            observed.append('not comparable')
+        gaps = []
+        if unobservable:
+            gaps.append(f'{unobservable} of {executions} executions '
+                        f'UNOBSERVABLE')
+        if never:
+            gaps.append(f'{_executions(never)} UNMEASURED or not run')
+        questions = _arm_questions(summary, cond)
+        if questions and len(questions[1]) < len(questions[0]):
+            computable, seen = questions
+            gaps.append(f'{len(computable) - len(seen)} of '
+                        f'{len(computable)} computable questions not in n')
+        if not executions and not never:
+            status, text = NOT_MEASURED, 'no executions'
+        elif not observed:
+            status, text = NOT_MEASURED, '; '.join(
+                ['no observed outcome'] + gaps)
+        elif gaps:
+            status, text = PARTLY, '; '.join(observed + gaps)
+        else:
+            status, text = MEASURED, '; '.join(observed)
+        arms.append((status, f'{cond} {status} ({text})'))
+    return arms
+
+
+def _inventory_gap(summary):
+    """'call inventory incomplete for k executions (...)' where calls may
+    have gone unseen: EV-0 executions (no invocation signal, AP-1 D7.7)
+    and executions never observed; None if there are none."""
+    ev0 = sum(c for ec, c in summary.get('evidence_class_counts',
+                                         {}).items()
+              if ec.startswith('EV-0'))
+    never = _never_observed(summary)
+    if not ev0 and not never:
+        return None
+    why = ([f'{ev0} EV-0 UNOBSERVABLE'] if ev0 else []) + (
+        [f'{never} UNMEASURED or not run'] if never else [])
+    return (f'call inventory incomplete for {_executions(ev0 + never)} '
+            f'({", ".join(why)})')
+
+
+def _executions(count):
+    """'1 execution', '2 executions'."""
+    return f'{count} execution{"" if count == 1 else "s"}'
+
+
+def _d72_parts(summary):
+    """D7.2(a) and (b): [(status, text, where)], from the calls whose
+    operands could not be read and the operations not observed."""
+    parts = []
+    for label, counts, unread_as, unit, where in (
+            ('(a) operand provenance', summary.get('provenance_outcomes', {}),
+             ('OPERANDS-UNOBSERVABLE', 'UNMEASURABLE'), 'calls',
+             '\u00a76, \u00a77b'),
+            ('(b) operation correctness',
+             summary.get('operation_correctness_counts', {}),
+             ('OPERATION-UNOBSERVABLE',), 'operations', '\u00a77')):
+        total = sum(counts.values())
+        unread = sum(counts.get(name, 0) for name in unread_as)
+        names = ' or '.join(unread_as)
+        if not total:
+            status, text = NOT_MEASURED, f'no {unit[:-1]} evaluated'
+        elif unread == total:
+            status, text = NOT_MEASURED, f'all {total} {unit} {names}'
+        elif unread:
+            status, text = PARTLY, f'{unread} of {total} {unit} {names}'
+        else:
+            status, text = MEASURED, f'{total} {unit}'
+        parts.append((status, f'{label} {status}: {text}', where))
+    return parts
+
+
+def _d72_status(summary, parts):
+    """D7.2's status: its parts', and at most partly measured where the
+    call inventory is incomplete."""
+    status = _status_of([s for s, _, _ in parts])
+    if status == MEASURED and _inventory_gap(summary):
+        return PARTLY
+    return status
+
+
+def _d73_part(summary):
+    """D7.3: (status, text), from its UNOBSERVABLE executions and the
+    executions never observed (UNMEASURED or not run)."""
+    tr = summary.get('transcription_results', [])
+    unobservable = sum(1 for r in tr if r.get('outcome') == 'UNOBSERVABLE')
+    never = _never_observed(summary)
+    unread = [f'{_executions(never)} UNMEASURED or not run'] if never else []
+    if not tr:
+        return NOT_MEASURED, '; '.join(['no executions'] + unread)
+    if unobservable == len(tr):
+        return NOT_MEASURED, '; '.join(
+            [f'all {len(tr)} executions UNOBSERVABLE'] + unread)
+    if unobservable:
+        return PARTLY, '; '.join(
+            [f'{unobservable} of {len(tr)} executions UNOBSERVABLE'] + unread)
+    if unread:
+        return PARTLY, '; '.join(unread)
+    return MEASURED, f'{len(tr)} executions'
+
+
+def _classes_note(summary, figures, where):
+    """'; on k evidence classes, not comparable ...' where the counts of
+    these figures rest on more than one class (AP-1 D7.7), else ''."""
+    by_class = summary.get('d7_outcomes_by_class', {})
+    classes = {ec for figure in figures for ec in by_class.get(figure, {})}
+    if len(classes) < 2:
+        return ''
+    return (f'; on {len(classes)} evidence classes, not comparable (per '
+            f'class: {where})')
+
+
+def _d7_rows(summary, d7):
+    """§3 rows for a claimed D7: one per sub-dimension (AP-1 v1.3 D7
+    "Report all four"; T3-29). D7.4 is never measured; the status of
+    D7.1-D7.3 follows from what was computed for each arm and class."""
+    arms = _d71_arms(summary)
+    d71 = _status_of([status for status, _ in arms])
+    d72_parts = _d72_parts(summary)
+    d72 = _d72_status(summary, d72_parts)
+    d73, d73_text = _d73_part(summary)
+    measured = (d71, d72, d73)
+    whole = (NOT_MEASURED if all(s == NOT_MEASURED for s in measured)
+             else PARTLY)
+    (_, a, a_where), (_, b, b_where) = d72_parts
+    gap = _inventory_gap(summary)
+    tr = summary.get('transcription_results', [])
+    return [
+        f'| D7 | {_STATUS_CELL[whole]} | {d7.get("n", "N/A")} | D7.1 '
+        f'{d71}, D7.2 {d72}, D7.3 {d73}; D7.4 not measured (\u00a712) |',
+        f'| D7.1 | {_STATUS_CELL[d71]} | see \u00a75 | Invocation rate per '
+        f'condition (\u00a75): {"; ".join(text for _, text in arms)} |',
+        f'| D7.2 | {_STATUS_CELL[d72]} | see \u00a76-7b | {a} ({a_where}); '
+        f'{b} ({b_where})' + (f'; {gap}' if gap else '') +
+        f'{_classes_note(summary, ("D7.2(a)", "D7.2(b)"), "§7, §7b")} |',
+        f'| D7.3 | {_STATUS_CELL[d73]} | {len(tr)} | Transcription fidelity '
+        f'(D7.3 section): {d73}: {d73_text}'
+        f'{_classes_note(summary, ("D7.3",), "D7.3 section")} |',
+        '| D7.4 | **NOT MEASURED** | \u2014 | Invocation under pressure '
+        '(\u00a712) |',
+    ]
+
+
+def _per_class_table(summary, figure, outcomes, label=str):
+    """The outcome counts of a D7 figure per evidence class, where they
+    rest on more than one (AP-1 D7.7: not comparable across classes);
+    [] otherwise. label gives an outcome's row name."""
+    by_class = summary.get('d7_outcomes_by_class', {}).get(figure, {})
+    if len(by_class) < 2:
+        return []
+    classes = sorted(by_class)
+    lines = ['Per evidence class (AP-1 D7.7: not comparable across '
+             'classes):\n',
+             '| Outcome | ' + ' | '.join(f'`{ec or "no class"}`'
+                                       for ec in classes) + ' |',
+             '|---' * (len(classes) + 1) + '|']
+    for outcome in outcomes:
+        lines.append(f'| {label(outcome)} | ' + ' | '.join(
+            str(by_class[ec].get(outcome, 0)) for ec in classes) + ' |')
+    lines.append('| Total | ' + ' | '.join(
+        str(sum(by_class[ec].values())) for ec in classes) + ' |\n')
+    return lines
+
+
+def _evidence_line(summary, figure):
+    """The evidence classes a D7 figure rests on (AP-1 v1.3 D7.7: every
+    D7 figure with its evidence class; SPEC R3.3), or None. Uses the
+    figure's own executions where the summary has them
+    (d7_evidence[figure]), otherwise the run's evidence class counts."""
+    classes = (summary.get('d7_evidence', {}).get(figure)
+               or summary.get('evidence_class_counts'))
+    if not classes:
+        return None
+    listed = ', '.join(f'`{ec}` ({c})' for ec, c in sorted(classes.items()))
+    line = f'Evidence class (AP-1 D7.7), executions: {listed}.'
+    if len(classes) > 1:
+        line += ' Figures resting on different classes are not comparable.'
+    return line + '\n'
 
 
 def _section_d7_figures(summary):
     """Section 4: Every D7 figure with its evidence class.
 
     Figures resting on different evidence classes are not comparable
-    (AP-1 v1.3 section 6.4).
+    (AP-1 v1.3 D7.7).
     """
     lines = ['## 4. D7 Figures by Evidence Class\n']
     lines.append('> Figures resting on different evidence classes are not '
-                 'comparable (AP-1 v1.3 §6.4).\n')
+                 'comparable (AP-1 v1.3 D7.7).\n')
 
     ev_counts = summary.get('evidence_class_counts', {})
     if ev_counts:
@@ -262,6 +709,9 @@ def _section_d73(summary):
     B. Release coverage     (check_release_coverage -- ALL items)
     """
     lines = ['## D7.3 Transcription Fidelity\n']
+    evidence = _evidence_line(summary, 'D7.3')
+    if evidence:
+        lines.append(evidence)
 
     # -- A. Transcription Check --
     lines.append('### A. Transcription Check\n')
@@ -284,6 +734,12 @@ def _section_d73(summary):
             pct = _share(c, total) if total > 0 else '\u2014'
             lines.append(f'| `{outcome}` | {c} | {pct}% |')
         lines.append(f'| **Total** | **{total}** | |')
+        per_class = _per_class_table(
+            summary, 'D7.3', ['TRANSCRIBED-EXACT', 'TRANSCRIBED-ALTERED',
+                              'UNOBSERVABLE'], label=lambda o: f'`{o}`')
+        if per_class:
+            lines.append('')
+            lines.extend(per_class[:-1] + [per_class[-1].rstrip('\n')])
 
         rounded = [r for r in tr_results
                    if r['outcome'] == 'TRANSCRIBED-EXACT'
@@ -304,6 +760,10 @@ def _section_d73(summary):
         altered = [r for r in tr_results if r['outcome'] == 'TRANSCRIBED-ALTERED']
         if altered:
             lines.append('\n#### Altered Transcriptions\n')
+            lines.append('Difference: the gap between the released figure '
+                         'and the closest return, without the tool\'s '
+                         'binary float tail (digits past 15 significant '
+                         'digits of the return); the comparison is exact.\n')
             lines.append('| Item | Condition | Rep | Difference | Reason |')
             lines.append('|---|---|---|---|---|')
             for r in altered[:20]:
@@ -311,7 +771,7 @@ def _section_d73(summary):
                     f'| {r.get("item_id", "?")} '
                     f'| {r.get("condition", "?")} '
                     f'| {r.get("repeat", "?")} '
-                    f'| {r.get("difference", "?")} '
+                    f'| {_difference_shown(r)} '
                     f'| {r.get("reason", "?")} |')
             if len(altered) > 20:
                 lines.append(f'| ... | ... | ... | ... | ({len(altered)-20} more) |')
@@ -356,15 +816,24 @@ def _section_d73(summary):
 
     return '\n'.join(lines)
 
+def _difference_shown(record):
+    """An altered transcription's gap as the list prints it: without the
+    tool's float tail where the run recorded that (without_float_tail)."""
+    return record.get('difference_shown', record.get('difference', '?'))
+
+
 def _section_clopper_pearson(summary):
     """Section 5: D7.1 invocation figures with their bounds.
 
     n is the number of computable questions with an observed outcome
     (AP-1 v1.3 D7.1; a question fails if any repeat is NOT-INVOKED).
-    k=0: p_upper = 1 - 0.05^(1/n). k>0: point estimate, no bound, with
-    declared limitation. Beside k, each failing question with its
-    NOT-INVOKED repeats out of its observed repeats ("2 (Q02 48/50, Q06
-    21/50)"). The rate is printed as a percentage with k/n
+    Every figure has its exact one-sided 95% upper bound on the failure
+    rate (k=0: 1 - 0.05^(1/n); k>0: Clopper-Pearson), rounded up; for
+    k>0 the exact two-sided 95% interval beside it, as the published
+    paper prints it (to 0.01%, rounded outward). Beside k, each failing
+    question with its NOT-INVOKED repeats out of its observed repeats
+    ("2 (Q02 48/50, Q06 21/50)"). The rate is printed as a percentage
+    with k/n
     and the bound, never "100%" alone (SPEC R2.3), and each condition
     gets the AP-1 \u00a76.2 headline. EV-0 (UNOBSERVABLE) executions are
     listed per evidence class and are in no n (SPEC R1.3.1, R2.3).
@@ -412,18 +881,20 @@ def _section_clopper_pearson(summary):
         pct = _percent(n - k, n)
         rate_str = f'{n - k}/{n} ({pct}%)'
 
-        if k == 0:
-            # Exact closed-form Clopper-Pearson: p_upper = 1 - alpha^(1/n)
-            alpha = 0.05
-            p_upper = 1.0 - alpha ** (1.0 / n)
-            bound_str = f'{p_upper:.6f} ({p_upper*100:.4f}%)'
-            bound_text = (f'one-sided 95% upper bound on the failure rate '
-                          f'{p_upper*100:.4f}%')
-        else:
-            # k > 0: report point estimate only
-            bound_str = '*not computed (see \u00a7Declared Limitations)*'
-            bound_text = ('upper bound on the failure rate not computed, '
-                          'see \u00a7Declared Limitations')
+        # Exact Clopper-Pearson bound in Decimal, rounded up (T3-61,
+        # T3-81): k=0 is 1 - 0.05^(1/n), k>0 the Beta(k+1, n-k) quantile
+        p_upper = clopper_pearson_upper(k, n)
+        bound_pct = round_up(p_upper * 100, Decimal('0.0001'))
+        bound_str = (f'{round_up(p_upper, Decimal("0.000001"))} '
+                     f'({bound_pct}%)')
+        bound_text = (f'one-sided 95% upper bound on the failure rate '
+                      f'{bound_pct}%')
+        if 0 < k <= n:
+            # Beside D7.5's bound, the two-sided interval the published
+            # paper prints for k > 0
+            interval = _interval_text(k, n)
+            bound_str += f'; {interval}'
+            bound_text += f'; {interval}'
         failing = data.get('failing_questions')
         k_str = f'{k} ({format_failing_questions(failing)})' if failing else k
         lines.append(f'| {metric} | {k_str} | {n} | {rate_str} | {bound_str} '
@@ -504,17 +975,20 @@ def _section_d72a_audit(summary):
         lines.append('*No originated operands detected.*\n')
         return '\n'.join(lines)
 
-    lines.append('| Item | Condition | Operation | Originated Operand | '
+    # The entries are build_summary's (T3-64): the operand is its literal
+    # as written in the call (else its value); a missing field reads '—'
+    lines.append('| Item | Condition | Repeat | Originated Operand | '
                  'Expression | Resolution |')
     lines.append('|---|---|---|---|---|---|')
     for entry in audit:
+        operand = entry.get('literal') or entry.get('value') or '—'
         lines.append(
-            f'| {entry.get("item_id", "?")} '
-            f'| {entry.get("condition", "?")} '
-            f'| {entry.get("operation", "?")} '
-            f'| `{entry.get("originated_operand", "?")}` '
-            f'| `{entry.get("expression", "?")}` '
-            f'| {entry.get("resolution", "?")} |')
+            f'| {entry.get("item_id") or "—"} '
+            f'| {entry.get("condition") or "—"} '
+            f'| {entry.get("repeat") or "—"} '
+            f'| `{operand}` '
+            f'| `{entry.get("expression") or "—"}` '
+            f'| {entry.get("resolution") or "—"} |')
 
     lines.append('')
     return '\n'.join(lines)
@@ -529,14 +1003,22 @@ def _section_d72b_counts(summary):
         lines.append('*No operation correctness data available.*\n')
         return '\n'.join(lines)
 
+    evidence = _evidence_line(summary, 'D7.2(b)')
+    if evidence:
+        lines.append(evidence)
     total = sum(op_counts.values())
     lines.append(f'Total operations evaluated: {total}\n')
     lines.append('| Outcome | Count |')
     lines.append('|---|---|')
-    for outcome in ['OPERATION-CORRECT', 'WRONG-OPERATION',
-                    'OPERATION-UNOBSERVABLE']:
+    op_outcomes = ['OPERATION-CORRECT', 'WRONG-OPERATION',
+                   'OPERATION-UNOBSERVABLE']
+    for outcome in op_outcomes:
         count = op_counts.get(outcome, 0)
         lines.append(f'| {outcome} | {count} |')
+    per_class = _per_class_table(summary, 'D7.2(b)', op_outcomes)
+    if per_class:
+        lines.append('')
+        lines.extend(per_class[:-1] + [per_class[-1].rstrip('\n')])
 
     # WRONG-OPERATION split by item-level correctness
     wo_split = summary.get('wrong_operation_split', {})
@@ -567,16 +1049,28 @@ def _section_scoring_proportions(summary):
     if d1:
         auto = d1.get('auto_scored_n', 0)
         adj = d1.get('adjudicated_n', 0)
-        total = auto + adj
-        lines.append('### D1 Accuracy\n')
+        unmeasurable = d1.get('unmeasurable_n', 0)
+        # One D1 n (T3-66): every scored execution is auto-scored,
+        # adjudicated or UNMEASURABLE (adjudicated with a reason)
+        total = auto + adj + unmeasurable
+        lines.append('### D1 Accuracy (base condition only)\n')
         lines.append(f'- Auto-scored: {auto}')
         lines.append(f'- Adjudicated: {adj}')
+        lines.append(f'- Unmeasurable: {unmeasurable} (response unreadable, '
+                     f'routed to adjudication)')
         lines.append(f'- Total: {total}')
         if total > 0:
             lines.append(f'- Auto-scored proportion: '
                          f'{auto}/{total} = {auto/total:.2%}')
         rate = d1.get('accuracy_rate')
-        if rate is not None:
+        pending = adj + unmeasurable
+        if rate is not None and pending:
+            lines.append(f'- Accuracy rate: not computed: {pending} items '
+                         f'await adjudication, and R2.0 routes every wrong '
+                         f'figure there, so a rate over the {auto} '
+                         f'auto-scored items alone would leave the wrong '
+                         f'answers out (T3-3)')
+        elif rate is not None:
             lines.append(f'- Accuracy rate: {rate} '
                          f'(computed from {auto} auto-scored items only; '
                          f'{adj} adjudicated items are not represented '
@@ -585,7 +1079,7 @@ def _section_scoring_proportions(summary):
 
     d7 = summary.get('d7_results', {})
     if d7:
-        lines.append('### D7 Provenance\n')
+        lines.append('### D7 Computation invocation\n')
         auto = d7.get('auto_scored_n', 0)
         adj = d7.get('adjudicated_n', 0)
         total = auto + adj
@@ -600,18 +1094,81 @@ def _section_scoring_proportions(summary):
     if not d1 and not d7:
         lines.append('*No scoring proportion data available.*\n')
 
+    if 'answer_outcomes' in summary:
+        lines.extend(_answer_outcome_rows(summary['answer_outcomes']))
+
     return '\n'.join(lines)
 
 
-def _section_d2_mechanisms(summary):
+# AP-1 v1.3 section 6.8's six outcomes, in its order
+SECTION_6_8_OUTCOMES = ('COMPUTED', 'RETRIEVED', 'MODEL-DECLINED',
+                        'CLASSIFIER-REFUSED', 'ORIGINATED', 'WRONG-SCOPE')
+
+
+def _answer_outcome_rows(counts):
+    """Section 8's section 6.8 table: each outcome present with its
+    count, the responses routed to adjudication, and those with no
+    automatic outcome, listed by kind with a count, so that the counts
+    sum to the executions scored and none is silently missing (T3-13)."""
+    outcomes = counts.get('outcomes', {})
+    no_outcome = dict(counts.get('no_outcome', {}))
+    routed = no_outcome.pop(ROUTED, 0)
+    unlabelled = sum(no_outcome.values())
+    provisional = counts.get('provisional', {})
+    total = (sum(outcomes.values()) + sum(provisional.values()) + routed
+             + unlabelled)
+    lines = ['### AP-1 \u00a76.8 Answer Outcomes\n',
+             '> AP-1 v1.3 \u00a76.8: every response is scored as exactly one '
+             'of COMPUTED, RETRIEVED, MODEL-DECLINED, CLASSIFIER-REFUSED, '
+             'ORIGINATED and WRONG-SCOPE. The runner assigns an outcome '
+             'where the record decides it; the scorers assign it to a '
+             'response routed to adjudication; the rest have no automatic '
+             'outcome and are listed below by kind.\n',
+             '| Outcome | Count |', '|---|---|']
+    present = [o for o in SECTION_6_8_OUTCOMES if outcomes.get(o)] + sorted(
+        o for o in outcomes if o not in SECTION_6_8_OUTCOMES)
+    for outcome in present:
+        lines.append(f'| `{outcome}` | {outcomes[outcome]} |')
+    # A refusal or content-filter stop (T3-10): its provisional outcome,
+    # which the scorers confirm or replace on its sheet
+    for outcome in [o for o in SECTION_6_8_OUTCOMES if provisional.get(o)] \
+            + sorted(o for o in provisional if o not in SECTION_6_8_OUTCOMES):
+        lines.append(f'| `{outcome}` (provisional: routed to adjudication, '
+                     f'the scorers confirm or replace it) | '
+                     f'{provisional[outcome]} |')
+    lines.append(f'| Routed to adjudication (the scorers assign the '
+                 f'outcome) | {routed} |')
+    lines.append(f'| No automatic outcome (by kind below) | {unlabelled} |')
+    lines.append(f'| **Total (executions scored)** | **{total}** |')
+    lines.append('\n#### No Automatic Outcome, by Kind\n')
+    if not unlabelled:
+        lines.append('None: every response not routed to adjudication has '
+                     'an outcome.\n')
+        return lines
+    lines.extend(['| Kind | Count |', '|---|---|'])
+    for kind in NO_OUTCOME_KINDS:
+        if kind != ROUTED and no_outcome.get(kind):
+            lines.append(f'| {kind} | {no_outcome[kind]} |')
+    for reason, n in sorted(counts.get('other_reasons', {}).items()):
+        lines.append(f'| {OTHER}: {reason} | {n} |')
+    lines.append('')
+    return lines
+
+
+def _section_d2_mechanisms(summary, config=None):
     """Section 9: D2 mechanism classes per surface.
 
     D2 is auto-measured. Per surface, report:
       - the mechanism class
       - whether determined from evidence or operator-declared
       - parameter-echo verification result, or UNVERIFIED
+    and n (questions x runs; a line if it is below AP-1 D2's 10 x 50,
+    which is reported, not enforced), the operator's declaration per
+    surface (config d2_declared, SPEC R2.2), and how many replies were
+    left out of the comparison, by kind.
     """
-    lines = ['## 9. D2 Reproducibility Mechanism Classes\n']
+    config = config or {}
+    lines = ['## 9. D2 Determinism Mechanism Classes\n']
     # D2.2 cap display
     d2_cap = summary.get('d2_cap_reason')
     if d2_cap:
@@ -624,33 +1181,177 @@ def _section_d2_mechanisms(summary):
     lines.append('> D2 is auto-measured. STRUCTURAL and CONFIGURED are '
                  'operator-declared; OBSERVED-ONLY and UNMEASURED are '
                  'determined from evidence.\n')
+    lines.append('> Figures surface: each run\'s identified answer, its '
+                 'released figure or else the one value it states. An '
+                 'answer not identified (a decline, no figure, several '
+                 'figures) is unresolved: counted, never a value, and never '
+                 'evidence that the answers were stable. A question-'
+                 'condition with one is UNMEASURED unless its identified '
+                 'answers already differ, counted then as at least that '
+                 'many.\n')
 
     d2 = summary.get('d2_results', {})
     if not d2:
         lines.append('*No D2 results available.*\n')
         return '\n'.join(lines)
 
-    surfaces = d2.get('surfaces', {})
-    if surfaces:
-        lines.append('| Surface | Mechanism Class | Basis | Distinct Values | '
-                     'Runs | Parameter Echo |')
-        lines.append('|---|---|---|---|---|---|')
-
+    # The live shape (T3-4): {'<item>/<condition>': {surface: class}},
+    # one class per surface per question and condition (SPEC R2.2)
+    lines.extend(_d2_n_lines(d2, config))
+    lines.extend(_d2_declared_lines(config))
+    lines.append(_d2_left_out_line(d2))
+    lines.append(f'Classes per surface, over question-conditions: '
+                 f'{_d2_class_counts(d2)}.\n')
+    lines.append('| Question | Condition | Surface | Mechanism Class | Basis '
+                 '| Distinct Values | Runs | Parameter Echo |')
+    lines.append('|---|---|---|---|---|---|---|---|')
+    for key, surfaces in sorted(d2.items()):
+        item, _, condition = key.partition('/')
         for surface_name, data in sorted(surfaces.items()):
-            mechanism = data.get('mechanism', 'unknown')
-            is_op_decl = data.get('operator_declared', False)
-            basis = 'operator-declared' if is_op_decl else 'evidence'
-            distinct = data.get('distinct_values', '—')
-            runs = data.get('successful_runs', '—')
-            echo = data.get('parameter_echo_status', 'UNVERIFIED')
             lines.append(
-                f'| {surface_name} | `{mechanism}` | {basis} | '
-                f'{distinct} | {runs} | `{echo}` |')
-    else:
-        lines.append('*No per-surface D2 data available.*\n')
+                f'| {item} | {_cell(condition)} | {surface_name} '
+                f'| `{data.get("mechanism", "unknown")}` | {_d2_basis(data)} '
+                f'| {_d2_distinct(data)} '
+                f'| {_d2_runs(data)} '
+                f'| `{data.get("parameter_echo_status", "UNVERIFIED")}` |')
 
     lines.append('')
     return '\n'.join(lines)
+
+
+# AP-1 D2 Method (v1.2 l.117, v1.3 l.210): minimum 10 questions x
+# minimum 50 runs. The runner accepts any run count and says when a run
+# is below it.
+D2_MINIMUM_QUESTIONS = 10
+D2_MINIMUM_RUNS = 50
+
+
+def _d2_n(d2, config):
+    """D2's n: (questions, runs per question and condition), runs the
+    configured repeat count (None if the config gives none)."""
+    questions = len({key.split('/')[0] for key in d2})
+    runs = config.get('repeat_count')
+    return questions, (int(runs) if runs is not None else None)
+
+
+def _d2_below_minimum(questions, runs):
+    """True if a run is below AP-1 D2's 10 questions x 50 runs."""
+    return questions < D2_MINIMUM_QUESTIONS or (
+        runs is not None and runs < D2_MINIMUM_RUNS)
+
+
+def _d2_n_lines(d2, config):
+    """n for D2, and one line if it is below AP-1 D2's minimum."""
+    questions, runs = _d2_n(d2, config)
+    if runs is None:
+        lines = [f'n = {questions} questions.\n']
+    else:
+        lines = [f'n = {questions} questions × {runs} runs, per '
+                 f'condition.\n']
+    if _d2_below_minimum(questions, runs):
+        n = questions if runs is None else f'{questions} × {runs}'
+        lines.append(f'> **Below AP-1 D2\'s 10 × 50: n = {n}** (AP-1 D2: '
+                     f'minimum {D2_MINIMUM_QUESTIONS} questions × minimum '
+                     f'{D2_MINIMUM_RUNS} runs). The runner accepts any run '
+                     f'count and classifies on what was run.\n')
+    return lines
+
+
+def _d2_declared_lines(config):
+    """The operator's D2 declaration, one line per declared surface
+    (SPEC R2.2; AP-1 asks per surface), or a line saying there is none."""
+    declared = config.get('d2_declared') or {}
+    if not declared:
+        return ['Operator\'s declaration (settings field `d2_declared`): '
+                'none, so no surface is STRUCTURAL or CONFIGURED.\n']
+    lines = ['Operator\'s declaration (settings field `d2_declared`, '
+             'sealed with the configuration):']
+    for surface, cls in sorted(declared.items()):
+        lines.append(f'- {surface}: `{str(cls).upper()}` (operator-declared)')
+    lines.append('')
+    return lines
+
+
+def _d2_left_out(data):
+    """The left-out counts of a surface's cell, as text ('' if none)."""
+    from ap1_run.scoring.reproducibility import LEFT_OUT_KINDS
+    left_out = data.get('left_out') or {}
+    return ', '.join(f'{left_out[k]} {k}' for k in LEFT_OUT_KINDS
+                     if left_out.get(k))
+
+
+def _d2_runs(data):
+    """A cell's runs, with the replies left out of its comparison."""
+    runs = _cell(data.get('successful_runs'))
+    left_out = _d2_left_out(data)
+    return f'{runs} ({left_out} left out)' if left_out else runs
+
+
+def _d2_left_out_line(d2):
+    """How many replies were left out of D2's comparison, by kind, over
+    the question-conditions (each reply once: the surfaces share them)."""
+    from ap1_run.scoring.reproducibility import LEFT_OUT_KINDS
+    totals = {k: 0 for k in LEFT_OUT_KINDS}
+    for surfaces in d2.values():
+        data = next(iter(surfaces.values()), {})
+        for k, v in (data.get('left_out') or {}).items():
+            totals[k] = totals.get(k, 0) + v
+    total = sum(totals.values())
+    if not total:
+        return 'Left out of the comparison: none.\n'
+    shown = ', '.join(f'{v} {k}' for k, v in totals.items() if v)
+    return (f'Left out of the comparison: {total} '
+            f'repl{"y" if total == 1 else "ies"} ({shown}). An errored or '
+            f'EV-0 reply has no answer to compare; an unreadable one has '
+            f'no shape to read.\n')
+
+
+def _d2_basis(data):
+    """The evidence basis of a D2 class (SPEC R3.3 "with evidence basis
+    and operator-declared marking"; T3-4): operator-declared, or what was
+    observed and that the class is not operator-declared."""
+    if data.get('operator_declared'):
+        return 'operator-declared'
+    runs = data.get('successful_runs')
+    if runs is None:
+        return 'evidence: no runs recorded; not operator-declared'
+    return (f'evidence: observed over {runs} run{"" if runs == 1 else "s"}; '
+            f'not operator-declared')
+
+
+def _d2_distinct(data):
+    """The number of distinct values and, on the figures surface, the
+    values themselves (AP-1 D2 "distinct numeric answers per question";
+    T3-4): '2: 2600.00; 2500.00'. Answers not identified are counted
+    apart, never as a value: 'at least 2: 2600.00; 2500.00; 3
+    unresolved', or '—: 144.00; 14 unresolved' where they leave the
+    count unknown."""
+    count = data.get('distinct_values')
+    values = list(data.get('values') or [])
+    unresolved = data.get('unresolved')
+    if unresolved:
+        values.append(f'{unresolved} unresolved')
+    if not values:
+        return _cell(count)
+    shown = _cell(count)
+    if unresolved and count is not None:
+        shown = f'at least {count}'
+    return f'{shown}: ' + _cell('; '.join(values))
+
+
+def _d2_class_counts(d2):
+    """'figures: OBSERVED-ONLY 9, UNMEASURED 1; prose: ...': how many
+    question-conditions have each class, per surface."""
+    counts = {}
+    for surfaces in d2.values():
+        for surface_name, data in surfaces.items():
+            per = counts.setdefault(surface_name, {})
+            mechanism = data.get('mechanism', 'unknown')
+            per[mechanism] = per.get(mechanism, 0) + 1
+    return '; '.join(
+        f'{surface_name}: ' + ', '.join(
+            f'{m} {c}' for m, c in sorted(per.items()))
+        for surface_name, per in sorted(counts.items()))
 
 
 def _serving_line(transcript_records):
@@ -722,87 +1423,173 @@ def _section_d2_conditions(summary, config, transcript_records=None):
 
 
 def _section_unmeasured_cells(summary, transcript_records):
-    """Section 10: Every UNMEASURED/UNOBSERVABLE/UNMEASURABLE/VOID cell."""
+    """Section 10: every UNMEASURED, UNOBSERVABLE, UNMEASURABLE and VOID
+    cell with its reason (SPEC R3.3; T3-35).
+
+    A cell is one execution's result for one measurement. Execution-level
+    cells (UNMEASURED and VOID from the summary, a transcript record's
+    error state, else its EV-0 class) are one row per execution: a
+    transport failure is one row, whatever records it left. Each
+    measurement that has no outcome for an execution adds its own row:
+    the R2.0 figure (UNMEASURABLE), D7.2(a) (OPERANDS-UNOBSERVABLE, or
+    UNMEASURABLE for the execution), D7.2(b) (OPERATION-UNOBSERVABLE,
+    per call), D7.3 transcription (UNOBSERVABLE) and D7.3 release
+    coverage (COVERAGE-UNOBSERVABLE). Nothing is de-duplicated across
+    repeats, and the summary is not changed.
+
+    A tool loop stopped by the turn limit (T3-67) is a flag on an
+    executed, scored execution, not a status of its own: it is the reason
+    beside its R2.0 figure's UNMEASURABLE cell and its EV-0 invocation
+    cell when it has them, and no cell otherwise.
+    """
     lines = ['## 10. Non-Outcome Cells\n']
     lines.append('> Every cell that is not a scoreable outcome is listed '
                  'with its reason.\n')
 
-    cells = summary.get('non_outcome_cells', [])
+    rows = []
+    seen = set()
 
-    # Also extract from transcript if available
-    if transcript_records:
-        for rec in transcript_records:
-            # An EV-0 state is structured (T3-35); its text is derived.
-            error = error_state_text(rec.get('error_state'))
-            if error:
-                cells.append({
-                    'item_id': rec.get('item_id', '?'),
-                    'condition': rec.get('condition', '?'),
-                    'status': error.split(':')[0] if ':' in str(error)
-                              else str(error),
-                    'reason': str(error),
-                })
-            ev = rec.get('evidence_class', '')
-            if ev and 'UNOBSERVABLE' in str(ev):
-                cells.append({
-                    'item_id': rec.get('item_id', '?'),
-                    'condition': rec.get('condition', '?'),
-                    'status': 'UNOBSERVABLE',
-                    'reason': f'Evidence class: {ev}',
-                })
-
-    if cells:
-        lines.append('| Item | Condition | Status | Reason |')
-        lines.append('|---|---|---|---|')
-        seen = set()
-        for cell in cells:
-            key = (cell.get('item_id'), cell.get('condition'),
-                   cell.get('status'))
+    def add(source, status, reason, measurement, execution=False):
+        repeat = source.get('repeat')
+        key = (source.get('item_id'), source.get('condition'), repeat)
+        if execution and repeat is not None:
             if key in seen:
-                continue
+                return
             seen.add(key)
-            lines.append(
-                f'| {cell.get("item_id", "?")} '
-                f'| {cell.get("condition", "?")} '
-                f'| {cell.get("status", "?")} '
-                f'| {cell.get("reason", "?")} |')
-    else:
-        lines.append('*No non-outcome cells.*\n')
+        rows.append((source.get('item_id'), source.get('condition'), status,
+                     reason, repeat, measurement))
 
+    for cell in summary.get('non_outcome_cells', []):
+        add(cell, cell.get('status'), cell.get('reason'), 'execution',
+            execution=True)
+    records = [r for r in transcript_records or []
+               if r.get('record_type') != 'figure_identification']
+    flags = {}
+    for rec in records:
+        # An EV-0 state is structured (T3-35); its text is derived.
+        error = error_state_text(rec.get('error_state'))
+        evidence = str(rec.get('evidence_class'))
+        # The loop flag is apart from invocation observability: an
+        # exhausted loop keeps its EV-0 cell, the flag beside its reason.
+        flag = error if error.startswith(LOOP_EXHAUSTED) else None
+        if flag:
+            flags[(rec.get('item_id'), rec.get('condition'),
+                   rec.get('repeat'))] = flag
+        elif error:
+            add(rec, error.split(':')[0], error, 'execution', execution=True)
+            continue
+        if 'UNOBSERVABLE' in evidence:
+            reason = f'Evidence class: {evidence}'
+            add(rec, 'UNOBSERVABLE', f'{reason}; {flag}' if flag else reason,
+                'D7.1 invocation', execution=True)
+    for rec in records:
+        if rec.get('figure_outcome') == 'UNMEASURABLE':
+            reason = 'response could not be read; routed to adjudication'
+            flag = flags.get((rec.get('item_id'), rec.get('condition'),
+                              rec.get('repeat')))
+            add(rec, 'UNMEASURABLE', f'{reason}; {flag}' if flag else reason,
+                'R2.0 figure')
+    for cell in summary.get('provenance_unmeasurable', []):
+        add(cell, 'UNMEASURABLE', cell.get('reason'), 'D7.2(a) provenance')
+    for cell in summary.get('operands_unobservable', []):
+        add(cell, 'OPERANDS-UNOBSERVABLE', cell.get('reason'),
+            'D7.2(a) provenance')
+    for cell in summary.get('operation_unobservable', []):
+        add(cell, 'OPERATION-UNOBSERVABLE', cell.get('reason'),
+            'D7.2(b) operation')
+    for r in summary.get('transcription_results', []):
+        if r.get('outcome') == 'UNOBSERVABLE':
+            reason = r.get('reason') or ''
+            if reason.startswith('R2.0 outcome is'):
+                # its figure outcome has its own row or sheet
+                reason = 'no released figure to compare (not auto-matched)'
+            add(r, 'UNOBSERVABLE', reason, 'D7.3 transcription')
+    for r in summary.get('release_coverage_results', []):
+        if r.get('outcome') == 'COVERAGE-UNOBSERVABLE':
+            add(r, 'COVERAGE-UNOBSERVABLE', r.get('finding'),
+                'D7.3 release coverage')
+
+    if not rows:
+        lines.append('*No non-outcome cells.*\n')
+        lines.append('')
+        return '\n'.join(lines)
+
+    counts = {}
+    for row in rows:
+        counts[row[5]] = counts.get(row[5], 0) + 1
+    lines.append(f'{len(rows)} cells: ' + '; '.join(
+        f'{measurement} {count}' for measurement, count in counts.items())
+        + '.\n')
+    lines.append('| Item | Condition | Status | Reason | Repeat | '
+                 'Measurement |')
+    lines.append('|---|---|---|---|---|---|')
+    for row in rows:
+        lines.append('| ' + ' | '.join(_cell(v) for v in row) + ' |')
     lines.append('')
     return '\n'.join(lines)
 
 
+def _cell(value):
+    """A value as a markdown table cell: '—' if missing, on one line,
+    with any '|' escaped."""
+    if value is None or value == '':
+        return '—'
+    return ' '.join(str(value).split()).replace('|', '\\|')
+
+
 def _section_quantisation(summary):
-    """Section 11: Quantisation and near-miss findings."""
+    """Section 11: Quantisation and near-miss findings (D7.2(a)(iii);
+    SPEC R2.4, R3.3; T3-34).
+
+    A quantisation finding is an operand grounded on a reference
+    intermediate only after the declared quantisation. A near miss is an
+    operand equal to an earlier call's return only after quantisation:
+    it stays ORIGINATED, with the finding recorded.
+    """
     lines = ['## 11. Quantisation and Near-Miss Findings\n']
 
     quant = summary.get('quantisation_findings', [])
     if quant:
-        lines.append('| Item | Operand | Finding |')
-        lines.append('|---|---|---|')
+        lines.append('| Item | Condition | Repeat | Operand | Finding |')
+        lines.append('|---|---|---|---|---|')
         for qf in quant:
             lines.append(
-                f'| {qf.get("item_id", "?")} '
-                f'| `{qf.get("operand", "?")}` '
-                f'| {qf.get("finding", "?")} |')
+                f'| {_cell(qf.get("item_id"))} '
+                f'| {_cell(qf.get("condition"))} '
+                f'| {_cell(qf.get("repeat"))} '
+                f'| `{_cell(qf.get("operand"))}` '
+                f'| {_cell(qf.get("finding"))} |')
     else:
         lines.append('*No quantisation findings.*')
 
     near_miss = summary.get('near_miss_findings', [])
     if near_miss:
         lines.append('\n### Near-Miss Findings\n')
+        lines.append('> Operand equal to an earlier return only after '
+                     'quantisation: ORIGINATED, with this finding.\n')
+        lines.append('| Item | Condition | Repeat | Operand | Prior Return '
+                     '| Quantised To | Prior Call Grounded |')
+        lines.append('|---|---|---|---|---|---|---|')
         for nm in near_miss:
-            lines.append(f'- {nm}')
+            lines.append(
+                f'| {_cell(nm.get("item_id"))} '
+                f'| {_cell(nm.get("condition"))} '
+                f'| {_cell(nm.get("repeat"))} '
+                f'| `{_cell(nm.get("operand"))}` '
+                f'| `{_cell(nm.get("prior_return"))}` '
+                f'| `{_cell(nm.get("quantised_to"))}` '
+                f'| {_cell(nm.get("grounded"))} |')
 
     lines.append('')
     return '\n'.join(lines)
 
 
-def _section_unmeasured_dimensions(config):
+def _section_unmeasured_dimensions(config, summary=None):
     """Section 12: Declaration of which dimensions were NOT measured.
 
-    A dimension not measured is declared, never omitted.
+    A dimension not measured is declared, never omitted. With D7
+    claimed, the parts of D7 not fully measured are declared too: D7.4
+    always, and D7.1-D7.3 by what the run computed for them (T3-29).
     """
     lines = ['## 12. Unmeasured Dimensions Declaration\n']
     lines.append('> A dimension not measured is declared, never omitted.\n')
@@ -816,12 +1603,55 @@ def _section_unmeasured_dimensions(config):
 
     if unmeasured:
         lines.append('The following dimensions were **not measured** in this '
-                     'evaluation and require human adjudication:\n')
+                     'evaluation:\n')
         for dim in unmeasured:
             reason = _unmeasured_reason(dim)
             lines.append(f'- **{dim}**: {reason}')
     else:
         lines.append('All seven dimensions were claimed for measurement.')
+
+    if 'D7' in dims_claimed:
+        summary = summary or {}
+        lines.append('\nD7 is claimed, but not all of it was measured (AP-1 '
+                     'v1.3 D7: "Report all four"):\n')
+        arms = _d71_arms(summary)
+        d71 = _status_of([status for status, _ in arms])
+        if d71 != MEASURED:
+            lines.append(f'- **D7.1**: Invocation rate \u2014 {d71}: ' +
+                         '; '.join(text for status, text in arms
+                                   if status != MEASURED))
+        parts = _d72_parts(summary)
+        d72 = _d72_status(summary, parts)
+        if d72 != MEASURED:
+            gap = _inventory_gap(summary)
+            lines.append(f'- **D7.2**: Computation correctness \u2014 '
+                         f'{d72}: ' + '; '.join(
+                             [text for status, text, _ in parts
+                              if status != MEASURED] + ([gap] if gap
+                                                        else [])))
+        tr = summary.get('transcription_results', [])
+        unobservable = sum(1 for r in tr
+                           if r.get('outcome') == 'UNOBSERVABLE')
+        never = _never_observed(summary)
+        why = ('(no single released figure to compare: routed to '
+               'adjudication, or no return of the required operation)')
+        d73 = []
+        if not tr:
+            d73.append('no executions')
+        elif unobservable == len(tr):
+            d73.append(f'all {len(tr)} executions are UNOBSERVABLE {why}')
+        elif unobservable:
+            d73.append(f'{unobservable} of {len(tr)} executions are '
+                       f'UNOBSERVABLE {why}')
+        if never:
+            d73.append(f'{_executions(never)} UNMEASURED or not run')
+        if d73:
+            lines.append(f'- **D7.3**: Transcription fidelity \u2014 '
+                         f'{_d73_part(summary)[0]}: ' + '; '.join(d73))
+        lines.append('- **D7.4**: Invocation under pressure \u2014 not '
+                     'measured: the runner sends each item once, with no '
+                     'rephrasing, casual framing, escalating pressure or '
+                     'adversarial input')
 
     lines.append('')
     return '\n'.join(lines)
@@ -832,13 +1662,45 @@ def _section_declared_limitations():
     lines = ['## 13. Declared Limitations\n']
 
     lines.append('### Clopper-Pearson Bound (k > 0)\n')
-    lines.append('An exact confidence bound for non-zero failure counts is '
-                 'not computed; AP-1 v1.3 D7.5 specifies the zero-failure '
-                 'form only. This is an author-identified defect in the '
-                 'standard, noted for resolution in the adopted version.\n')
-    lines.append('For non-zero failure counts, the point estimate is '
-                 'reported with n. The full Beta quantile would require '
-                 'an external dependency or a specification extension.\n')
+    lines.append('AP-1 v1.3 D7.5 requires the exact one-sided 95% upper '
+                 'bound for any invocation figure but states its formula '
+                 'for zero failures only. For k > 0 failures the report '
+                 'gives the exact Clopper-Pearson bound, the 0.95 quantile '
+                 'of Beta(k+1, n-k), the general form DISPOSITION C-1 '
+                 'adopts for the next version. It is computed in Decimal '
+                 '(bisection on the binomial distribution) and every bound '
+                 'is shown rounded up. Beside it, for k > 0, the report '
+                 'gives the exact two-sided 95% Clopper-Pearson interval, '
+                 'as the published paper prints it, with its ends rounded '
+                 'outward.\n')
+
+    lines.append('### Percentage Answers\n')
+    lines.append('In a response\'s text, a figure written with % is never '
+                 'compared with the expected value: SPEC R0.4.2 records the '
+                 'percent flag, and 15.20% is not the money figure 15.20 '
+                 '(S3-G4-2). The expected value has no unit (SPEC R3.1: '
+                 'final is a Decimal), so the runner cannot tell an answer '
+                 'that is a rate from one that is an amount. For an item '
+                 'whose answer is a rate (18.5): "18.5%" is not compared, so '
+                 'it routes to adjudication as figures present, none '
+                 'matching; the same rate written without % ("18.5", "18.5 '
+                 'percent") is compared as a plain figure and can be '
+                 'auto-scored; a configured structured answer is compared '
+                 'whatever its unit; and a figure glued to letters '
+                 '("18.5pct") is not read, so the response is auto-scored as '
+                 'having no figure.\n')
+
+    lines.append('### Adjudication Sheet Order\n')
+    lines.append('adjudication_sheets.md gives the sheets in run order '
+                 '(the order of the transcript), two for each execution '
+                 'routed to adjudication. A sheet does not name its '
+                 'condition, but the order can show it, so the judging is '
+                 'not blind to the condition (AP-1 v1.3 \u00a713.8 asks for '
+                 'scorers blind to arm identity where the response text '
+                 'permits). Shuffling or blinding the sheets, with a key '
+                 'joining each sheet back to its execution, is left to a '
+                 'later step that works on that file; the runner does '
+                 'neither.\n')
 
     return '\n'.join(lines)
 
@@ -924,6 +1786,8 @@ def _section_operand_provenance(summary):
             lines.append(f'| {outcome} | {count} | {count}/{total_inv} '
                          f'({_share(count, total_inv)}%) |')
         lines.append('')
+        lines.extend(_per_class_table(summary, 'D7.2(a)',
+                                      PROVENANCE_OUTCOMES))
 
     # Executions for which D7.2 is UNMEASURABLE, with the reason (R3.3)
     unmeasurable = summary.get('provenance_unmeasurable')
@@ -958,22 +1822,24 @@ def _section_operand_provenance(summary):
 
 # -- Helpers -----------------------------------------------------------
 
-def clopper_pearson_upper_k0(n, alpha=0.05):
+def clopper_pearson_upper_k0(n, alpha=Decimal('0.05')):
     """Exact one-sided 95% Clopper-Pearson upper bound for k=0 failures.
 
     Formula: p_upper = 1 - alpha^(1/n)
-    Source: AP-1 v1.3 D7.5.
+    Source: AP-1 v1.3 D7.5. The one Decimal implementation,
+    invocation._exact_upper_bound (T3-61): never float (SPEC R0.4.1).
 
     Args:
         n: int -- total number of trials
-        alpha: float -- significance level (default 0.05 for 95%)
+        alpha: Decimal (or a number, read from its text) -- significance
+            level (default 0.05 for 95%)
 
     Returns:
-        float -- upper bound on failure probability
+        Decimal -- upper bound on failure probability; NaN if n <= 0
     """
     if n <= 0:
-        return float('nan')
-    return 1.0 - alpha ** (1.0 / n)
+        return Decimal(math.nan)  # not a number: no bound without trials
+    return _exact_upper_bound(n, Decimal(str(alpha)))
 
 
 def _format_dim_result(dim, data):
@@ -982,29 +1848,58 @@ def _format_dim_result(dim, data):
         rate = data.get('accuracy_rate')
         auto = data.get('auto_scored_n', 0)
         adj = data.get('adjudicated_n', 0)
+        pending = adj + data.get('unmeasurable_n', 0)
+        if rate is not None and pending:
+            # Every wrong figure is among the items awaiting
+            # adjudication (SPEC R2.0), so no rate is printed (T3-3)
+            return (f'No rate: {pending} items await adjudication '
+                    f'(base condition only; auto-scored {auto}: '
+                    f'{data.get("correct", 0)} '
+                    f'correct, {data.get("incorrect", 0)} incorrect, '
+                    f'{data.get("no_figure", 0)} no figure)')
         if rate is not None:
             return (f'Accuracy: {rate} '
-                    f'(auto-scored {auto}; {adj} adjudicated not in rate)')
+                    f'(base condition only; auto-scored {auto}; {adj} '
+                    f'adjudicated not in rate)')
         return 'No rate computed'
-    elif dim == 'D2':
-        return 'See §9 D2 Mechanism Classes'
-    elif dim == 'D7':
-        return 'See §4-7 D7 Figures'
     return str(data)
 
 
-def _unmeasured_reason(dim):
-    """Return the reason a dimension is not measured."""
+# Each dimension's AP-1 v1.3 section 4 name (T3-33)
+_DIMENSION_NAMES = {
+    'D1': 'Accuracy', 'D2': 'Determinism', 'D3': 'Provenance',
+    'D4': 'Refusal integrity', 'D5': 'Adversarial resistance',
+    'D6': 'Conflicting input', 'D7': 'Computation invocation',
+}
+
+
+def _unclaimed_reason(dim):
+    """Why a dimension the configuration does not claim is not measured,
+    in the words section 12 uses (and section 3 repeats).
+
+    D1, D2 and D7 are measured by the runner when claimed; only D3-D6
+    need human adjudication (SPEC §1.1, §1.2; S3-G6-2).
+    """
+    not_claimed = 'not claimed in this configuration'
+    adjudicated = 'requires human adjudication; the runner does not measure it'
     reasons = {
-        'D1': 'Accuracy — requires item-level scoring',
-        'D2': 'Reproducibility — requires repeated runs',
-        'D3': 'Completeness of explanation — requires human adjudication',
-        'D4': 'Appropriate caveats — requires human adjudication',
-        'D5': 'Source attribution — requires human adjudication',
-        'D6': 'Confidence calibration — requires human adjudication',
-        'D7': 'Provenance — requires tool-call observation',
+        'D1': f'{not_claimed} (the runner auto-scores it)',
+        'D2': f'{not_claimed} (the runner measures it from repeated runs)',
+        'D3': adjudicated,
+        'D4': adjudicated,
+        'D5': adjudicated,
+        'D6': adjudicated,
+        'D7': f'{not_claimed} (the runner measures D7.1-D7.3 from '
+              f'tool-call evidence)',
     }
-    return reasons.get(dim, 'Reason not specified')
+    return reasons.get(dim, 'reason not specified')
+
+
+def _unmeasured_reason(dim):
+    """Return the reason a dimension is not measured, with its name."""
+    if dim not in _DIMENSION_NAMES:
+        return 'Reason not specified'
+    return f'{_DIMENSION_NAMES[dim]} — {_unclaimed_reason(dim)}'
 
 
 def _make_json_safe(obj):

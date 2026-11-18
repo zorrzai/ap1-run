@@ -108,7 +108,9 @@ ERROR_500 = {'http': 500, 'body': '{"error": {"message": "server error"}}'}
 
 # Q02 (available credit, expected 2600.00): a grounded call, then text.
 Q02_CALL = {'call': '5000 - 2400'}
-Q02_RIGHT = {'say': 'The available credit is ${result}. REP2-MARKER'}
+# The marker comes first: its digit is a numeric token, and a figure
+# followed by another one is not auto-matched (T3-3).
+Q02_RIGHT = {'say': 'REP2-MARKER The available credit is ${result}.'}
 # "I cannot" is a configured decline marker: ADJUDICATE-DECLINE.
 Q02_DECLINE = {'say': 'I cannot be certain of this. REP3-MARKER'}
 
@@ -235,10 +237,6 @@ def test_run_auto_scored_responses_carry_one_section_6_8_outcome(
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3', 'AP-1 D7.2(a)(iii)')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: quantisation findings are computed and '
-                          'dropped; report §11 says "No quantisation '
-                          'findings"')
 def test_run_quantised_intermediate_operand_listed_in_report_section_11(
         tmp_path, monkeypatch):
     """Q07 chained through the 2-place quantised intermediates: 274.14
@@ -261,9 +259,6 @@ def test_run_quantised_intermediate_operand_listed_in_report_section_11(
 @pytest.mark.finding('T3-34')
 @pytest.mark.req('R2.4', 'R3.3')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-34: near-miss findings are computed and '
-                          'dropped; report §11 has no near-miss list')
 def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
                                                            monkeypatch):
     """Q01: the second call uses 2.17, the first call's return
@@ -285,9 +280,6 @@ def test_run_near_miss_operand_listed_in_report_section_11(tmp_path,
 @pytest.mark.finding('T3-81')
 @pytest.mark.req('AP-1 D7.5', 'R3.3')
 @pytest.mark.filterwarnings('ignore:VERSION file says')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-81: the D7.5 bound for k > 0 failures is '
-                          '"not computed"')
 def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
                                                              monkeypatch):
     """Instruction-removed arm, two questions with one repeat each: Q01
@@ -309,7 +301,8 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
             'Q02/*/*': [Q02_CALL, Q02_RIGHT]})
     row = next(line for line in report_section(out, '5').splitlines()
                if line.startswith('| d7_invocation_instruction_removed '))
-    assert row.split('|')[2:4] == [' 1 ', ' 2 ']
+    # k carries the failing question beside it (T3-11)
+    assert row.split('|')[2:4] == [' 1 (Q01 1/1) ', ' 2 ']
     bound_cell = row.split('|')[5]
     with localcontext() as ctx:
         ctx.prec = 30
@@ -321,8 +314,9 @@ def test_run_report_prints_upper_bound_for_nonzero_failures(tmp_path,
 
 def bound_values(cell):
     """The numbers in a bound cell, as fractions (a '%' one divided by
-    100)."""
+    100); not those of the two-sided interval beside the bound."""
     values = []
+    cell = cell.split('; two-sided')[0]
     for number, percent in re.findall(r'(\d+(?:\.\d+)?)\s*(%?)', cell):
         value = Decimal(number)
         values.append(value / 100 if percent else value)

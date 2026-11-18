@@ -22,6 +22,9 @@ Anything else is left without an outcome (None), with the reason: the
 record does not decide it (a figure without the required computation is
 only a RETRIEVED candidate, SPEC R4.1; unobservable operands; no figure).
 
+no_outcome_kind names the kind of each such response, so a report can
+list them by kind and none is silently missing (T3-13).
+
 A provider refusal or content-filter stop is routed to adjudication with
 a provisional outcome (refusal_outcome): CLASSIFIER-REFUSED for a
 content-filter stop ("a provider safety layer intervened"), MODEL-DECLINED
@@ -45,6 +48,34 @@ _PROVISIONAL = {
 }
 
 _ROUTED = 'routed to adjudication: the scorers assign the outcome'
+_NO_FIGURE = 'no figure released: the record does not decide the outcome'
+_NOT_INVOKED = ('correct figure, required computation not shown '
+                'invoked: a RETRIEVED candidate (SPEC R4.1)')
+_NOT_GROUNDED = 'operands not shown grounded (D7.2(a))'
+_D1_DIFFERS = 'figure matched, but D1 scores it'
+
+# The kinds of response left without an automatic outcome, in the order
+# a report lists them: each kind's name and the reason it shares
+ROUTED = 'routed to adjudication'
+NOT_INVOKED = 'correct figure, calculator not shown used'
+NOT_GROUNDED = 'calculator used, operands not shown grounded'
+NO_FIGURE = 'no figure found (AUTO-NO-FIGURE)'
+D1_DIFFERS = 'figure matched, D1 does not score it correct'
+NO_OUTCOME_KINDS = (ROUTED, NOT_INVOKED, NOT_GROUNDED, NO_FIGURE, D1_DIFFERS)
+OTHER = 'other'
+
+
+def no_outcome_kind(reason):
+    """The kind of a response answer_outcome left without an outcome,
+    from its reason: one of NO_OUTCOME_KINDS, or OTHER for a reason this
+    module does not give (a record scored by another version)."""
+    kinds = {_ROUTED: ROUTED, _NO_FIGURE: NO_FIGURE,
+             _NOT_INVOKED: NOT_INVOKED, _NOT_GROUNDED: NOT_GROUNDED}
+    if reason in kinds:
+        return kinds[reason]
+    if (reason or '').startswith(_D1_DIFFERS):
+        return D1_DIFFERS
+    return OTHER
 
 
 def answer_outcome(figure_outcome, invocation_outcome, provenance_results,
@@ -63,12 +94,11 @@ def answer_outcome(figure_outcome, invocation_outcome, provenance_results,
     Returns (outcome, reason); outcome is COMPUTED, ORIGINATED or None.
     """
     if figure_outcome == AUTO_NO_FIGURE:
-        return None, 'no figure released: the record does not decide the outcome'
+        return None, _NO_FIGURE
     if figure_outcome != AUTO_MATCH:
         return None, _ROUTED
     if invocation_outcome != 'INVOKED':
-        return None, ('correct figure, required computation not shown '
-                      'invoked: a RETRIEVED candidate (SPEC R4.1)')
+        return None, _NOT_INVOKED
     outcomes = [p.get('outcome') for p in provenance_results]
     # The composition rule, as this instrument reads AP-1 §6.8 "rests
     # on": the answer is ORIGINATED if ANY calculator call of the
@@ -84,10 +114,10 @@ def answer_outcome(figure_outcome, invocation_outcome, provenance_results,
         return ORIGINATED, (f'{figure} figure computed from an originated '
                             f'operand (D7.2(a) OPERAND-ORIGINATED)')
     if not (outcomes and all(o == 'OPERANDS-GROUNDED' for o in outcomes)):
-        return None, 'operands not shown grounded (D7.2(a))'
+        return None, _NOT_GROUNDED
     if accuracy_outcome != 'CORRECT':
-        return None, (f'figure matched, but D1 scores it '
-                      f'{accuracy_outcome or "unscored"}: not COMPUTED')
+        return None, (f'{_D1_DIFFERS} {accuracy_outcome or "unscored"}: '
+                      f'not COMPUTED')
     return COMPUTED, 'correct figure; computation invoked; operands grounded'
 
 

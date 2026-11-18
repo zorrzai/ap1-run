@@ -70,7 +70,7 @@ These are stated plainly before anyone finds them:
   conditions must be run as separate tasks, and comparison is computed
   afterward by `compare.py`.
 
-- **D2 reproducibility** is classified by a custom metric reading unreduced
+- **D2 determinism** is classified by a custom metric reading unreduced
   epoch scores. Run with `epochs=N` and use `--no-epochs-reducer` to preserve
   per-epoch scores for D2 classification.
 

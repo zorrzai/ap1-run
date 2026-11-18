@@ -9,6 +9,7 @@ Runner source hash: <RUNNER_SOURCE_HASH>...
 
 Ground-truth guards (R3.1): PASSED (perturbation, source fields, declared constants)
 
+Lookup collisions (R3.1): none
 Seal hash: <SEAL_HASH>
 AP-1 text hash: 48e7826fc7807880ab98694b394bd020da070fb1d9c212e383f7c70bd819cf56
 
@@ -155,9 +156,9 @@ result, by us or by anyone, in any document.
   base: invoked=8 not_invoked=0 n=8
     EV-0 UNOBSERVABLE executions: 1 UNOBSERVABLE, not in n
     aggregate spans 2 evidence classes (EV-0 UNOBSERVABLE, EV-2 PLATFORM-STRUCTURAL); figures are not comparable across classes
-    failure rate: 0/8 failures; one-sided 95% upper bound on the failure rate 31.2%
+    failure rate: 0/8 failures; one-sided 95% upper bound on the failure rate 31.3%
   instruction_removed: invoked=9 not_invoked=0 n=9
-    failure rate: 0/9 failures; one-sided 95% upper bound on the failure rate 28.3%
+    failure rate: 0/9 failures; one-sided 95% upper bound on the failure rate 28.4%
 
 3h2. D7.3 TRANSCRIPTION:
   TRANSCRIBED-EXACT: 30
@@ -174,18 +175,19 @@ result, by us or by anyone, in any document.
   WRONG-OPERATION: 0
   OPERATION-UNOBSERVABLE: 0
 
-3j. D1 ACCURACY:
-  Auto-scored: 30
+3j. D1 ACCURACY (base condition only):
+  Auto-scored: 12
   Adjudicated: 0
-  Correct: 30
+  Correct: 12
   Incorrect: 0
   No figure: 0
-  Accuracy rate: 1
+  Unmeasurable: 1
+  Accuracy rate: not computed (1 items await adjudication)
 
-3k. D2 REPRODUCIBILITY:
+3k. D2 DETERMINISM:
   CAP: D2.2 cap: temperature was platform-rejected. Detail: OpenAI reasoning-model endpoint returned HTTP 400: Unsupported value: 'temperature' does not support 0 with this model. Only the default (1) value is supported.
-  OBSERVED-ONLY: 28
-  UNMEASURED: 6
+  OBSERVED-ONLY: 26
+  UNMEASURED: 14
 
 3l. D7.2(a) OPERAND PROVENANCE:
   step 1 (source match):       79

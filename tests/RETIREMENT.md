@@ -124,7 +124,7 @@ How the suites were retired is recorded at the end ("Retirement").
 | test_r01_config | 276 | `bare int refused` (in _test_config_error, l.551) | `unit/foundation/test_config.py::test_load_config_bare_int_refused` |  (G1) |
 | test_r01_minimum_n | 292 | `D6 with 9 items refused` | `unit/foundation/test_config.py::test_minimum_n_d6_below_minimum_refused` | exact message (G1) |
 | test_r01_minimum_n | 299 | `D6 with 10 items accepted` | `unit/foundation/test_config.py::test_minimum_n_d6_at_minimum_accepted` |  (G1) |
-| test_r01_minimum_n | 310 | `D1 category A with 9 refused` | `unit/foundation/test_config.py::test_minimum_n_d1_small_category_refused`<br>`unit/foundation/test_config.py::test_minimum_n_d1_uncategorised_items_share_default_category` |  (G1) |
+| test_r01_minimum_n | 310 | `D1 category A with 9 refused` | `unit/foundation/test_config.py::test_minimum_n_d1_small_category_refused`<br>`unit/foundation/test_config.py::test_minimum_n_d1_uncategorised_items_not_held_to_category_minimum` |  (G1) |
 | test_r11_seal | 341 | `seal has seal_hash` | `unit/execution/test_seal.py::test_seal_record_without_ap1_text` | new test pins the exact seal_hash (canonical hash of the record minus timestamp) (G3) |
 | test_r11_seal | 345 | `seal has ev3_implemented=False` | `unit/execution/test_seal.py::test_seal_record_without_ap1_text`<br>`unit/execution/test_seal.py::test_seal_records_verification_keys` |  (G3) |
 | test_r11_seal | 356 | `fixture hash stable` | `unit/execution/test_seal.py::test_seal_record_without_ap1_text`<br>`unit/execution/test_seal.py::test_seal_accepts_string_paths` | hash pinned to an independent SHA-256 of the bytes; two seals compared equal (G3) |

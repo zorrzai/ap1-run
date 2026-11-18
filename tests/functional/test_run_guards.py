@@ -1,6 +1,6 @@
 """Run-level guards fed by the shipped example and by the scorers (from
 legacy verify_integration.py): the condition guard on the example's two
-prompts, and the D2.2 cap carried into the reproducibility classes.
+prompts, and the D2.2 cap carried into the D2 (Determinism) classes.
 
 The invocation consistency check (legacy
 test_consistency_check_halts_on_invoked_without_tool_calls) is covered by

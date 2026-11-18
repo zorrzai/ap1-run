@@ -11,7 +11,7 @@ from ap1_run.scoring.figure_id import (
 )
 from ap1_run.scoring.transcription import (
     TRANSCRIBED_ALTERED, TRANSCRIBED_EXACT, UNOBSERVABLE_TRANSCRIPTION,
-    check_transcription,
+    check_transcription, without_float_tail,
 )
 
 D = Decimal
@@ -517,3 +517,50 @@ def test_transcription_infinite_return_orders_before_nan():
                             figure_outcome=AUTO_MATCH, quantisation_digits=2)
     assert (r['outcome'], r['tool_return']) == (
         TRANSCRIBED_ALTERED, D('Infinity'))
+
+
+# -- the difference as shown: without the tool's float tail -----------------
+
+@pytest.mark.req('R2.5')
+@pytest.mark.parametrize('difference, tool_return, shown', [
+    # the float tail of the closest return goes (run E, Q09)
+    (D('12.000000000000001'), D('27.200000000000001'), '12'),
+    # a real sub-cent gap stays, unrounded to the declared places
+    (D('0.005'), D('15.205'), '0.005'),
+    # nothing past 15 significant digits: shown as it is
+    (D('8.80'), D('24.00'), '8.80'),
+    (D('0.10'), D('182.50'), '0.10'),
+    (D('0'), D('15.20'), '0'),
+    # a gap past the decimal point of a large return, shown without
+    # an exponent
+    (D('1200.0000000000001'), D('1215.2000000000001'), '1200'),
+    # only noise: the gap is no gap at a float's precision
+    (D('1E-15'), D('15.200000000000001'), '0'),
+    # nothing to strip from what is not a finite Decimal
+    (D('NaN'), D('15.20'), 'NaN'),
+    (D('0.5'), None, '0.5'),
+    # a gap too long to quantise in the context is shown as it is
+    (D('1000000000000000000000000000.001'), D('0.5'),
+     '1000000000000000000000000000.001'),
+    (None, D('1'), 'None'),
+])
+def test_without_float_tail(difference, tool_return, shown):
+    assert str(without_float_tail(difference, tool_return)) == shown
+
+
+@pytest.mark.req('R2.5')
+def test_transcription_altered_reason_without_float_tail_difference_exact():
+    r = check_transcription(D('27.200000000000001'), D('15.20'),
+                            figure_outcome=AUTO_MATCH, quantisation_digits=2)
+    assert r['outcome'] == TRANSCRIBED_ALTERED
+    assert r['difference'] == D('12.000000000000001')
+    assert r['reason'] == 'altered by 12'
+
+
+@pytest.mark.req('R2.5')
+def test_transcription_altered_sub_cent_gap_stays_visible():
+    r = check_transcription(D('15.205'), D('15.20'),
+                            figure_outcome=AUTO_MATCH)
+    assert r['outcome'] == TRANSCRIBED_ALTERED
+    assert r['difference'] == D('0.005')
+    assert r['reason'] == 'altered by 0.005'

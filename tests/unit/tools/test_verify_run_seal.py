@@ -111,7 +111,8 @@ def make_record(base, config):
                 ground_truth_path=base / 'example' / 'ground_truth_example.py',
                 calculator_path=base / 'example' / 'calculator_tool.py',
                 ap1_text_path=base / AP1_TEXT,
-                runner_source_hash=TREE_SOURCE_HASH, expected_values={})
+                runner_source_hash=TREE_SOURCE_HASH, expected_values={},
+                lookup_collisions=[])
 
 
 def reseal(record, inputs=True):
@@ -179,6 +180,7 @@ def all_checks(record, lines=2):
         ('calculator_hash', 'MATCH'),
         ('ap1_text_hash', 'MATCH'),
         ('expected_values_hash', 'MATCH'),
+        ('lookup_collisions', 'MATCH'),
         ('runner_source_hash', 'MATCH'),
         ('inputs_hash', 'MATCH'),
         ('seal_hash', 'MATCH'),
@@ -387,7 +389,7 @@ def test_verify_run_missing_input_file_fails_with_its_path(vrs, run, base,
     # The other inputs are still checked; the expected values need all
     # three text inputs.
     skipped = ([field] if field == 'ap1_text_hash'
-               else [field, 'expected_values_hash'])
+               else [field, 'expected_values_hash', 'lookup_collisions'])
     assert checks == without(all_checks(record), *skipped)
 
 
@@ -512,7 +514,8 @@ def legacy(record):
     the timestamp."""
     record = {k: v for k, v in record.items() if k not in (
         'seal_format', 'calculator_hash', 'expected_values_hash',
-        'python_version', 'platform', 'package_versions', 'inputs_hash')}
+        'python_version', 'platform', 'package_versions',
+        'lookup_collisions', 'inputs_hash')}
     record['seal_hash'] = canonical_hash(
         {k: v for k, v in record.items()
          if k not in ('timestamp', 'seal_hash')})
@@ -523,6 +526,9 @@ def legacy(record):
 LEGACY_WARNING = ('seal_format', 'none: a record made before October 2026, '
                   'checked under the rules it was made with (raw bytes, '
                   'seal_hash without the timestamp)')
+LEGACY_COLLISIONS_WARNING = (
+    'lookup_collisions', 'not sealed (legacy record): a runner before '
+    'October 2026 did not seal the R3.1 lookup collisions; not verified')
 LEGACY_SOURCE_WARNING = ('runner_source_hash', 'not recomputed: a record '
                          'made before October 2026 hashed every .py file of '
                          'the clone; see docs/REPRODUCING.md')
@@ -541,8 +547,26 @@ def test_verify_run_legacy_record_checked_under_its_rules(vrs, tmp_path,
     assert failures == []
     assert checks == without(all_checks(record), 'seal record fields',
                              'calculator_hash', 'expected_values_hash',
-                             'runner_source_hash', 'inputs_hash')
-    assert warnings == [LEGACY_WARNING, LEGACY_SOURCE_WARNING]
+                             'lookup_collisions', 'runner_source_hash',
+                             'inputs_hash')
+    assert warnings == [LEGACY_WARNING, LEGACY_COLLISIONS_WARNING,
+                        LEGACY_SOURCE_WARNING]
+
+
+@pytest.mark.finding('T3-75')
+@pytest.mark.req('R3.1', 'R1.1')
+def test_verify_run_current_record_without_sealed_collisions_fails(
+        vrs, tmp_path, base):
+    # The field removed and seal_hash recomputed: every other check
+    # passes, and the verifier said nothing about the collisions.
+    config = resolved_config()
+    record = make_record(base, config)
+    del record['lookup_collisions']
+    record = reseal(record)
+    run_dir = write_run(tmp_path / 'run', record, config)
+    _, failures = vrs.verify_run(str(run_dir))
+    assert failures == [('lookup_collisions', 'not sealed: a record with '
+                         'seal_format seals the R3.1 lookup collisions')]
 
 
 def test_verify_run_legacy_record_without_source_hash_no_source_warning(
@@ -553,7 +577,7 @@ def test_verify_run_legacy_record_without_source_hash_no_source_warning(
     run_dir = write_run(tmp_path / 'run', legacy(record), config)
     warnings = []
     assert vrs.verify_run(str(run_dir), warnings=warnings)[1] == []
-    assert warnings == [LEGACY_WARNING]
+    assert warnings == [LEGACY_WARNING, LEGACY_COLLISIONS_WARNING]
 
 
 def test_verify_run_legacy_record_hashes_raw_bytes(vrs, tmp_path, base):
@@ -634,7 +658,8 @@ def test_verify_run_ap1_text_of_the_runs_version(vrs, tmp_path, base):
                   calculator_path=base / 'example' /
                   'calculator_tool.py',
                   ap1_text_path=v12, runner_source_hash=TREE_SOURCE_HASH,
-                  expected_values={})
+                  expected_values={},
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
     assert failures == [] and ('ap1_text_hash', 'MATCH') in checks
@@ -664,7 +689,8 @@ def test_verify_run_inputs_from_the_fixture_dir_given(vrs, tmp_path, base):
                   ground_truth_path=other / 'ground_truth_example.py',
                   calculator_path=other / 'calculator_tool.py',
                   ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values={})
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values={},
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     assert names(vrs.verify_run(str(run_dir))[1]) == ['fixture_hash']
     assert vrs.verify_run(str(run_dir), fixture_dir=str(other))[1] == []
@@ -716,7 +742,8 @@ def test_verify_run_expected_values_recomputed_from_the_module(
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
     assert failures == [] and ('expected_values_hash', 'MATCH') in checks
@@ -727,7 +754,8 @@ def test_verify_run_expected_values_recomputed_from_the_module(
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run2', record, config)
     _, failures = vrs.verify_run(str(run_dir))
     assert failures == [('expected_values_hash', 'sealed=%s, recomputed=%s'
@@ -760,7 +788,8 @@ def test_verify_run_worked_step_only_change_fails(vrs, tmp_path, base):
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     checks, failures = vrs.verify_run(str(run_dir))
     assert failures == [] and ('expected_values_hash', 'MATCH') in checks
@@ -806,7 +835,8 @@ def test_verify_run_expected_values_computed_in_the_runs_decimal_context(
                   questions_path=base / 'example' / 'questions.json',
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values)
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values=values,
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     with localcontext(Context(prec=28)):
         checks, failures = vrs.verify_run(str(run_dir))
@@ -818,7 +848,7 @@ def test_verify_run_expected_values_module_may_import_its_neighbours(
     (base / 'example' / 'helper_g5.py').write_text('V = "7"\n')
     (base / 'example' / 'fixture.json').write_text('{"accounts": []}\n')
     (base / 'example' / 'questions.json').write_text(json.dumps(
-        {'items': [{'id': 'Q01'}]}))
+        {'items': [{'id': 'Q01', 'source_accounts': []}]}))
     (base / GT).write_text('import helper_g5\n'
                            'def compute(item_id, ctx):\n'
                            '    return {"final": helper_g5.V}\n')
@@ -829,7 +859,8 @@ def test_verify_run_expected_values_module_may_import_its_neighbours(
                   ground_truth_path=base / GT,
                   calculator_path=base / CALC, ap1_text_path=base / AP1_TEXT,
                   runner_source_hash=TREE_SOURCE_HASH,
-                  expected_values={'Q01': {'final': '7'}})
+                  expected_values={'Q01': {'final': '7'}},
+                  lookup_collisions=[])
     run_dir = write_run(tmp_path / 'run', record, config)
     path_before = list(sys.path)
     try:
@@ -1191,7 +1222,7 @@ def test_main_without_arguments_prints_usage_and_returns_1(vrs, monkeypatch,
 def test_main_argv_argument(vrs, run, capsys):
     run_dir, _, _ = run
     assert vrs.main([str(run_dir)]) == 0
-    assert capsys.readouterr().out.endswith('RESULT: PASS (13 checks)\n')
+    assert capsys.readouterr().out.endswith('RESULT: PASS (14 checks)\n')
 
 
 def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
@@ -1202,7 +1233,7 @@ def test_main_passing_run_prints_each_check_and_counts_them(vrs, run,
     assert code == 0
     expected = ['=== Verifying: %s ===' % run_dir, '']
     expected += ['  PASS  %s: %s' % c for c in all_checks(record)]
-    expected += ['', '  13 passed, 0 failed', '', 'RESULT: PASS (13 checks)',
+    expected += ['', '  14 passed, 0 failed', '', 'RESULT: PASS (14 checks)',
                  '']
     assert out == '\n'.join(expected)
 
@@ -1218,10 +1249,10 @@ def test_main_prints_warnings_and_counts_them(vrs, tmp_path, base,
     lines = out.splitlines()
     assert [line.split(':')[0] for line in lines
             if line.startswith('  WARN')] == [
-        '  WARN  seal_format', '  WARN  runner_source_hash',
-        '  WARN  runner_modified'] * 2
-    assert '  8 passed, 0 failed, 3 warnings' in lines
-    assert lines[-1] == 'RESULT: PASS (16 checks, 6 warnings)'
+        '  WARN  seal_format', '  WARN  lookup_collisions',
+        '  WARN  runner_source_hash', '  WARN  runner_modified'] * 2
+    assert '  8 passed, 0 failed, 4 warnings' in lines
+    assert lines[-1] == 'RESULT: PASS (16 checks, 8 warnings)'
 
 
 def test_main_failures_print_after_checks_and_warnings(vrs, tmp_path, base,
@@ -1262,7 +1293,7 @@ def test_main_totals_passes_over_passing_runs(vrs, run, monkeypatch,
     code, out = run_main(vrs, [str(run_dir), str(run_dir)], monkeypatch,
                          capsys)
     assert code == 0
-    assert out.endswith('RESULT: PASS (26 checks)\n')
+    assert out.endswith('RESULT: PASS (28 checks)\n')
 
 
 def test_main_totals_failures_over_failing_runs(vrs, tmp_path, base,
@@ -1300,7 +1331,8 @@ def test_main_options_relative_to_the_working_directory(
                   ground_truth_path=other / 'ground_truth_example.py',
                   calculator_path=other / 'calculator_tool.py',
                   ap1_text_path=base / AP1_TEXT,
-                  runner_source_hash=TREE_SOURCE_HASH, expected_values={})
+                  runner_source_hash=TREE_SOURCE_HASH, expected_values={},
+                  lookup_collisions=[])
     write_run(tmp_path / 'run', record, config)
     monkeypatch.chdir(tmp_path)
     code, out = run_main(vrs, ['--fixture-dir', 'mine', '--ap1-text',

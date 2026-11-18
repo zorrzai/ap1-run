@@ -174,22 +174,29 @@ def print_run_report(all_results, conditions, *, disclaimer, grammar_issues,
 
 
 def print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary):
-    """Sections 3j-3l: D1 accuracy, D2 reproducibility, D7.2(a) operand
+    """Sections 3j-3l: D1 accuracy, D2 determinism, D7.2(a) operand
     provenance."""
     # 3j. D1 Accuracy
-    print(f'\n3j. D1 ACCURACY:')
+    print(f'\n3j. D1 ACCURACY (base condition only):')
     if d1_summary:
         print(f'  Auto-scored: {d1_summary.get("auto_scored_n", 0)}')
         print(f'  Adjudicated: {d1_summary.get("adjudicated_n", 0)}')
         print(f'  Correct: {d1_summary.get("correct", 0)}')
         print(f'  Incorrect: {d1_summary.get("incorrect", 0)}')
         print(f'  No figure: {d1_summary.get("no_figure", 0)}')
+        print(f'  Unmeasurable: {d1_summary.get("unmeasurable_n", 0)}')
         rate = d1_summary.get('accuracy_rate')
-        if rate is not None:
+        pending = (d1_summary.get('adjudicated_n', 0)
+                   + d1_summary.get('unmeasurable_n', 0))
+        if rate is not None and pending:
+            # every wrong figure awaits adjudication (SPEC R2.0; T3-3)
+            print(f'  Accuracy rate: not computed ({pending} items await '
+                  f'adjudication)')
+        elif rate is not None:
             print(f'  Accuracy rate: {rate}')
 
-    # 3k. D2 Reproducibility
-    print(f'\n3k. D2 REPRODUCIBILITY:')
+    # 3k. D2 Determinism
+    print(f'\n3k. D2 DETERMINISM:')
     if d2_cap_reason:
         print(f'  CAP: {d2_cap_reason}')
     d2_mechs = {}

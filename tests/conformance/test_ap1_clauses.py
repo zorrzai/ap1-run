@@ -184,7 +184,7 @@ def test_measure_invocation_reports_n_and_rate_per_evidence_class():
         'per_class': {EV_2: {
             'evidence_class': EV_2, 'n': 3, 'invoked': 2,
             'not_invoked': 1, 'unobservable': 0,
-            'failure_rate': '1/3 (33.3%)',
+            'failure_rate': '1/3 (33.3%); one-sided 95% upper bound on the failure rate 86.5%',
             'failing_questions': [(None, 1, 1)]}},
         'total_n': 3, 'unobservable_n': 0, 'cross_class_warning': None,
     }
@@ -482,8 +482,9 @@ def test_zero_failure_rate_is_reported_with_n_and_bound():
     # T3-61: the exact bound is 13.91 %; it is shown rounded to nearest,
     # not up. The fix changes the expected text.
     from ap1_run.scoring.invocation import format_rate
+    # 13.91 %, shown rounded up (T3-61).
     assert format_rate(0, 20) == (
-        '0/20 failures; one-sided 95% upper bound on the failure rate 13.9%')
+        '0/20 failures; one-sided 95% upper bound on the failure rate 14.0%')
 
 
 # =====================================================================
@@ -630,7 +631,9 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
     # outcome. Since the T3-13 fix, scoring/answer_outcome.py assigns the
     # §6.8 outcome of an auto-scored response where the record decides it
     # (COMPUTED, or ORIGINATED by the composition rule); the scorers
-    # assign the rest on the sheets. The SPEC §10 row is still to fix.
+    # assign it to a routed response on the sheets; the rest get none and
+    # the report counts them by kind. So the SPEC §10 row reads PARTIAL,
+    # with that reason and the four kinds.
     from ap1_run.scoring import figure_id
     routing = {v for k, v in vars(figure_id).items()
                if k.isupper() and isinstance(v, str)}
@@ -640,6 +643,17 @@ def test_figure_identification_outcomes_are_not_the_six_outcome_vocabulary():
         'ADJUDICATE-FIGURES-PRESENT-NONE-MATCHING', 'UNMEASURABLE',
         'ADJUDICATE-REFUSAL'}
     assert routing.isdisjoint(SIX_OUTCOMES)
+    rows = [line for line in SPEC.read_text(encoding='utf-8').splitlines()
+            if line.startswith('| §6.8 six-outcome vocabulary |')]
+    assert len(rows) == 1
+    assert rows[0].rstrip().endswith('| PARTIAL |')
+    assert 'no automatic outcome' in rows[0]
+    # the four kinds answer_outcome leaves without one, as the report
+    # lists them (routed responses get theirs on the sheets)
+    assert 'four kinds' in rows[0]
+    for words in ('not shown invoked', 'not shown grounded',
+                  'no figure found', 'D1 does not score'):
+        assert words in rows[0], words
 
 
 # =====================================================================
@@ -729,8 +743,9 @@ def test_mechanism_is_classified_for_a_single_configuration():
     (AP-1 v1.3 §5.11, L474)
     """
     from ap1_run.scoring.reproducibility import classify_mechanism
-    result = classify_mechanism([{'content': 'result1'},
-                                 {'content': 'result1'}],
+    reply = {'choices': [{'message': {'role': 'assistant',
+                                      'content': 'result1'}}]}
+    result = classify_mechanism([reply, dict(reply)],
                                 surface='figures', minimum_runs=2)
     assert result == {
         'mechanism': 'OBSERVED-ONLY', 'distinct_values': 1,

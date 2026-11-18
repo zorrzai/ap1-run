@@ -13,10 +13,12 @@ Reports auto-scored n and adjudicated n SEPARATELY; the two are
 never merged without both being stated.
 """
 
-from decimal import Decimal
+from decimal import MAX_PREC, Decimal, localcontext
 
+from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.foundation.numeric import quantise
 from ap1_run.scoring.figure_id import AUTO_MATCH, AUTO_NO_FIGURE, UNMEASURABLE
+from ap1_run.scoring.invocation import clopper_pearson_upper
 
 
 # -- Outcome constants -----------------------------------------------------
@@ -122,7 +124,12 @@ def summarise_accuracy(results):
             correct: int (auto-scored only)
             incorrect: int (auto-scored only)
             no_figure: int (auto-scored only)
-            accuracy_rate: Decimal or None (correct / auto-scored with figures)
+            accuracy_rate: Decimal or None (correct / (correct +
+                incorrect + no_figure))
+
+    An auto-scored answer with no figure is not correct: AP-1 D1 asks
+    whether the system produces the correct figure, so it is in the
+    denominator, as in the per-category rate (T3-3).
     """
     auto_scored = [r for r in results if r['auto_scored']]
     adjudicated = [r for r in results if not r['auto_scored']
@@ -133,10 +140,10 @@ def summarise_accuracy(results):
     incorrect = sum(1 for r in auto_scored if r['outcome'] == INCORRECT)
     no_figure = sum(1 for r in auto_scored if r['outcome'] == NO_FIGURE)
 
-    scored_with_figures = correct + incorrect
+    answered = correct + incorrect + no_figure
     accuracy_rate = None
-    if scored_with_figures > 0:
-        accuracy_rate = Decimal(correct) / Decimal(scored_with_figures)
+    if answered > 0:
+        accuracy_rate = Decimal(correct) / Decimal(answered)
 
     return {
         'auto_scored_n': len(auto_scored),
@@ -147,3 +154,88 @@ def summarise_accuracy(results):
         'no_figure': no_figure,
         'accuracy_rate': accuracy_rate,
     }
+
+# -- D1 per category (AP-1 D1; T3-32) --------------------------------------
+
+# AP-1 v1.3 D1: "No category claim may be made where n < 10."
+CATEGORY_MINIMUM_N = 10
+
+
+def summarise_accuracy_by_category(results, categories):
+    """D1 per category, with n and a 95% confidence interval (AP-1 v1.3
+    D1: "Results reported per category, with 95% confidence intervals,
+    and with n stated. No category claim may be made where n < 10.").
+
+    Args:
+        results: score_accuracy results, each with an 'item_id' and a
+            'condition'
+        categories: dict of item_id -> category (questions.json)
+
+    D1 counts the base condition only: AP-1 does not say which condition
+    D1 uses, and the instruction-removed repeats exist to measure D7 (the
+    calculator called when not told to), so an answer under them neither
+    adds to nor vetoes a question's accuracy. Results from any other
+    condition are left out of every count here.
+
+    The unit is the question, as for D7.1 (T3-11): n counts a category's
+    questions, and a question is correct only if every one of its base
+    executions is CORRECT. A rate is given only where n >= 10 and no
+    base execution awaits adjudication (adjudicated or UNMEASURABLE:
+    every wrong figure is among them, SPEC R2.0; T3-3), with the exact
+    two-sided 95% Clopper-Pearson interval.
+
+    Returns:
+        dict of category -> {n, executions, correct, incorrect,
+        no_figure, pending, correct_questions, rate, interval}; rate and
+        interval are None where no rate is given. Categories in order of
+        first appearance in `categories`.
+    """
+    summary = {}
+    questions = {}
+    for item_id, category in categories.items():
+        summary.setdefault(category, {
+            'n': 0, 'executions': 0, 'correct': 0, 'incorrect': 0,
+            'no_figure': 0, 'pending': 0, 'correct_questions': 0,
+            'rate': None, 'interval': None})
+    for r in results:
+        if r.get('condition') != CONDITION_BASE:
+            continue
+        category = categories.get(r.get('item_id'))
+        if category is None:
+            continue
+        c = summary[category]
+        c['executions'] += 1
+        outcome = r['outcome']
+        if outcome == CORRECT:
+            c['correct'] += 1
+        elif outcome == INCORRECT:
+            c['incorrect'] += 1
+        elif outcome == NO_FIGURE:
+            c['no_figure'] += 1
+        else:
+            c['pending'] += 1
+        ok = questions.get(r.get('item_id'), True)
+        questions[r.get('item_id')] = ok and outcome == CORRECT
+    for item_id, ok in questions.items():
+        c = summary[categories[item_id]]
+        c['n'] += 1
+        c['correct_questions'] += ok
+    for c in summary.values():
+        if c['n'] >= CATEGORY_MINIMUM_N and not c['pending']:
+            c['rate'] = Decimal(c['correct_questions']) / c['n']
+            c['interval'] = clopper_pearson_interval(c['correct_questions'],
+                                                     c['n'])
+    return summary
+
+
+def clopper_pearson_interval(successes, n, alpha=Decimal('0.05')):
+    """The exact two-sided 1 - alpha Clopper-Pearson interval for a
+    proportion, (lower, upper), in Decimal: each end leaves alpha/2 in
+    its tail. Uses the one bound implementation (invocation.py)."""
+    with localcontext() as ctx:
+        # exact: half of alpha, and 1 minus a bound, are never rounded
+        ctx.prec = MAX_PREC
+        half = alpha / 2
+        upper = clopper_pearson_upper(successes, n, half)
+        lower = 1 - clopper_pearson_upper(n - successes, n, half)
+    return lower, upper

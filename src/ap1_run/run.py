@@ -44,7 +44,9 @@ import os
 import sys
 import time
 
-from ap1_run.execution.context import build_delivered_context
+from ap1_run.execution.context import (
+    build_delivered_context, lookup_collisions,
+)
 from ap1_run.execution.ap1_texts import (
     check_ap1_text_version, resolve_ap1_text,
 )
@@ -62,7 +64,9 @@ from ap1_run.execution.version import (
     compute_runner_source_hash, resolve_runner_version,
 )
 from ap1_run.foundation import adapter
-from ap1_run.foundation.config import load_config, validate_minimum_n
+from ap1_run.foundation.config import (
+    load_config, validate_kinds, validate_minimum_n,
+)
 from ap1_run.foundation.numeric import in_decimal_context
 from ap1_run.runner.credentials import get_api_key
 from ap1_run.runner.outputs import OUTPUT_FILES
@@ -129,7 +133,9 @@ def main(argv=None):
     # the seal and the engine alike (T3-60; SPEC R0.4.1).
     gt_module.compute = in_decimal_context(gt_module.compute)
 
-    # -- Minimum-n (R0.1): refuse an under-powered claim before any request --
+    # -- D5/D6 kinds (R0.1): refuse a label that names no fixed or defined
+    # kind, then minimum-n: refuse an under-powered claim before any request --
+    validate_kinds(questions)
     validate_minimum_n(config, questions['items'])
 
     # -- Output directory --
@@ -208,7 +214,10 @@ def main(argv=None):
     )
     seal_record = create_seal(
         **seal_inputs, runner_source_hash=runner_source_hash,
-        expected_values=expected_values, loaded=inputs.data)
+        expected_values=expected_values, loaded=inputs.data,
+        # R3.1: lookup collisions computed at seal and sealed (T3-75)
+        lookup_collisions=lookup_collisions(
+            sealed_compute(expected_values), fixture, questions))
     check_ap1_text_version(config, seal_record)
     seal_hash = seal_record['seal_hash']
 
@@ -225,7 +234,10 @@ def main(argv=None):
                             f'cannot recompute: {type(e).__name__}: {e}')
         verify_seal(seal_record, **seal_inputs,
                     runner_source_hash=compute_runner_source_hash(base_dir),
-                    expected_values=current_values)
+                    expected_values=current_values,
+                    lookup_collisions=lookup_collisions(
+                        sealed_compute(current_values), fixture, questions))
+    print(f'Lookup collisions (R3.1): {seal_record["lookup_collisions"]}')
     print(f'Seal hash: {seal_hash}')
     print(f'AP-1 text hash: {seal_record["ap1_text_hash"]}')
     print()

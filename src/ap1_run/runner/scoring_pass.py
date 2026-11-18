@@ -28,23 +28,28 @@ import hashlib
 from ap1_run.execution.context import (
     build_delivered_context, check_lookup_collision,
 )
+from ap1_run.execution.engine import CONDITION_BASE
 from ap1_run.execution.perturbation_guard import HELD_CONSTANT
+from ap1_run.execution.seal import SealError, check_collisions
 from ap1_run.foundation import transcript
+from ap1_run.foundation.config import d2_declared_classes, kind_counts
 from ap1_run.foundation.transcript import (
     ROUND_RECORD, TranscriptError, round_entry,
 )
 from ap1_run.runner.console import print_run_report, print_scoring_report
 from ap1_run.runner.executions import (
     Findings, apply_question_measurability, record_interrupted,
-    record_not_run, record_not_scored, record_underivable, result_from_record,
-    score_execution,
+    record_not_run, record_not_scored, record_served, record_underivable,
+    result_from_record, score_execution,
 )
 from ap1_run.runner.outputs import attach_scores, write_outputs
 from ap1_run.runner.summary import (
     build_summary, classify_reproducibility, find_d2_cap,
     verify_invocation_consistency,
 )
-from ap1_run.scoring.accuracy import summarise_accuracy
+from ap1_run.scoring.accuracy import (
+    summarise_accuracy, summarise_accuracy_by_category,
+)
 
 CONDITIONS = ['base', 'instruction_removed']
 
@@ -223,6 +228,21 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         for condition, item, _, gt in planned if gt.get('derivable', True)
         for rep in range(1, repeat_count + 1)])
 
+    # R3.1: the lookup collisions, once per derivable item. Scoring uses
+    # the sealed ones (T3-75): the collisions the sealed inputs give must
+    # be the record's, or nothing is scored. A record sealed before the
+    # field existed has none to compare.
+    found = []
+    for condition, item, ctx, gt in planned:
+        if condition == CONDITIONS[0] and gt.get('derivable', True):
+            collision, field = check_lookup_collision(gt['final'], ctx)
+            if collision:
+                found.append((item['id'], field))
+    mismatch = check_collisions(seal_record, found)
+    if mismatch:
+        raise SealError('seal verification failed:\n  ' + mismatch[0])
+    collided = {item_id for item_id, _ in found}
+
     findings = Findings()
     for condition, item, ctx, gt in planned:
         item_id = item['id']
@@ -234,7 +254,7 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
             continue
 
         expected = gt['final']
-        collision, _ = check_lookup_collision(expected, ctx)
+        collision = item_id in collided
 
         for rep in range(1, repeat_count + 1):
             print(f'  {item_id}/{condition}/r{rep}: ', end='', flush=True)
@@ -242,6 +262,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
             rounds = rounds_by_execution.get((item_id, condition, rep))
             if record is None and rounds:
                 print('UNMEASURED (interrupted)')
+                # V12-8: its rounds' responses were served all the same
+                for round_ in rounds:
+                    record_served(findings, round_.get('response_received'))
                 record_interrupted(findings, item_id, condition, rep,
                                    rounds[-1]['round'])
                 continue
@@ -249,6 +272,9 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
                 print('NOT-RUN')
                 record_not_run(findings, item_id, condition, rep)
                 continue
+            # V12-8: what served each response the record holds
+            for round_ in record.get('rounds') or []:
+                record_served(findings, round_.get('response'))
 
             result = result_from_record(record, gt=gt, ctx=ctx,
                                         config=config)
@@ -285,13 +311,31 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         release_coverage_results=findings.release_coverage_results)
 
     # -- D1 aggregation --
-    d1_summary = summarise_accuracy(findings.all_accuracy_results)
-    d1_summary['n'] = len(findings.all_accuracy_results)
+    # D1 counts the base condition only: the instruction-removed repeats
+    # exist for D7, and counting them in D1 would mix D7's signal into
+    # D1's (T3-32). One D1 n (T3-66), so §3's row, §8 and the console
+    # agree with each other and with the per-category table.
+    base_results = [r for r in findings.all_accuracy_results
+                    if r.get('condition') == CONDITION_BASE]
+    d1_summary = summarise_accuracy(base_results)
+    d1_summary['n'] = len(base_results)
+    # AP-1 D1: per category, with n and a 95% interval (T3-32). A
+    # question with no category is in no row; the report lists it under
+    # the table instead, so none is dropped silently.
+    d1_summary['by_category'] = summarise_accuracy_by_category(
+        findings.all_accuracy_results,
+        {q['id']: q['category'] for q in questions['items']
+         if q.get('category')})
+    d1_summary['uncategorised'] = [q['id'] for q in questions['items']
+                                   if not q.get('category')]
 
     # -- D2 classification per (item, condition) per surface --
     d2_cap_reason = find_d2_cap(config['sampling'])
-    d2_results = classify_reproducibility(findings.d2_responses, repeat_count,
-                                          d2_cap_reason)
+    d2_results = classify_reproducibility(
+        findings.d2_responses, repeat_count, d2_cap_reason,
+        findings.d2_figures, d2_evidence=findings.d2_evidence,
+        d2_errored=findings.d2_errored,
+        d2_declared=d2_declared_classes(config))
 
     summary = build_summary(
         findings.all_results, findings.evidence_findings,
@@ -300,7 +344,13 @@ def score_run(transcript_path, *, config, seal_record, fixture, questions,
         transcription_results=findings.transcription_results,
         release_coverage_results=findings.release_coverage_results,
         parameter_echo=findings.parameter_echo,
-        held_constant=HELD_CONSTANT)
+        held_constant=HELD_CONSTANT, served=findings.served)
+    # D5/D6: the items per kind, for a dimension claimed or labelled
+    # (SPEC R0.1); a run with neither has no entry
+    kinds = kind_counts(questions, config.get('ap1_version'),
+                        config.get('dimensions_claimed', []))
+    if kinds:
+        summary['kinds'] = kinds
 
     # 3j-3l. D1, D2, operand provenance
     print_scoring_report(d1_summary, d2_results, d2_cap_reason, summary)

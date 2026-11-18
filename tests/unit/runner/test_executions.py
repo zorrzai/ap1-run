@@ -128,7 +128,8 @@ def test_score_execution_collects_every_record(fakes, capsys):
         'expected_value': D('638.40'),
         'delivered_context': {'savings': {'balance': '1'}},
         'lookup_collision': False, 'answer_tolerance': D('0.01'),
-        'decline_markers': ['cannot'], 'currency_symbols': ['$'],
+        'decline_markers': ['cannot'], 'structured_answer_field': None,
+        'currency_symbols': ['$'],
         'decimal_separator': '.', 'grouping_separator': ','})]
 
     # D7.3 transcription
@@ -155,8 +156,10 @@ def test_score_execution_collects_every_record(fakes, capsys):
     assert fakes.calls['score_accuracy'] == [((fakes.figure,), {
         'expected_value': D('638.40'), 'answer_tolerance': D('0.01'),
         'quantisation_digits': 3, 'quantisation_rounding': 'ROUND_HALF_EVEN'})]
+    # T3-32: with its question, for D1 per category
     assert findings.all_accuracy_results == [
-        {'scored': 'accuracy', 'outcome': 'CORRECT'}]
+        {'scored': 'accuracy', 'outcome': 'CORRECT', 'item_id': 'Q01',
+         'condition': 'base'}]
     assert findings.d2_responses == {('Q01', 'base'): [response(content)]}
 
     # evidence, tool-call structures, grammar (both token extractions)
@@ -511,10 +514,12 @@ def test_findings_start_empty_and_separate():
     assert b == Findings()
     assert vars(b) == {
         'all_results': [], 'all_accuracy_results': [], 'd2_responses': {},
+        'd2_figures': {}, 'd2_evidence': {}, 'd2_errored': {},
         'grammar_issues': [], 'decline_findings': [],
         'tool_call_structures': [], 'evidence_findings': [],
         'transcription_results': [], 'release_coverage_results': [],
-        'unmeasured_cells': [], 'parameter_echo': []}
+        'unmeasured_cells': [], 'parameter_echo': [],
+        'served': {'models': {}, 'fingerprints': {}, 'responses': 0}}
 
 
 # -- the real scoring modules, on a realistic response --------------------
@@ -533,6 +538,27 @@ def test_score_execution_with_real_scorers(capsys):
             row['transcription_outcome'],
             row['release_coverage_outcome']) == (
         'AUTO-MATCH', '638.40', 'TRANSCRIBED-EXACT', 'GOVERNED-RELEASE')
+
+
+@pytest.mark.req('R2.5')
+@pytest.mark.parametrize('returned, difference, shown', [
+    ('27.200000000000001', '12.000000000000001', '12'),
+    ('15.205', '0.005', '0.005'),
+])
+def test_score_execution_altered_transcription_shown_without_float_tail(
+        capsys, returned, difference, shown):
+    # The altered list prints the gap without the calculator's binary
+    # float tail; the exact difference is kept beside it
+    result = {'response': response('The payment is $15.20.'),
+              'tool_calls': [calc('x', '{"result": "%s"}' % returned)],
+              'evidence_class': 'EV-2', 'invocation_outcome': 'INVOKED'}
+    findings = Findings()
+    score(findings, result, expected=D('15.20'),
+          config={'quantisation': {'places': 2, 'rounding': 'ROUND_HALF_UP'}})
+    (record,) = findings.transcription_results
+    assert record['outcome'] == 'TRANSCRIBED-ALTERED'
+    assert (record['difference'], record['difference_shown'],
+            record['reason']) == (difference, shown, f'altered by {shown}')
 
 
 # -- D7.2 of one execution: score_d72 (moved from the engine, T3-21) -------
@@ -848,9 +874,6 @@ def test_as_recorded_json_round_trip_sorted_with_str():
 # xfail(strict=True) until the fix.
 
 @pytest.mark.finding('T3-75')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='T3-75: structured_answer_field is not passed to '
-                          'identify_figure, so R2.0 step 1 never runs live')
 def test_score_execution_passes_structured_answer_field(fakes):
     # SPEC R2.0 step 1: "If structured_answer_field is configured and
     # present, that value is the released figure. Preferred path." The
@@ -1218,6 +1241,26 @@ def test_apply_question_measurability_without_a_chain_changes_nothing():
     assert findings.all_results[0]['answer_outcome'] == 'COMPUTED'
 
 
+# -- record_served (V12-8) ---------------------------------------------------
+
+@pytest.mark.finding('V12-8')
+def test_record_served_counts_models_and_fingerprints():
+    from ap1_run.runner.executions import record_served
+    findings = Findings()
+    for response in [
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_a'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': 'fp_b'},
+            {'model': 'm-2026-01-01', 'system_fingerprint': None},
+            {'model': '', 'choices': []}, {}, None, 'not a dict',
+            {'model': 7, 'system_fingerprint': 'fp_a'}]:
+        record_served(findings, response)
+    # Seven responses (None is no response); what each reports, counted
+    assert findings.served == {
+        'models': {'m-2026-01-01': 3, '7': 1},
+        'fingerprints': {'fp_a': 2, 'fp_b': 1}, 'responses': 7}
+    assert Findings().served is not Findings().served
+
+
 # An execution the engine flagged is flagged in
 # the runner too (T3-67).
 
@@ -1299,3 +1342,32 @@ def test_score_execution_checks_the_echo_of_every_round(fakes):
     assert findings.parameter_echo[0]['findings'] == [
         "parameter 'temperature': requested='0', applied=0.7 "
         '— silently ignored']
+
+
+# -- d2_answer_figure (T3-4) -------------------------------------------------
+
+@pytest.mark.finding('T3-4')
+@pytest.mark.req('R2.2')
+def test_d2_answer_figure_released_else_the_one_stated_else_none():
+    from types import SimpleNamespace as T
+    from ap1_run.runner.executions import d2_answer_figure
+    one = [T(value=Decimal('2500.00'), percent=False)]
+    assert d2_answer_figure({'released_figure': Decimal('2600.00'),
+                             'extracted_tokens': one}) == Decimal('2600.00')
+    assert d2_answer_figure({'released_figure': None,
+                             'extracted_tokens': one}) == Decimal('2500.00')
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + [T(value=Decimal('1.2'), percent=True)]}
+                            ) == Decimal('2500.00')
+    # one value stated twice is that value; two values, unresolved
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + one}) == Decimal('2500.00')
+    assert d2_answer_figure({'released_figure': None, 'extracted_tokens':
+                             one + [T(value=Decimal('7'), percent=False)]}
+                            ) is None
+    # a decline is unresolved whatever it recites
+    assert d2_answer_figure({'released_figure': None,
+                             'outcome': 'ADJUDICATE-DECLINE',
+                             'extracted_tokens': one}) is None
+    assert d2_answer_figure({'released_figure': None,
+                             'extracted_tokens': None}) is None
