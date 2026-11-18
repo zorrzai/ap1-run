@@ -328,10 +328,6 @@ def test_identify_figure_currency_before_a_signed_figure_keeps_the_sign(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: a currency glued between two figures '
-                          'before a sign reads as a subtraction and can '
-                          'AUTO-MATCH')
 @pytest.mark.parametrize('content, expected', [
     ('For month 12$-575.50 was paid', '575.50'),
     ('10$-3$', '3'),

@@ -522,9 +522,10 @@ token per R0.4.2 with its literal text, span and context. Then:
 
 | Condition | Outcome |
 |---|---|
-| Exactly one extracted value matches the expected value within `answer_tolerance`, and no digits of another script | `AUTO-MATCH` |
+| Exactly one extracted value matches the expected value within `answer_tolerance`, no digits of another script, and no currency symbol glued between figures before a sign | `AUTO-MATCH` |
 | No extracted value matches, no numeric tokens present, and no digits of another script | `AUTO-NO-FIGURE` |
 | Digits of another script (R0.4.2), and no numeric tokens present or exactly one extracted value matches | `ADJUDICATE — figures present, none matching` |
+| Exactly one extracted value matches, but a configured currency symbol touches a digit or `%` before it and is followed directly by a sign and a digit (`12$-575.50`, `10$-3$`: the sign may be the figure's or a subtraction's) | `ADJUDICATE — figures present, none matching` |
 | Two or more extracted values match | `ADJUDICATE — ambiguous` |
 | No match, but numeric tokens present | `ADJUDICATE — figures present, none matching` |
 

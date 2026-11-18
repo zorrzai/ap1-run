@@ -16,8 +16,11 @@ Steps, in order:
   3  Lookup collision -> adjudication, never auto-scored
   4  Extract per R0.4.2 -> AUTO-MATCH / AUTO-NO-FIGURE / ADJUDICATE
      (digits of another script anywhere: never AUTO-, ADJUDICATE)
+     (a currency glued between figures before a sign, '12$-575.50':
+      not AUTO-MATCH, ADJUDICATE)
 """
 
+import re
 import unicodedata
 from decimal import Decimal
 from ap1_run.execution.evidence import _extract_content
@@ -42,6 +45,17 @@ def _has_non_ascii_digit(text):
     ASCII 0-9: Arabic-Indic, Devanagari, full-width and the like."""
     return any(not ('0' <= c <= '9') and unicodedata.category(c) == 'Nd'
                for c in text)
+
+
+def _has_currency_glued_before_sign(text, currency_symbols):
+    """Whether text has a configured currency symbol touching a digit or
+    '%' before it and a sign then a digit right after it ('12$-575.50',
+    '10$-3$'): the sign may be the next figure's or a subtraction's."""
+    if not currency_symbols:
+        return False
+    syms = sorted(currency_symbols, key=len, reverse=True)
+    cur = '(?:' + '|'.join(re.escape(s) for s in syms) + ')'
+    return re.search(r'[0-9%]' + cur + r'[+\-\u2212][0-9]', text) is not None
 
 
 class FigureIdError(Exception):
@@ -202,6 +216,22 @@ def identify_figure(response, *, expected_value, delivered_context,
             'reason': f'one token matches: '
                       f'{tokens[matched[0]].literal!r}, but the response '
                       f'also has digits other than ASCII 0-9',
+            'extracted_tokens': tokens,
+            'matched_indices': [],
+        }
+
+    if len(matched) == 1 and _has_currency_glued_before_sign(
+            content, currency_symbols):
+        # '12$-575.50' reads 12 $ and +575.50 (a subtraction, as
+        # '10$-3$'), but may mean 12 and $-575.50: a person decides
+        # (S3-G1-5).
+        return {
+            'outcome': ADJUDICATE_NO_MATCH,
+            'released_figure': None,
+            'reason': f'one token matches: '
+                      f'{tokens[matched[0]].literal!r}, but a currency '
+                      f'symbol between two figures is followed by a sign '
+                      f'(the sign of a figure or a subtraction)',
             'extracted_tokens': tokens,
             'matched_indices': [],
         }

@@ -306,9 +306,6 @@ def test_run_currency_before_a_signed_figure_is_not_auto_matched(
 
 @pytest.mark.finding('S3-G1-5')
 @pytest.mark.req('R0.4.2', 'R2.0')
-@pytest.mark.xfail(strict=True, raises=AssertionError,
-                   reason='S3-G1-5: \'1$-430.75\' reads 1 $ and +430.75 '
-                          'and AUTO-MATCHes')
 def test_run_currency_glued_before_a_sign_is_not_auto_matched(
         tmp_path, monkeypatch, capsys):
     # Steven's decision on the second review of #13: 'For payment 1$-430.75'
